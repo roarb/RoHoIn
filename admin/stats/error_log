@@ -1,0 +1,8 @@
+[06-Mar-2015 12:59:41 UTC] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/rhoehn24/public_html/admin/stats/index.php on line 55
+[06-Mar-2015 13:01:10 UTC] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/rhoehn24/public_html/admin/stats/index.php on line 55
+[06-Mar-2015 13:03:31 UTC] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/rhoehn24/public_html/admin/stats/index.php on line 55
+[08-Mar-2015 14:08:53 UTC] PHP Fatal error:  Call to undefined function in_array_r() in /home/rhoehn24/public_html/admin/stats/index.php on line 80
+[08-Mar-2015 14:12:04 UTC] PHP Fatal error:  Call to a member function in_array_r() on a non-object in /home/rhoehn24/public_html/admin/stats/index.php on line 80
+[08-Mar-2015 14:12:49 UTC] PHP Fatal error:  Call to a member function in_array_r() on a non-object in /home/rhoehn24/public_html/admin/stats/index.php on line 80
+[08-Mar-2015 14:13:06 UTC] PHP Fatal error:  Call to undefined function in_array_r() in /home/rhoehn24/public_html/admin/stats/index.php on line 80
+[08-Mar-2015 14:13:23 UTC] PHP Fatal error:  Call to a member function in_array_r() on a non-object in /home/rhoehn24/public_html/admin/stats/index.php on line 80

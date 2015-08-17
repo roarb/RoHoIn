@@ -1,0 +1,20 @@
+[21-Feb-2015 21:59:47 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34
+[21-Feb-2015 21:59:52 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34
+[21-Feb-2015 21:59:58 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34
+[21-Apr-2015 23:49:16 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:49:29 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:50:02 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:50:08 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:50:26 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:01 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:12 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:21 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:38 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:49 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:52:59 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:53:38 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:54:36 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:55:29 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/_header.php on line 31
+[21-Apr-2015 23:57:15 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/logged_in.php on line 4
+[22-Apr-2015 02:02:28 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/logged_in.php on line 4
+[22-Apr-2015 02:02:58 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/login/views/logged_in.php on line 4

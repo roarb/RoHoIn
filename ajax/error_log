@@ -1,0 +1,7 @@
+[05-Apr-2015 21:28:22 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Unit.php on line 44
+[22-Apr-2015 03:53:01 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Barracks.php on line 8
+[24-Apr-2015 03:33:10 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/rhoehn24/public_html/core/Barracks.php on line 29
+[24-Apr-2015 03:33:29 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/rhoehn24/public_html/core/Barracks.php on line 29
+[04-May-2015 03:04:25 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Unit.php on line 181
+[15-Jun-2015 00:27:32 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Unit.php on line 568
+[15-Jun-2015 00:30:25 UTC] PHP Fatal error:  Call to a member function userModelCountCheck() on a non-object in /home/rhoehn24/public_html/ajax/update-barracks-new-painted.php on line 22

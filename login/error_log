@@ -1,0 +1,4 @@
+[06-Apr-2015 22:37:45 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 39
+[06-Apr-2015 23:31:20 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 39
+[06-Apr-2015 23:32:35 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 39
+[06-Apr-2015 23:35:09 UTC] PHP Fatal error:  Class 'Login' not found in /home/rhoehn24/public_html/login/index.php on line 36

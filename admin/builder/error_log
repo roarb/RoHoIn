@@ -1,0 +1,1 @@
+[21-Feb-2015 22:06:36 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34

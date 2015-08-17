@@ -1,0 +1,7 @@
+[21-Feb-2015 05:25:11 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 8
+[21-Feb-2015 05:25:45 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 8
+[21-Feb-2015 05:25:47 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 8
+[21-Feb-2015 05:32:29 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 8
+[21-Feb-2015 22:00:32 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34
+[14-May-2015 22:07:43 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 7
+[14-May-2015 22:07:47 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/admin/index.php on line 7

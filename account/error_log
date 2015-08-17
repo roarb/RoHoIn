@@ -1,0 +1,4 @@
+[26-Apr-2015 13:40:28 UTC] PHP Fatal error:  Class 'Barracks' not found in /home/rhoehn24/public_html/account/barracks.php on line 8
+[26-Apr-2015 13:41:06 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Barracks.php on line 96
+[26-Apr-2015 13:56:39 UTC] PHP Fatal error:  Class 'AllUnits' not found in /home/rhoehn24/public_html/core/Barracks.php on line 109
+[26-Apr-2015 13:58:26 UTC] PHP Fatal error:  Call to a member function getFactionByUnitName() on a non-object in /home/rhoehn24/public_html/core/Barracks.php on line 110

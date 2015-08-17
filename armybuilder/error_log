@@ -1,0 +1,4 @@
+[03-May-2015 20:57:08 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/Faction.php on line 6
+[31-May-2015 17:28:49 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/ArmyBuilder.php on line 23
+[31-May-2015 17:29:19 UTC] PHP Fatal error:  Class 'AllCore' not found in /home/rhoehn24/public_html/core/ArmyBuilder.php on line 23
+[31-May-2015 22:25:35 UTC] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/rhoehn24/public_html/core/ArmyBuilder.php on line 42
