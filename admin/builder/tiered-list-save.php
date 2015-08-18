@@ -1,9 +1,11 @@
 <?php include('../../login/index-start.php'); ?>
 <html lang="en">
 <head>
-    <?php include '../../admin/header.php';
+    <?php
+    include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/tiered-list.php';   ?>
+    include '../../core/tiered-list.php';
+    ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Tiered List Additions - RoHo.in Admin Panel</title>
 </head>

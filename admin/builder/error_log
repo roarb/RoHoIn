@@ -1,1 +1,3 @@
 [21-Feb-2015 22:06:36 UTC] PHP Fatal error:  Call to a member function isUserLoggedIn() on a non-object in /home/rhoehn24/public_html/login/index.php on line 34
+[06-Aug-2015 00:21:47 UTC] PHP Fatal error:  Class 'AllTieredLists' not found in /home/rhoehn24/public_html/admin/builder/tiered-list-save.php on line 66
+[06-Aug-2015 00:22:20 UTC] PHP Fatal error:  Class 'AllTieredLists' not found in /home/rhoehn24/public_html/admin/builder/tiered-list-save.php on line 66

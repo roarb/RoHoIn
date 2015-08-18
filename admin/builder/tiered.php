@@ -4,7 +4,6 @@
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
     include '../../core/Unit.php';
-    include '../../core/tiered-list.php';
     include '../../core/Faction.php';  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Tiered List Additions - RoHo.in Admin Panel</title>

@@ -5,7 +5,7 @@ class AllTieredLists
 	function getAllTieredLists(){
 		$core = new AllCore();
 		$conn = $core->connect();
-		
+
 		$lists = "SELECT * FROM tiered_list ORDER BY name";
 		$listsResult = $conn->query($lists);
 		$listsBuild = '';
@@ -18,6 +18,23 @@ class AllTieredLists
 			}
 		} else {
 			echo "0 results";
+		}
+		return $listsBuild;
+	}
+
+	function getTieredListById($tierId){
+		$core = new AllCore();
+		$conn = $core->connect();
+
+		$lists = "SELECT * FROM tiered_list WHERE id = '".$tierId."' ORDER BY name";
+		$listsResult = $conn->query($lists);
+		$listsBuild = '';
+		if ($listsResult->num_rows > 0) {
+			while($row = $listsResult->fetch_assoc()) {
+				$listsBuild = $row;
+			}
+		} else {
+			return false;
 		}
 		return $listsBuild;
 	}

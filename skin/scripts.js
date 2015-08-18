@@ -279,10 +279,11 @@ function submitBugForm(){
 }
 
 function expandUnitDisplay(el){
-    var addBlock = $(el).find('.additional-model-info');
+    var addBlock = $(el).parent().find('.additional-model-info');
+    $(el).toggleClass('open');
     var openHeight = $(addBlock).height() + 80;
     if ($(addBlock).hasClass('open')){
-        $(el).animate({
+        $(el).parent().animate({
             height: 28
         }, 1000);
         $(addBlock).animate({
@@ -292,7 +293,7 @@ function expandUnitDisplay(el){
         });
     } else {
         $(addBlock).show();
-        $(el).animate({
+        $(el).parent().animate({
             height: openHeight
         }, 1000);
         $(addBlock).animate({
