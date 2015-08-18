@@ -33,7 +33,7 @@
                 </paper-button>
                 <?php if ($_SESSION['user_name'] == 'roarb' || $_SESSION['user_name'] == 'rohoin'): ?>
                     <paper-button raised class="full-button link-admin-home">
-                        Welcome <?php echo $_SESSION['user_name'] ?><br /> Admin Panel
+                        Admin Panel
                     </paper-button>
                 <?php endif; ?>
             </div>

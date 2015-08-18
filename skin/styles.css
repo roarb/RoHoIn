@@ -364,3 +364,13 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 paper-fab.bug-fab.paper-fab-0 {background:#eb7f00;}
 #bug-report-form {position:fixed; top:10%; left:10%; height:80%; z-index:10; width:80%; background:#fff; border:1px solid #d1d1d1; display:none;}
 paper-toast#bug-toast {left:auto; bottom:14px; right:90px;}
+
+/* section link colors and backgrounds */
+.main-nav .link-account-home paper-material, .main-nav .link-playtest-home paper-material, .main-nav .link-account-barracks paper-material, .main-nav .link-armybuilder-home paper-material,
+.main-nav .link-playtest-single-unit paper-material, .main-nav .link-admin-home paper-material {height:36px; line-height:28px; font-size:16px; background-size:30%;}
+.link-account-home paper-material {background:#039be5; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-playtest-home paper-material {background:#689f38; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-account-barracks paper-material {background:#536dfe url(/skin/images/barracks.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-armybuilder-home paper-material {background-color:#ed3b3b; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-playtest-single-unit paper-material {background-color:#ef6c00; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-admin-home paper-material {background-color:#658092; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
