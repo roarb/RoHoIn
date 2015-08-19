@@ -22,7 +22,7 @@
         </paper-toolbar>
         <?php include '../login/index.php'; ?>
         <?php include '../nav/main-nav.php'; ?>
-        <paper-fab mini icon="arrow-back" class="nav-back link-armybuilder-home primary-focus"></paper-fab>
+        <?php //<paper-fab mini icon="arrow-back" class="nav-back link-armybuilder-home primary-focus"></paper-fab> ?>
     </paper-header-panel>
 
     <paper-header-panel main>

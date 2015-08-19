@@ -371,6 +371,6 @@ paper-toast#bug-toast {left:auto; bottom:14px; right:90px;}
 .link-account-home paper-material {background:#039be5; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-playtest-home paper-material {background:#689f38; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-account-barracks paper-material {background:#536dfe url(/skin/images/barracks.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
-.link-armybuilder-home paper-material {background-color:#ed3b3b; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
-.link-playtest-single-unit paper-material {background-color:#ef6c00; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-armybuilder-home paper-material {background:#ed3b3b url(/skin/images/army-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-playtest-single-unit paper-material {background:#ef6c00 url(/skin/images/single-model.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-admin-home paper-material {background-color:#658092; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}

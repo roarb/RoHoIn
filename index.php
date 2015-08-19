@@ -43,9 +43,9 @@
                         View Your Barracks
                     </paper-button>
                 <?php else: ?>
-                    <paper-button raised class="full-button link-login-register">
+                    <?php /*<paper-button raised class="full-button link-login-register"> // we'll need to add something to incentivize a login here.
                         Log in to view your Barracks
-                     </paper-button>
+                     </paper-button> */ ?>
                 <?php endif; ?>
                 <paper-button raised class="full-button link-armybuilder-home">
                     Create a New Army List

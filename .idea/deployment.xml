@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="roho.in" promptOnLocalOverwrite="false">
+  <component name="PublishConfigData" autoUpload="Always" promptOnLocalOverwrite="false" showNewOnSourceInSync="false">
     <serverData>
-      <paths name="roho.in">
+      <paths name="RoHo">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />

@@ -24,13 +24,24 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         tier2BonusRules = tier2BonusRules.split(']['); // create an array of the rules
         $(tier2BonusRules).each(function(key, val){
             applyBonusRules(val,2); // val = rule to apply, 2 = tier level
+            //console.log(val); // will display the rule to be applied
         });
     }
     if (level > 2){ // run the tier 3 level rules
-
+        var tier3BonusRules = tierObject['tier3_bonus'].substring(1,(tierObject['tier3_bonus'].length - 1)); // remove the open and close []
+        tier3BonusRules = tier3BonusRules.split(']['); // create an array of the rules
+        $(tier3BonusRules).each(function(key, val){
+            applyBonusRules(val,3); /// val = rule to apply, 3 = tier level
+            //console.log(val); // will display the rule to be applied
+        });
     }
     if (level > 3){ // run the tier 4 level rules
-
+        var tier4BonusRules = tierObject['tier4_bonus'].substring(1,(tierObject['tier4_bonus'].length - 1)); // remove the open and close []
+        tier4BonusRules = tier4BonusRules.split(']['); // create an array of the rules
+        $(tier4BonusRules).each(function(key, val) {
+            applyBonusRules(val, 4); /// val = rule to apply, 4 = tier level
+            //console.log(val); // will display the rule to be applied
+        });
     }
 }
 
@@ -59,9 +70,17 @@ function defineBonusRuleLoc(rawLoc, rule, level){
     } else if (rawLoc == 'caster'){
         loc = 'rule location is the caster model';
         // need to definebonusrule action for each individual model
-    } else if (rawLoc.indexOf('type') > -1){
-        loc = 'rule location is model type';
-        // need to definebonusrule action for each individual model
+    } else if (rawLoc.indexOf('type') > -1){ // 'rule location is model type';
+        // to get the type for heavy/light warjack/vector/myrmidon/warbeast loop through the battlegroup unit objects looking for unit type.
+        var type = rawLoc.substring(rawLoc.indexOf('==')+2);
+        $(bgUnitObject).each(function(key,val){
+            if (typeof val != 'undefined'){
+                if (val['type'] == type){
+                    loc = $('.model-id-'+val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
+                }
+            }
+        });
     } else { // location is model id
         loc = $('.model-id-'+rawLoc);
         defineBonusRuleAction(loc, rule, rawLoc, level);
@@ -94,28 +113,28 @@ function defineBonusRuleAction(loc, rule, id, level){
 function getModelObjectAndAdjusts(loc, id, field, newVal, level){
     $('.model-id-'+id).addClass('tier-'+level+'-rule-applied');
     if ($(loc).hasClass('unit-model-option')){ // loop through all units looking for matches to the model id - if found update the field with the newVal
-        jQuery(unitModelObject).each(function(key,val){
+        $(unitModelObject).each(function(key,val){
             if (val['id'] == id){
                 val[field] = newVal;
             }
         });
     }
     if ($(loc).hasClass('solo-model')) { // loop through all solos looking for matches to the model id - if found update the field with the newVal
-        jQuery(soloModelObject).each(function(key,val){
+        $(soloModelObject).each(function(key,val){
             if (val['id'] == id){
                 val[field] = newVal;
             }
         });
     }
     if ($(loc).hasClass('battle-engine-model')) { // loop through all battle engines looking for matches to the model id - if found update the field with the newVal
-        jQuery(battleEngineModelObject).each(function(key,val){
+        $(battleEngineModelObject).each(function(key,val){
            if (val['id'] == id){
                val[field] = newVal;
            }
         });
     }
     if ($(loc).hasClass('battle-group-unit')) { // loop through all battle group units looking for matches to the model id - if found update the field with the newVal
-        jQuery(bgUnitObject).each(function(key,val){
+        $(bgUnitObject).each(function(key,val){
             if (val['id'] == id){
                 val[field] = newVal;
             }
