@@ -18,30 +18,37 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
     tier1BonusRules = tier1BonusRules.split(']['); // create an array of the rules
     $(tier1BonusRules).each(function(key, val){ // loop through each model affected to apply rules
         applyBonusRules(val,1); // val = rule to apply, 1 = tier level
+        console.log(val);
     });
     if (level > 1){ // run the tier 2 level rules
         var tier2BonusRules = tierObject['tier2_bonus'].substring(1,(tierObject['tier2_bonus'].length - 1)); // remove the open and close []
         tier2BonusRules = tier2BonusRules.split(']['); // create an array of the rules
         $(tier2BonusRules).each(function(key, val){
             applyBonusRules(val,2); // val = rule to apply, 2 = tier level
-            //console.log(val); // will display the rule to be applied
+            console.log(val); // will display the rule to be applied
         });
+        // populate requirements block
+        processTierReq(tierObject['tier2_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
     }
     if (level > 2){ // run the tier 3 level rules
         var tier3BonusRules = tierObject['tier3_bonus'].substring(1,(tierObject['tier3_bonus'].length - 1)); // remove the open and close []
         tier3BonusRules = tier3BonusRules.split(']['); // create an array of the rules
         $(tier3BonusRules).each(function(key, val){
             applyBonusRules(val,3); /// val = rule to apply, 3 = tier level
-            //console.log(val); // will display the rule to be applied
+            console.log(val); // will display the rule to be applied
         });
+        // populate requirements block
+        processTierReq(tierObject['tier3_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
     }
     if (level > 3){ // run the tier 4 level rules
         var tier4BonusRules = tierObject['tier4_bonus'].substring(1,(tierObject['tier4_bonus'].length - 1)); // remove the open and close []
         tier4BonusRules = tier4BonusRules.split(']['); // create an array of the rules
         $(tier4BonusRules).each(function(key, val) {
             applyBonusRules(val, 4); /// val = rule to apply, 4 = tier level
-            //console.log(val); // will display the rule to be applied
+            console.log(val); // will display the rule to be applied
         });
+        // populate requirements block
+        processTierReq(tierObject['tier4_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
     }
 }
 
@@ -67,10 +74,10 @@ function defineBonusRuleLoc(rawLoc, rule, level){
     var loc = '';
     if (rawLoc == ''){
         return;
-    } else if (rawLoc == 'caster'){
-        loc = 'rule location is the caster model';
-        // need to definebonusrule action for each individual model
-    } else if (rawLoc.indexOf('type') > -1){ // 'rule location is model type';
+    } else if (rawLoc == 'caster'){ // rule location is the caster model
+        loc = $('#battlegroup-1-built .leader');
+        defineBonusRuleAction(loc, rule, rawLoc, level);
+    } else if (rawLoc.indexOf('type') > -1 || rawLoc.indexOf('modelType') > -1){ // 'rule location is type or modelType';
         // to get the type for heavy/light warjack/vector/myrmidon/warbeast loop through the battlegroup unit objects looking for unit type.
         var type = rawLoc.substring(rawLoc.indexOf('==')+2);
         $(bgUnitObject).each(function(key,val){
@@ -87,14 +94,14 @@ function defineBonusRuleLoc(rawLoc, rule, level){
     }
 }
 
-function defineBonusRuleAction(loc, rule, id, level){
+function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'caster'
     // find the model and add class 'tier-x-rule-applied'
     if (rule.indexOf('FA') > -1 ){ // check if the action is to adjust the FA
         var field = 'field_allowance';
         var opp = rule.substring(3,2); // gets the opperand, we're assuming this is a single character
         var val = parseInt(rule.substring(4,3)); // gets the new FA value to adjust by, we're assuming this is a single character
-        if (!$(loc).hasClass('tier-rule-applied')){
-            $(loc).addClass('tier-rule-applied');
+        if (!$(loc).hasClass('tier-rule-applied-level'+level)){
+            $(loc).addClass('tier-rule-applied-level'+level);
             var currentVal = parseInt($(loc).find('.field-allowance').text());
             var newVal = '';
             if (opp == '+'){ newVal = currentVal + val;}
@@ -104,9 +111,32 @@ function defineBonusRuleAction(loc, rule, id, level){
 
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
         }
-    } else if (rule.indexOf('special_ability') > -1){ // check if the action is to add a special ability
+    } else if (rule.indexOf('special_ability') > -1 || rule.indexOf('new_ability') > -1){ // check if the action is to add a special ability or a new ability
         var ruleMsg = rule.substr(rule.indexOf('|')+1);
-        getModelDisplayAndBuildMessage(id, ruleMsg, level); // id = model id affected, ruleMsg = front facing message, level = tier level
+        if (!$(loc).hasClass('tier-rule-applied-level'+level)){
+            $(loc).addClass('tier-rule-applied-level'+level);
+            getModelDisplayAndBuildMessage(id, ruleMsg, level); // id = model id affected, ruleMsg = front facing message, level = tier level
+        }
+    } else if (rule.indexOf('Cost') > -1){ // check if the action is to adjust the Cost of the unit
+        field = 'cost';
+        opp = rule.substring(5,4); // gets the opperand, we're assuming this is a single character
+        val = parseInt(rule.substring(6,5)); // gets the new cost value to adjust by, we're assuming this is a single character
+        if (!$(loc).hasClass('tier-rule-applied-level'+level)) {
+            $(loc).addClass('tier-rule-applied-level'+level);
+            currentVal = parseInt($(loc).find('.unit-cost').text());
+            if (opp == '+') {
+                newVal = currentVal + val;
+            }
+            else if (opp == '=') {
+                newVal = val;
+            }
+            else if (opp == '-') {
+                newVal = currentVal - val;
+            }
+            $(loc).find('.unit-cost').text(newVal + 'pts.');
+
+            getModelObjectAndAdjusts(loc, id, field, newVal, level);
+        }
     }
 }
 
@@ -143,7 +173,12 @@ function getModelObjectAndAdjusts(loc, id, field, newVal, level){
 }
 
 function getModelDisplayAndBuildMessage(id, ruleMsg, level){
-    var modelId = '.model-id-'+id;
+    var modelId = '';
+    if (id == 'caster'){
+        modelId = ('#battlegroup-1-built .leader');
+    } else {
+        modelId = '.model-id-'+id;
+    }
     $(modelId).each(function(key,val){ // loop each instance of the model unit
         console.log(val);
         if ($(val).hasClass('tier-'+level+'-rule-applied')){
@@ -156,4 +191,32 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
             // need to find a way to check for already applied tiered rules so they can be displayed on the current army list live view (right window)
         }
     });
+}
+
+function processTierReq(tierReq, level){
+    tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
+    var tierBreakdown = tierReq.split(',');
+    var reqBlock = $('#requirements');
+    if (tierBreakdown[0] > 1){ // denotes that the first part of the rule is a modelID
+        if ($(reqBlock).find('#tier-'+level+'-req').length == 0){
+            // this first bit is forward facing ====
+            var tierBlock = '<div id="tier-'+level+'-req">'+tierReq+'</div>';
+            $(reqBlock).removeClass('hidden').addClass('active');
+            $(reqBlock).append().html(tierBlock);
+
+        }
+        // second attempt - write a JSON object into the page on initial load - leave it empty
+        // access that on each new requirement to added, check it's there already
+        // access it each time a unit is added to the list and adjust if needed
+        // access it each time a unit is removed from the list and adjust if needed
+        //
+        // then after each of those changes, if a change is made rebuild the '#requirements' div
+        listBuildingRequirements += {
+            tier: level,
+            modelId: tierBreakdown[0],
+            rule: tierBreakdown[1]
+        };
+        console.dir(listBuildingRequirements);
+
+    }
 }
