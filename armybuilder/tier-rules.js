@@ -211,12 +211,11 @@ function processTierReq(tierReq, level){
         // access it each time a unit is removed from the list and adjust if needed
         //
         // then after each of those changes, if a change is made rebuild the '#requirements' div
-        listBuildingRequirements += {
-            tier: level,
-            modelId: tierBreakdown[0],
-            rule: tierBreakdown[1]
-        };
-        console.dir(listBuildingRequirements);
+        listBuildingRequirements['tier'+level] = []; // build subarray
+        listBuildingRequirements['tier'+level]['modelId'] = tierBreakdown[0]; //add model id to tierLevel subarray
+        listBuildingRequirements['tier'+level]['rule'] = tierBreakdown[1]; // add rule to tierLevel subarray
+
+        console.log(listBuildingRequirements);
 
     }
 }
