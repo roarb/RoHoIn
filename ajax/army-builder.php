@@ -162,7 +162,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
     <div class="flex-2 added-to-list-panel info-block-tools" style="overflow-y:auto;">
         <form method="post" name="create-army-list" id="create-army-list" action="save-list.php">
             <script>var listBuildingRequirements = [];</script>
-            <div id="requirements" class="hidden"></div>
+            <paper-material id="requirements" class="hidden"></paper-material>
             <paper-material class="battle-group-built m-cushion" id="battlegroup-1-built" style="display:none;"></paper-material>
             <paper-material class="battle-group-built m-cushion" id="battlegroup-2-built" style="display:none;"></paper-material>
             <paper-material class="battle-group-built m-cushion" id="battlegroup-3-built" style="display:none;"></paper-material>

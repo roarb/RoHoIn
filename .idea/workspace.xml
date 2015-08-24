@@ -22,53 +22,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="71" selection-start-line="79" selection-start-column="71" selection-end-line="79" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/skin/styles.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.481482">
-              <caret line="368" column="0" selection-start-line="368" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/armybuilder/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.692307">
-              <caret line="24" column="118" selection-start-line="24" selection-start-column="118" selection-end-line="24" selection-end-column="118" />
+            <state vertical-scroll-proportion="0.6888889">
+              <caret line="296" column="44" selection-start-line="296" selection-start-column="44" selection-end-line="296" selection-end-column="44" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#paper-toolbar#1;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1440131905798" expanded="true" signature="2092:2107" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="single-unit.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
+      <file leaf-file-name="army-builder.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.3261166">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="565" column="1" selection-start-line="565" selection-start-column="1" selection-end-line="565" selection-end-column="1" />
+              <folding>
+                <marker date="1440128163813" expanded="true" signature="9271:9282" placeholder="..." />
+                <marker date="1440128163813" expanded="true" signature="12963:12974" placeholder="..." />
+                <marker date="1440128163813" expanded="true" signature="17984:17995" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="army-builder.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9230769">
+              <caret line="164" column="27" selection-start-line="164" selection-start-column="27" selection-end-line="164" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -90,14 +74,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ajax/army-builder.php" />
         <option value="$PROJECT_DIR$/core/Unit.php" />
         <option value="$PROJECT_DIR$/core/Core.php" />
         <option value="$PROJECT_DIR$/armybuilder/save-list.php" />
         <option value="$PROJECT_DIR$/core/ArmyBuilder.php" />
         <option value="$PROJECT_DIR$/armybuilder/view-owned.php" />
         <option value="$PROJECT_DIR$/armybuilder/view-public.php" />
-        <option value="$PROJECT_DIR$/armybuilder/army-builder.js" />
         <option value="$PROJECT_DIR$/armybuilder/view-army-list.php" />
         <option value="$PROJECT_DIR$/admin/header.php" />
         <option value="$PROJECT_DIR$/bower_components/paper-styles/classes/typography.html" />
@@ -113,10 +95,12 @@
         <option value="/" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/ajax/battlegroup-build.php" />
-        <option value="$PROJECT_DIR$/armybuilder/tier-rules.js" />
         <option value="$PROJECT_DIR$/skin/styles.css" />
         <option value="$PROJECT_DIR$/armybuilder/create.php" />
         <option value="$PROJECT_DIR$/playtest/single-unit.php" />
+        <option value="$PROJECT_DIR$/armybuilder/army-builder.js" />
+        <option value="$PROJECT_DIR$/ajax/army-builder.php" />
+        <option value="$PROJECT_DIR$/armybuilder/tier-rules.js" />
       </list>
     </option>
   </component>
@@ -126,6 +110,9 @@
   </component>
   <component name="NamedScopeManager">
     <order />
+  </component>
+  <component name="PhpServers">
+    <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
@@ -158,7 +145,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -251,8 +237,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RoHoIn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RoHoIn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ajax" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -334,10 +335,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17023809" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17023809" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288948" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -380,20 +381,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="195" column="34" selection-start-line="195" selection-start-column="34" selection-end-line="195" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/armybuilder/view-army-list.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.038462">
-          <caret line="50" column="80" selection-start-line="50" selection-start-column="80" selection-end-line="50" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/view-owned.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-20.26923">
@@ -692,7 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-20.923077">
           <caret line="45" column="149" selection-start-line="45" selection-start-column="149" selection-end-line="45" selection-end-column="149" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -704,18 +690,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
+    <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="71" selection-start-line="79" selection-start-column="71" selection-end-line="79" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skin/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.481482">
-          <caret line="368" column="0" selection-start-line="368" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.29548088">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -728,21 +706,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/skin/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.72389793">
+          <caret line="368" column="0" selection-start-line="368" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.692307">
+        <state vertical-scroll-proportion="0.019698726">
           <caret line="24" column="118" selection-start-line="24" selection-start-column="118" selection-end-line="24" selection-end-column="118" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="565" column="1" selection-start-line="565" selection-start-column="1" selection-end-line="565" selection-end-column="1" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#paper-toolbar#1;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1440128163813" expanded="true" signature="9271:9282" placeholder="..." />
+            <marker date="1440128163813" expanded="true" signature="12963:12974" placeholder="..." />
+            <marker date="1440128163813" expanded="true" signature="17984:17995" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
+    <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3261166">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="32" />
+        <state vertical-scroll-proportion="-3.9230769">
+          <caret line="164" column="27" selection-start-line="164" selection-start-column="27" selection-end-line="164" selection-end-column="27" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6888889">
+          <caret line="296" column="44" selection-start-line="296" selection-start-column="44" selection-end-line="296" selection-end-column="44" />
+          <folding>
+            <marker date="1440131905798" expanded="true" signature="2092:2107" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,3 +1,66 @@
+function displayTierListSelection(el,tierListId){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
+    // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
+    if ($('.tiered-army-list-choice').length > 0){
+        showTierOptions();
+    } else {
+        var tierListIds = tierListId.split('|');
+        $(tierListIds).each(function(key, id){
+            if (id != '') { // need to add a check for cases where there are more than one tier list option returned.
+                showAjaxLoading();
+                var msg = '';
+                var choiceBox = '<div class="ajax-loader tiered-army-list-choice" id="choice-loader">';
+                $.ajax({
+                    url: '/ajax/view-tier-list-on-builder-page.php?id='+id,
+                    type: 'post',
+                    dataType: 'html',
+                    success: function(data) {
+                        msg += data;
+                        choiceBox += msg;
+                        choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
+                        $('body').append(choiceBox);
+                        hideAjaxLoading();
+                    }
+                });
+            }
+        });
+    }
+}
+
+function selectTierList(tierObject, level){ // selected from displayTierListSelect() popup window, tierObject = the entire tier object, level is the tier chosen - use to start applying rules to the page
+                                            // 1 - change the button clicked to display a checkmark and change the iron-icon class to accent or secondary focus
+    var selectedIcon = $('.choose-tier-'+level);
+    $('.tier-action-item').removeClass('secondary selected').attr('icon', 'playlist-add'); // removes any previously selected tiers
+    $(selectedIcon).addClass('secondary selected').attr('icon', 'check');
+    // 2 - add the tier name to the #display-army-tier that is clickable to reopen the .tiered-army-list-choice
+    var tierChoiceReadout = '<span onclick="showTierOptions()" style="cursor:pointer;">'+tierObject['name']+' - tier '+level+'</span>';
+    $('#display-army-tier').html(tierChoiceReadout);
+    // 2.1 update the tier icon on the warcasters block to indicate that a tier has been chosen, on click relaunch the .tiered-army-list-choice
+    $('.leader .view-tiers').addClass('secondary selected');
+    // 2.2 remove all previously chosen tier rules
+    // 3 - apply the tier 1 rules
+    // 4 if level > 1 apply the tier 2 rules
+    // 5 if level > 2 apply the tier 3 rules
+    // 6 if level > 3 apply the tier 4 rules
+    applyTierRules(tierObject, level);
+    // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none. --- perhaps do a fade out?
+    armyListBuilderShortSave();
+}
+
+function showTierOptions(){
+    $('.tiered-army-list-choice').show();
+    $('#notice-shadow').show();
+}
+
+function removeTierList(){
+    // unselect all tier choices
+    // return caster tier icon to default
+    // remove text from .tiered-army-list-choice
+    // remove all chosen tier rules
+    // close the popup window
+    $('.tiered-army-list-choice').hide();
+    $('#notice-shadow').hide();
+    armyListBuilderShortSave();
+}
 
 function applyTierRules(tierObject, level, run){ // tierObject = tier rules in object - level = tier level chosen, run = null or 'add' if on a unit model addition call
 
@@ -18,14 +81,14 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
     tier1BonusRules = tier1BonusRules.split(']['); // create an array of the rules
     $(tier1BonusRules).each(function(key, val){ // loop through each model affected to apply rules
         applyBonusRules(val,1); // val = rule to apply, 1 = tier level
-        console.log(val);
+        console.log('tier 1 bonus '+val);
     });
     if (level > 1){ // run the tier 2 level rules
         var tier2BonusRules = tierObject['tier2_bonus'].substring(1,(tierObject['tier2_bonus'].length - 1)); // remove the open and close []
         tier2BonusRules = tier2BonusRules.split(']['); // create an array of the rules
         $(tier2BonusRules).each(function(key, val){
             applyBonusRules(val,2); // val = rule to apply, 2 = tier level
-            console.log(val); // will display the rule to be applied
+            console.log('tier 2 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
         processTierReq(tierObject['tier2_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
@@ -35,7 +98,7 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         tier3BonusRules = tier3BonusRules.split(']['); // create an array of the rules
         $(tier3BonusRules).each(function(key, val){
             applyBonusRules(val,3); /// val = rule to apply, 3 = tier level
-            console.log(val); // will display the rule to be applied
+            console.log('tier 3 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
         processTierReq(tierObject['tier3_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
@@ -45,7 +108,7 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         tier4BonusRules = tier4BonusRules.split(']['); // create an array of the rules
         $(tier4BonusRules).each(function(key, val) {
             applyBonusRules(val, 4); /// val = rule to apply, 4 = tier level
-            console.log(val); // will display the rule to be applied
+            console.log('tier 4 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
         processTierReq(tierObject['tier4_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
@@ -98,7 +161,7 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
     // find the model and add class 'tier-x-rule-applied'
     if (rule.indexOf('FA') > -1 ){ // check if the action is to adjust the FA
         var field = 'field_allowance';
-        var opp = rule.substring(3,2); // gets the opperand, we're assuming this is a single character
+        var opp = rule.substring(3,2); // gets the opperand, we're assuming this is a single character > or < or =
         var val = parseInt(rule.substring(4,3)); // gets the new FA value to adjust by, we're assuming this is a single character
         if (!$(loc).hasClass('tier-rule-applied-level'+level)){
             $(loc).addClass('tier-rule-applied-level'+level);
@@ -196,15 +259,8 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
 function processTierReq(tierReq, level){
     tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
     var tierBreakdown = tierReq.split(',');
-    var reqBlock = $('#requirements');
     if (tierBreakdown[0] > 1){ // denotes that the first part of the rule is a modelID
-        if ($(reqBlock).find('#tier-'+level+'-req').length == 0){
-            // this first bit is forward facing ====
-            var tierBlock = '<div id="tier-'+level+'-req">'+tierReq+'</div>';
-            $(reqBlock).removeClass('hidden').addClass('active');
-            $(reqBlock).append().html(tierBlock);
 
-        }
         // second attempt - write a JSON object into the page on initial load - leave it empty
         // access that on each new requirement to added, check it's there already
         // access it each time a unit is added to the list and adjust if needed
@@ -215,7 +271,35 @@ function processTierReq(tierReq, level){
         listBuildingRequirements['tier'+level]['modelId'] = tierBreakdown[0]; //add model id to tierLevel subarray
         listBuildingRequirements['tier'+level]['rule'] = tierBreakdown[1]; // add rule to tierLevel subarray
 
-        console.log(listBuildingRequirements);
-
+        armyListBuilderShortSave();
     }
+}
+
+function runTierRequirements(){
+    var reqBlock = $('#requirements');
+    if (typeof listBuildingRequirements['tier2'] !== 'undefined'){
+        buildTierRequirementsNotice(2, listBuildingRequirements['tier2']['modelId'],listBuildingRequirements['tier2']['rule']);
+    }
+}
+
+function buildTierRequirementsNotice(level, modelId, qty){ // level = tier level, modelId = needs to be the model id (we'll cross the caster exception if we see it), qty = qty(> < >= <=)X
+    // for modelId = we'll need to add in an exception to handel doing model type - ie. Heavy Warbeast
+    var reqBlock = $('#requirements');
+    $(reqBlock).show(); // make the requirements block visible --- add more logic in here...
+
+    var innerHtml = '<div class="tier-'+level+'-requirements"><p class="sub-head">Tier '+level+' Requirements</p>'; // begin the return html
+    // start logic build
+    var opp = qty.substring(4,3); // gets the opperand, we're assuming this is a single character > or < or =
+    var finalCount = parseInt(qty.substring(5,4)); // assumes opperand is 1 character long, also assumes the qty is 1 character long
+    var modelInListCount = $('.added-to-list-panel .model-id-'+modelId).length;
+
+    if (opp == '>'){
+        if (modelInListCount <= finalCount){
+            innerHtml += '<div class="requirement-item">X of Model '+modelId+' are needed for Tier '+level+'</div>';
+        }
+    }
+
+    innerHtml += '</div>';
+
+    $(reqBlock).html(innerHtml);
 }

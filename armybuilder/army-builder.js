@@ -2,6 +2,9 @@
  * Created by RMP2 on 5/3/2015.
  */
 
+function armyListBuilderShortSave(){
+    runTierRequirements();
+}
 
 function armyListBuilderBoot(faction, points, armyName){
     $.post("/ajax/army-builder.php?faction="+faction+"&points="+points+"&name="+armyName)
@@ -91,6 +94,7 @@ function leaderSelected(count, object){ // count = battle group 1-4, object = mo
     $('#solo-picker').show();
     $('#battle-engine-picker').show();
     addLeaderToBattleGroup(count,object);
+    armyListBuilderShortSave();
 }
 
 function applyBGPointsToToolbar(bg){
@@ -137,6 +141,7 @@ function addToBattleGroup(count, object, pos){ // count = battle group 1-4, obje
         addUnitPointsToToolbar(object['cost']);
         addUnitToBattleGroup(count, object);
         updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
+        armyListBuilderShortSave();
     }
 }
 
@@ -174,6 +179,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
             innerHtml += 'Companion Model</span></paper-material>';
         }
         $(bgBlock).html(innerHtml);
+        armyListBuilderShortSave();
     });
 }
 
@@ -206,6 +212,7 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
             innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
             innerHtml += '</span>';
             $(bgBlock).append(innerHtml);
+            armyListBuilderShortSave();
             hideAjaxLoading();
         });
     });
@@ -291,6 +298,7 @@ function addUnitToArmy(object,pos){
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
+                    armyListBuilderShortSave();
                     hideAjaxLoading();
                 });
             });
@@ -348,22 +356,9 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
+                    armyListBuilderShortSave();
                     hideAjaxLoading();
                 });
-
-                //innerHtml += '<span class="remove-unit-from-army remove-' + object["id"] + '"></span>';
-                //innerHtml += '<input name="unit-' + i + '" value="' + object["name"] + '|' + count + '" class="hidden ' + object["id"] + '" /></paper-material>';
-                //innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
-                //if (object['unit_leader'] != null && object['unit_leader'] != 'included') {
-                //    innerHtml += '<paper-material elevation="1" class="unit-model-child"><span class="unit-name">' + object['unit_leader'] + '</span><br>';
-                //    innerHtml += '<span class="unit-title">Unit Leader</span></papaer-materia>';
-                //    innerHtml += '<input name="unit-' + i + '-leader" value="' + object["unit_leader"] + '" class="hidden" />';
-                //}
-                //innerHtml += '</span>';
-                //$(unitBlock).append(innerHtml);
-                //addUnitPointsToToolbar(cost);
-                //updateFAonAddedUnit(object);
-                //hideAjaxLoading();
             });
         });
 
@@ -491,6 +486,7 @@ function addUnitAttachmentToArmy(unitId, unitName, unitCost, unitTitle, parentUn
     // add the unit attachment to the parent
     $(parentPaperMaterial).append(uaInsert);
     addUnitPointsToToolbar(unitCost);
+    armyListBuilderShortSave();
     removeNotice();
 }
 
@@ -555,6 +551,7 @@ function removeUnitFromArmy(id, event){
                 var newCount = parseInt(activeCount) - 1;
                 $(unitSelector).find('.in-army').html(newCount);
             }
+            armyListBuilderShortSave();
             hideAjaxLoading();
         });
 
@@ -566,66 +563,4 @@ function moNoticeOver(el){
 }
 function moNoticeOut(el){
     $(el).find('.mo-notice').removeClass('active').addClass('hidden');
-}
-
-function displayTierListSelection(el,tierListId){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
-    // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
-    if ($('.tiered-army-list-choice').length > 0){
-        showTierOptions();
-    } else {
-        var tierListIds = tierListId.split('|');
-        $(tierListIds).each(function(key, id){
-            if (id != '') { // need to add a check for cases where there are more than one tier list option returned.
-                showAjaxLoading();
-                var msg = '';
-                var choiceBox = '<div class="ajax-loader tiered-army-list-choice" id="choice-loader">';
-                $.ajax({
-                    url: '/ajax/view-tier-list-on-builder-page.php?id='+id,
-                    type: 'post',
-                    dataType: 'html',
-                    success: function(data) {
-                        msg += data;
-                        choiceBox += msg;
-                        choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
-                        $('body').append(choiceBox);
-                        hideAjaxLoading();
-                    }
-                });
-            }
-        });
-    }
-}
-
-function selectTierList(tierObject, level){ // selected from displayTierListSelect() popup window, tierObject = the entire tier object, level is the tier chosen - use to start applying rules to the page
-  // 1 - change the button clicked to display a checkmark and change the iron-icon class to accent or secondary focus
-    var selectedIcon = $('.choose-tier-'+level);
-    $('.tier-action-item').removeClass('secondary selected').attr('icon', 'playlist-add'); // removes any previously selected tiers
-    $(selectedIcon).addClass('secondary selected').attr('icon', 'check');
-  // 2 - add the tier name to the #display-army-tier that is clickable to reopen the .tiered-army-list-choice
-    var tierChoiceReadout = '<span onclick="showTierOptions()" style="cursor:pointer;">'+tierObject['name']+' - tier '+level+'</span>';
-    $('#display-army-tier').html(tierChoiceReadout);
-  // 2.1 update the tier icon on the warcasters block to indicate that a tier has been chosen, on click relaunch the .tiered-army-list-choice
-    $('.leader .view-tiers').addClass('secondary selected');
-  // 2.2 remove all previously chosen tier rules
-  // 3 - apply the tier 1 rules
-  // 4 if level > 1 apply the tier 2 rules
-  // 5 if level > 2 apply the tier 3 rules
-  // 6 if level > 3 apply the tier 4 rules
-    applyTierRules(tierObject, level);
-  // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none. --- perhaps do a fade out?
-}
-
-function showTierOptions(){
-    $('.tiered-army-list-choice').show();
-    $('#notice-shadow').show();
-}
-
-function removeTierList(){
-    // unselect all tier choices
-    // return caster tier icon to default
-    // remove text from .tiered-army-list-choice
-    // remove all chosen tier rules
-    // close the popup window
-    $('.tiered-army-list-choice').hide();
-    $('#notice-shadow').hide();
 }
