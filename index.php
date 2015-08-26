@@ -26,8 +26,8 @@
             </div>
         </paper-toolbar>
         <h2 class="cushion">Welcome to RoHo - experience the experiments</h2>
-        <div class="horizontal layout">
-            <div class="flex-2">
+        <div class="horizontal layout col2-set">
+            <div class="flex-2 col-1">
                 <paper-button raised class="full-button link-playtest-single-unit">
                     Browse Individual Models
                 </paper-button>
@@ -37,7 +37,7 @@
                     </paper-button>
                 <?php endif; ?>
             </div>
-            <div class="flex-2">
+            <div class="flex-2 col-2">
                 <?php if ($_SESSION['user_id'] != ''): ?>
                     <paper-button raised class="full-button link-account-barracks">
                         View Your Barracks

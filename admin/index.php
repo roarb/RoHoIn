@@ -29,11 +29,9 @@
             <?php include('../admin/toolbar.php'); ?>
         </paper-toolbar>
         <div class="info-block cushion">
-            <ul>
-                <li><a href="/admin/builder/unit-view.php" title="View All Units">View All Units</a></li>
-                <li><a href="/admin/builder.php" title="Builder Land">Builder Land</a></li>
-                <li><a href="/admin/stats/index.php" title="Stat-o-Matic">Stat-o-Matic</a></li>
-            </ul>
+            <paper-button raised class="full-button link-out link-stat-o-matic" data-src="/admin/stats/index.php">
+                Stat-o-Matic
+            </paper-button>
         </div>
     </paper-header-panel>
 </paper-drawer-panel>

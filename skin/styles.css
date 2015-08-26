@@ -366,11 +366,14 @@ paper-fab.bug-fab.paper-fab-0 {background:#eb7f00;}
 paper-toast#bug-toast {left:auto; bottom:14px; right:90px;}
 
 /* section link colors and backgrounds */
+/* main nav (left hand nav section) */
 .main-nav .link-account-home paper-material, .main-nav .link-playtest-home paper-material, .main-nav .link-account-barracks paper-material, .main-nav .link-armybuilder-home paper-material,
 .main-nav .link-playtest-single-unit paper-material, .main-nav .link-admin-home paper-material {height:36px; line-height:28px; font-size:16px; background-size:30%;}
+/* link button updates */
 .link-account-home paper-material {background:#039be5 url(/skin/images/account.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-playtest-home paper-material {background:#689f38; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-account-barracks paper-material {background:#536dfe url(/skin/images/barracks.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-armybuilder-home paper-material {background:#ed3b3b url(/skin/images/army-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-playtest-single-unit paper-material {background:#ef6c00 url(/skin/images/single-model.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-admin-home paper-material {background:#658092 url(/skin/images/admin.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-stat-o-matic paper-material {background:#eac75d url(/skin/images/stats.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
