@@ -54,6 +54,12 @@ class Login
      */
     public $messages = array();
 
+    public function ajaxLogin(){
+        // login form ajax submission
+        $this->loginWithPostData($_POST['user_name'], $_POST['user_password'], $_POST['user_rememberme']);
+        return $_POST['user_name'].$_POST['user_password'].$_POST['user_rememberme'];
+    }
+
     /**
      * the function "__construct()" automatically starts whenever an object of this class is created,
      * you know, when you do "$login = new Login();"
@@ -246,7 +252,7 @@ class Login
      * @param $user_password
      * @param $user_rememberme
      */
-    private function loginWithPostData($user_name, $user_password, $user_rememberme)
+    public function loginWithPostData($user_name, $user_password, $user_rememberme)
     {
         if (empty($user_name)) {
             $this->errors[] = MESSAGE_USERNAME_EMPTY;
