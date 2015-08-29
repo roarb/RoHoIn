@@ -1,7 +1,9 @@
 <?php
 
-require_once("../classes/Login.php");
+include "../classes/Login.php";
 
 $loginCheck = new Login();
 
-$loginCheck->__construct();
+$test = $loginCheck->loginWithPostData($_POST['user_name'], $_POST['user_password'], $_POST['user_rememberme']);
+
+echo($_POST['user_name'].$_POST['user_password'].$_POST['user_rememberme'].' - '.$test);

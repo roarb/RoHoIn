@@ -81,14 +81,14 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
     tier1BonusRules = tier1BonusRules.split(']['); // create an array of the rules
     $(tier1BonusRules).each(function(key, val){ // loop through each model affected to apply rules
         applyBonusRules(val,1); // val = rule to apply, 1 = tier level
-        console.log('tier 1 bonus '+val);
+        //console.log('tier 1 bonus '+val);
     });
     if (level > 1){ // run the tier 2 level rules
         var tier2BonusRules = tierObject['tier2_bonus'].substring(1,(tierObject['tier2_bonus'].length - 1)); // remove the open and close []
         tier2BonusRules = tier2BonusRules.split(']['); // create an array of the rules
         $(tier2BonusRules).each(function(key, val){
             applyBonusRules(val,2); // val = rule to apply, 2 = tier level
-            console.log('tier 2 bonus '+val); // will display the rule to be applied
+            //console.log('tier 2 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
         processTierReq(tierObject['tier2_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
@@ -98,20 +98,20 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         tier3BonusRules = tier3BonusRules.split(']['); // create an array of the rules
         $(tier3BonusRules).each(function(key, val){
             applyBonusRules(val,3); /// val = rule to apply, 3 = tier level
-            console.log('tier 3 bonus '+val); // will display the rule to be applied
+            //console.log('tier 3 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
-        processTierReq(tierObject['tier3_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
+        processTierReq(tierObject['tier3_req'], level); // tierObject['tier3_req'] = tier 3 requirement rule, level = tier level set
     }
     if (level > 3){ // run the tier 4 level rules
         var tier4BonusRules = tierObject['tier4_bonus'].substring(1,(tierObject['tier4_bonus'].length - 1)); // remove the open and close []
         tier4BonusRules = tier4BonusRules.split(']['); // create an array of the rules
         $(tier4BonusRules).each(function(key, val) {
             applyBonusRules(val, 4); /// val = rule to apply, 4 = tier level
-            console.log('tier 4 bonus '+val); // will display the rule to be applied
+            //console.log('tier 4 bonus '+val); // will display the rule to be applied
         });
         // populate requirements block
-        processTierReq(tierObject['tier4_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
+        processTierReq(tierObject['tier4_req'], level); // tierObject['tier4_req'] = tier 4 requirement rule, level = tier level set
     }
 }
 
@@ -243,7 +243,7 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
         modelId = '.model-id-'+id;
     }
     $(modelId).each(function(key,val){ // loop each instance of the model unit
-        console.log(val);
+        //console.log(val);
         if ($(val).hasClass('tier-'+level+'-rule-applied')){
         } else {
             $(val).addClass('tier-'+level+'-rule-applied');
@@ -256,50 +256,89 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
     });
 }
 
+
+//// start tier requirements
+
+// public variables
+var requirementsTier2 = '',
+    requirementsTier3 = '',
+    requirementsTier4 = '';
+
 function processTierReq(tierReq, level){
     tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
     var tierBreakdown = tierReq.split(',');
-    if (tierBreakdown[0] > 1){ // denotes that the first part of the rule is a modelID
-
-        // second attempt - write a JSON object into the page on initial load - leave it empty
-        // access that on each new requirement to added, check it's there already
-        // access it each time a unit is added to the list and adjust if needed
-        // access it each time a unit is removed from the list and adjust if needed
-        //
-        // then after each of those changes, if a change is made rebuild the '#requirements' div
-        listBuildingRequirements['tier'+level] = []; // build subarray
-        listBuildingRequirements['tier'+level]['modelId'] = tierBreakdown[0]; //add model id to tierLevel subarray
-        listBuildingRequirements['tier'+level]['rule'] = tierBreakdown[1]; // add rule to tierLevel subarray
-
-        armyListBuilderShortSave();
-    }
+    listBuildingRequirements['tier'+level] = []; // build subarray
+    listBuildingRequirements['tier'+level]['modelId'] = tierBreakdown[0]; //add model id to tierLevel subarray
+    listBuildingRequirements['tier'+level]['rule'] = tierBreakdown[1]; // add rule to tierLevel subarray
+    armyListBuilderShortSave();
 }
 
-function runTierRequirements(){
-    var reqBlock = $('#requirements');
+function runTierRequirements(){ // process all tier requirement which can be found on the page within the listBuildingRequirements array
     if (typeof listBuildingRequirements['tier2'] !== 'undefined'){
         buildTierRequirementsNotice(2, listBuildingRequirements['tier2']['modelId'],listBuildingRequirements['tier2']['rule']);
+    }
+    if (typeof listBuildingRequirements['tier3'] !== 'undefined'){
+        buildTierRequirementsNotice(3, listBuildingRequirements['tier3']['modelId'],listBuildingRequirements['tier3']['rule']);
+    }
+    if (typeof listBuildingRequirements['tier4'] !== 'undefined'){
+        buildTierRequirementsNotice(4, listBuildingRequirements['tier4']['modelId'],listBuildingRequirements['tier4']['rule']);
     }
 }
 
 function buildTierRequirementsNotice(level, modelId, qty){ // level = tier level, modelId = needs to be the model id (we'll cross the caster exception if we see it), qty = qty(> < >= <=)X
     // for modelId = we'll need to add in an exception to handel doing model type - ie. Heavy Warbeast
-    var reqBlock = $('#requirements');
-    $(reqBlock).show(); // make the requirements block visible --- add more logic in here...
-
-    var innerHtml = '<div class="tier-'+level+'-requirements"><p class="sub-head">Tier '+level+' Requirements</p>'; // begin the return html
-    // start logic build
-    var opp = qty.substring(4,3); // gets the opperand, we're assuming this is a single character > or < or =
-    var finalCount = parseInt(qty.substring(5,4)); // assumes opperand is 1 character long, also assumes the qty is 1 character long
-    var modelInListCount = $('.added-to-list-panel .model-id-'+modelId).length;
-
-    if (opp == '>'){
-        if (modelInListCount <= finalCount){
-            innerHtml += '<div class="requirement-item">X of Model '+modelId+' are needed for Tier '+level+'</div>';
-        }
+    var modelIdentifier = '';
+    if(modelId.indexOf('type') > -1){ // true == this modelId is a model type.
+        modelIdentifier = modelId.substring((modelId.indexOf('==')+2));
+        var modelIdentifierArray = modelIdentifier.split('|');
+        console.log(modelIdentifierArray);
     }
 
-    innerHtml += '</div>';
+    var opp = qty.substring(4,3); // gets the opperand, we're assuming this is a single character > or < or =
+    var finalCount = parseInt(qty.substring(5,4)); // assumes opperand is 1 character long, also assumes the qty is 1 character long
+
+    var modelInListCount = $('.added-to-list-panel .model-id-'+modelId).length;
+    var reqBlock = $('#requirements');
+    var innerHtml = '';
+
+    $(reqBlock).removeClass('hidden'); // make the requirements block visible --- add more logic in here...
+
+    if (level > 2){
+        if (level == 3 || requirementsTier2 == ''){ // only need to set this variable once, if it runs again for level 4 it will be written as undefined. or if just tier 4 is applied and tier 2 remains unset
+            requirementsTier2 = $(reqBlock).find('.tier-2-requirements').html();
+        }
+        innerHtml += requirementsTier2;
+    }
+    if (level == 4){
+        requirementsTier3 = $(reqBlock).find('.tier-3-requirements').html();
+        innerHtml += requirementsTier3;
+    }
+
+    if (level == 2){ // get existing level 2 tier requirement and add to the tier notice.
+        innerHtml += '<div class="tier-2-requirements"><p class="sub-head">Tier 2 Requirements</p>';
+        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
+        innerHtml += '</div>';
+    }
+    if (level == 3){ // get existing level 3 tier requirement and add to the tier notice.
+        innerHtml += '<div class="tier-3-requirements"><p class="sub-head">Tier 3 Requirements</p>';
+        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
+        innerHtml += '</div>';
+    }
+    if (level == 4){
+        innerHtml += '<div class="tier-4-requirements"><p class="sub-head">Tier 4 Requirements</p>';
+        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
+        innerHtml += '</div>';
+    }
 
     $(reqBlock).html(innerHtml);
+}
+
+function getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level){
+    var innerHtml = '';
+    if (opp == '>'){
+        if (modelInListCount <= finalCount){
+            innerHtml += '<div class="requirement-item">'+((finalCount-modelInListCount)+1)+' of Model '+modelIdentifier+' are needed for Tier '+level+'</div>';
+        }
+    }
+    return innerHtml;
 }

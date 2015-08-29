@@ -9,8 +9,8 @@ include'_header.php';
     <paper-icon-button icon="more-vert" onclick="toggleLoggedInMoreMenu()" style="float:right; padding-top:0;"></paper-icon-button>
     <div class="clear"></div>
     <paper-material elevation="2" class="cushion" id="login-more-menu" style="height:0; padding:0; overflow:hidden; text-align:center;">
-        <paper-button class="link-logout">Log Out</paper-button>
-        <paper-button class="link-login-edit">Edit User Data</paper-button>
+        <paper-button raised class="link-logout">Log Out</paper-button>
+        <paper-button raised class="link-login-edit">Edit User Data</paper-button>
     </paper-material>
 </div>
 

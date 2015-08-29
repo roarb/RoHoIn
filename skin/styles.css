@@ -44,7 +44,7 @@ button.x-lg-button {padding:10px 30px; font-size:28px;}
 .small {font-size:.8em;}
 .large {font-size:1.2em;}
 .show {display:block;}
-.hide, .hidden {display:none;}
+.hide, .hidden {display:none !important;}
 .error {color:#ff3f30;}
 .full-width {width:100%;}
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {background-color:#f3ffe2;}
@@ -195,6 +195,7 @@ paper-textarea-container {margin:10px 0; display:block;}
 .main-nav paper-fab.paper-fab-0.nav-home {position:fixed; top:10px; left:50px;}
 paper-fab.paper-fab-0.nav-back {position:fixed; top:10px; left:100px;}
 /* logged in window */
+.submit-login paper-material {background-color:#d4e9ff;}
 .login-window {padding:16px; margin-bottom:6px;}
 .welcome-message {width:60%; float:left; line-height:26px;}
 
