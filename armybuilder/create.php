@@ -127,6 +127,9 @@
 </paper-drawer-panel>
 
 <script>
+    // start the session object that will temp store this army list until it is saved.
+    var tempList = {userId:'<?php echo $_SESSION['user_id'] ?>', bg1Models:'', bg2Models:'', bg3Models:'', bg4Models:'', armyModels:'', tierList:'', uaModel:''};
+
     $('#start-army-list-builder').on('touchstart click', function(){
         // first run validation on army selected and points selected
         var faction = $('#army-faction input:checked');
@@ -156,7 +159,7 @@
             setActivePoints(25,'.army-points-25');
         });
         $('#army-points-35').on('touchstart click', function(){
-            setActivePoints(15,'.army-points-35');
+            setActivePoints(35,'.army-points-35');
         });
         $('#army-points-50').on('touchstart click', function(){
             setActivePoints(50,'.army-points-50');

@@ -32,6 +32,7 @@ function setActiveFaction(id, e){
     $('.faction-block').removeClass('active');
     $(e.target).parent().addClass('active');
     $('#'+id).attr('checked', 'checked');
+    tempList.faction = id;
 }
 
 
@@ -39,6 +40,7 @@ function setActivePoints(val, e){
     $('.points-block-item').removeClass('primary-focus');
     $(e).addClass('primary-focus');
     $('#points-'+val).attr('checked', 'checked');
+    tempList.points = val;
 }
 
 function startArmyListBuilder(){
@@ -63,6 +65,8 @@ function startArmyListBuilder(){
     if (armyName == ''){
         armyName = 'Random Army Name Picker Here';
     }
+    // update tempList with the army name
+    tempList.name = armyName;
     armyListBuilderBoot(faction, points, armyName);
     hideArmyListCreationStartScreen(faction, points, armyName);
 }
@@ -104,6 +108,8 @@ function applyBGPointsToToolbar(bg){
         points = parseInt(selectedPoints.val());
     }
     var finalPoints = bg + points;
+    // update tempList object
+    tempList.points = finalPoints;
     var startBGPoints = '<span class="total-army-points-block"><span id="points-count-up">0</span>/<span id="total-points-allowed">'+finalPoints+'</span> ('+points+')</span>';
     $('#display-army-points').html(startBGPoints);
 }
@@ -151,6 +157,17 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     if (object['possible_ua'] != '') {
         displayUnitAttachmentChoice(object['possible_ua'], object['id']); // pass the returned unit models to the popup builder, then this model's id
     }
+    // update tempList with leader(x) = modelId
+    if (count == 1){
+        tempList.leader1id = object['id'];
+    } if (count == 2){
+        tempList.leader2id = object['id'];
+    } if (count == 3){
+        tempList.leader3id = object['id'];
+    } if (count == 4){
+        tempList.leader4id = object['id'];
+    }
+
     var bgBlock = $('#battlegroup-'+count+'-built');
     var innerHtml = '<paper-material elevation="1" class="leader" id="model-id-'+object["id"]+'"><div class="model-added-basics"><span class="unit-name">'+object["name"]+'</span><br /><span class="unit-title">';
     innerHtml += object['title'] + '</span></div>';
@@ -196,6 +213,17 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
         if (data) {
             displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
         }
+        // add battlegroup model to the tempList object
+        if (count == 1){
+            tempList.bg1Models += object['id']+'|';
+        } if (count == 2){
+            tempList.bg2Models += object['id']+'|';
+        } if (count == 3){
+            tempList.bg3Models += object['id']+'|';
+        } if (count == 4){
+            tempList.bg4Models += object['id']+'|';
+        }
+        console.log(tempList);
         var bgBlock = $('#battlegroup-' + count + '-built');
         var i = modelCountInCurrentBattleGroup(count);
         var innerHtml = '<span class="wrapper">';
@@ -260,12 +288,16 @@ function addUnitToArmy(object,pos){
                     } else {
                         innerHtml += object['purchased_low'] + ' Grunts for <span class="points">' + object['cost'] + '</span> pts</span>';
                     }
+                    // save army model choice to tempList object
+                    tempList.armyModels += object['id']+','+object['purchased_low']+'|';
                 } else {
                     if (object['unit_leader'] == 'included') {
                         innerHtml += 'Grunt &amp; Leader for <span class="points">' + object['cost'] + '</span> pts</span>';
                     } else {
                         innerHtml += '<span class="points">' + object['cost'] + '</span> pts</span>';
                     }
+                    // save army model choice to tempList object
+                    tempList.armyModels += object['id']+','+object['purchased_high']+'|';
                 }
                 innerHtml += '</div>';
                 innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
@@ -331,6 +363,9 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                 } else {
                     innerHtml += count + ' Grunts for <span class="points">' + cost + '</span> pts</span>';
                 }
+                // save army model choice to tempList object
+                tempList.armyModels += object['id']+','+count+'|';
+
                 innerHtml += '</div>';
 
                 innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
@@ -485,6 +520,9 @@ function addUnitAttachmentToArmy(unitId, unitName, unitCost, unitTitle, parentUn
         uaInsert += '<script>$(window).ready(function(){$(".remove-' + unitId + '").on("touchstart click", function(){removeUnitFromArmy(' + unitId + ', this)});});</script>';
     // add the unit attachment to the parent
     $(parentPaperMaterial).append(uaInsert);
+    // save army model choice to tempList object
+    tempList.uaModel += parentUnit+','+unitId+'|';
+    console.log(tempList);
     addUnitPointsToToolbar(unitCost);
     armyListBuilderShortSave();
     removeNotice();
