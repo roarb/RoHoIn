@@ -127,8 +127,25 @@
 </paper-drawer-panel>
 
 <script>
-    // start the session object that will temp store this army list until it is saved.
-    var tempList = {userId:'<?php echo $_SESSION['user_id'] ?>', bg1Models:'', bg2Models:'', bg3Models:'', bg4Models:'', armyModels:'', tierList:'', uaModel:''};
+    // start the session array of objects that will temp store this army list until it is saved.
+    var tempList = [];
+    tempList['armyModels'] = [];
+    tempList['bg1Models'] = [];
+    tempList['bg2Models'] = [];
+    tempList['bg3Models'] = [];
+    tempList['bg4Models'] = [];
+    tempList['merArmyModels'] = [];
+    tempList['mercbg1Models'] = [];
+    tempList['uaModel'] = [];
+    tempList['companionModel'] = [];
+    tempList['tierList1Ben'] = [];
+    tempList['tierList2Ben'] = [];
+    tempList['tierList3Ben'] = [];
+    tempList['tierList4Ben'] = [];
+    tempList['tierList1Req'] = [];
+    tempList['tierList2Req'] = [];
+    tempList['tierList3Req'] = [];
+    tempList['tierList4Req'] = [];
 
     $('#start-army-list-builder').on('touchstart click', function(){
         // first run validation on army selected and points selected

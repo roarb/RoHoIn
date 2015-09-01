@@ -4,6 +4,7 @@
 
 function armyListBuilderShortSave(){
     runTierRequirements();
+    console.log(tempList);
 }
 
 function armyListBuilderBoot(faction, points, armyName){
@@ -32,7 +33,7 @@ function setActiveFaction(id, e){
     $('.faction-block').removeClass('active');
     $(e.target).parent().addClass('active');
     $('#'+id).attr('checked', 'checked');
-    tempList.faction = id;
+    tempList['faction'] = id;
 }
 
 
@@ -40,7 +41,7 @@ function setActivePoints(val, e){
     $('.points-block-item').removeClass('primary-focus');
     $(e).addClass('primary-focus');
     $('#points-'+val).attr('checked', 'checked');
-    tempList.points = val;
+    tempList['points'] = val;
 }
 
 function startArmyListBuilder(){
@@ -66,7 +67,7 @@ function startArmyListBuilder(){
         armyName = 'Random Army Name Picker Here';
     }
     // update tempList with the army name
-    tempList.name = armyName;
+    tempList['name'] = armyName;
     armyListBuilderBoot(faction, points, armyName);
     hideArmyListCreationStartScreen(faction, points, armyName);
 }
@@ -109,7 +110,7 @@ function applyBGPointsToToolbar(bg){
     }
     var finalPoints = bg + points;
     // update tempList object
-    tempList.points = finalPoints;
+    tempList['points'] = finalPoints;
     var startBGPoints = '<span class="total-army-points-block"><span id="points-count-up">0</span>/<span id="total-points-allowed">'+finalPoints+'</span> ('+points+')</span>';
     $('#display-army-points').html(startBGPoints);
 }
@@ -159,13 +160,13 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     }
     // update tempList with leader(x) = modelId
     if (count == 1){
-        tempList.leader1id = object['id'];
+        tempList['leader1id'] = object['id'];
     } if (count == 2){
-        tempList.leader2id = object['id'];
+        tempList['leader2id'] = object['id'];
     } if (count == 3){
-        tempList.leader3id = object['id'];
+        tempList['leader3id'] = object['id'];
     } if (count == 4){
-        tempList.leader4id = object['id'];
+        tempList['leader4id'] = object['id'];
     }
 
     var bgBlock = $('#battlegroup-'+count+'-built');
@@ -215,15 +216,15 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
         }
         // add battlegroup model to the tempList object
         if (count == 1){
-            tempList.bg1Models += object['id']+'|';
+            tempList['bg1Models'].push(object['id']);
         } if (count == 2){
-            tempList.bg2Models += object['id']+'|';
+            tempList['bg2Models'].push(object['id']);
         } if (count == 3){
-            tempList.bg3Models += object['id']+'|';
+            tempList['bg3Models'].push(object['id']);
         } if (count == 4){
-            tempList.bg4Models += object['id']+'|';
+            tempList['bg4Models'].push(object['id']);
         }
-        console.log(tempList);
+
         var bgBlock = $('#battlegroup-' + count + '-built');
         var i = modelCountInCurrentBattleGroup(count);
         var innerHtml = '<span class="wrapper">';
@@ -289,7 +290,8 @@ function addUnitToArmy(object,pos){
                         innerHtml += object['purchased_low'] + ' Grunts for <span class="points">' + object['cost'] + '</span> pts</span>';
                     }
                     // save army model choice to tempList object
-                    tempList.armyModels += object['id']+','+object['purchased_low']+'|';
+                    var armyModel = {modelId: object['id'], qty: object['purchased_low']};
+                    tempList['armyModels'].push(armyModel);
                 } else {
                     if (object['unit_leader'] == 'included') {
                         innerHtml += 'Grunt &amp; Leader for <span class="points">' + object['cost'] + '</span> pts</span>';
@@ -297,7 +299,8 @@ function addUnitToArmy(object,pos){
                         innerHtml += '<span class="points">' + object['cost'] + '</span> pts</span>';
                     }
                     // save army model choice to tempList object
-                    tempList.armyModels += object['id']+','+object['purchased_high']+'|';
+                    var armyModel = {modelId: object['id'], qty: object['purchased_high']};
+                    tempList['armyModels'].push(armyModel);
                 }
                 innerHtml += '</div>';
                 innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
@@ -364,10 +367,10 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                     innerHtml += count + ' Grunts for <span class="points">' + cost + '</span> pts</span>';
                 }
                 // save army model choice to tempList object
-                tempList.armyModels += object['id']+','+count+'|';
+                var armyModel = {modelId: object['id'], qty: count};
+                tempList['armyModels'].push(armyModel);
 
                 innerHtml += '</div>';
-
                 innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
                 innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
                 innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
@@ -521,8 +524,9 @@ function addUnitAttachmentToArmy(unitId, unitName, unitCost, unitTitle, parentUn
     // add the unit attachment to the parent
     $(parentPaperMaterial).append(uaInsert);
     // save army model choice to tempList object
-    tempList.uaModel += parentUnit+','+unitId+'|';
-    console.log(tempList);
+    var uaModel = {parentModelId: parentUnit, modelId: unitId};
+    tempList['uaModel'].push(uaModel);
+
     addUnitPointsToToolbar(unitCost);
     armyListBuilderShortSave();
     removeNotice();
@@ -589,6 +593,8 @@ function removeUnitFromArmy(id, event){
                 var newCount = parseInt(activeCount) - 1;
                 $(unitSelector).find('.in-army').html(newCount);
             }
+            // remove modelId from tempList object
+            removeModelIdFromTempList(id);
             armyListBuilderShortSave();
             hideAjaxLoading();
         });
@@ -601,4 +607,50 @@ function moNoticeOver(el){
 }
 function moNoticeOut(el){
     $(el).find('.mo-notice').removeClass('active').addClass('hidden');
+}
+
+function removeModelIdFromTempList(id){
+    $(tempList['armyModels']).each(function(key, val){
+        var i = 0; // make sure to only remove 1 element from the list.
+        if (val.modelId == id && i == 0){ /// removing just the first found match may lead to some unit size option varients that are mismatched on a save / reload
+            delete tempList['armyModels'][key]; i++
+        }
+    });
+    $(tempList['bg1Models']).each(function(key, val){
+        var i = 0; // make sure to only remove 1 element from this list.
+        if (val == id && i == 0){
+            delete tempList['bg1Models'][key]; i++;
+        }
+    });
+    $(tempList['bg2Models']).each(function(key, val){
+        var i = 0; // make sure to only remove 1 element from this list.
+        if (val == id && i == 0){
+            delete tempList['bg2Models'][key]; i++;
+        }
+    });
+    $(tempList['bg3Models']).each(function(key, val){
+        var i = 0; // make sure to only remove 1 element from this list.
+        if (val == id && i == 0){
+            delete tempList['bg3Models'][key]; i++;
+        }
+    });
+    $(tempList['bg4Models']).each(function(key, val){
+        var i = 0; // make sure to only remove 1 element from this list.
+        if (val == id && i == 0){
+            delete tempList['bg4Models'][key]; i++;
+        }
+    });
+    $(tempList['uaModel']).each(function(key, val){
+        var i = 0;
+        if (val.modelId == id && i == 0){ // need a piece that checks against the parent element yet to make sure the correct one is removed
+            delete tempList['uaModel'][key]; i++;
+        }
+    });
+    $(tempList['companionModel']).each(function(key, val){
+        var i = 0;
+        if (val.modelId == id && i == 0){ // need a piece that checks against the parent element yet to make sure the correct one is removed
+            delete tempList['companionModel'][key]; i++;
+        }
+    });
+    console.log(tempList);
 }

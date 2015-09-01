@@ -26,29 +26,76 @@ function displayTierListSelection(el,tierListId){ // el = clicked element, tierL
     }
 }
 
-function selectTierList(tierObject, level){ // selected from displayTierListSelect() popup window, tierObject = the entire tier object, level is the tier chosen - use to start applying rules to the page
-                                            // 1 - change the button clicked to display a checkmark and change the iron-icon class to accent or secondary focus
+function selectTierList(tierObject, level){
+    // selected from displayTierListSelect() popup window, tierObject = the entire tier object, level is the tier chosen - use to start applying rules to the page
+    // 1 - change the button clicked to display a checkmark and change the iron-icon class to accent or secondary focus
     var selectedIcon = $('.choose-tier-'+level);
     $('.tier-action-item').removeClass('secondary selected').attr('icon', 'playlist-add'); // removes any previously selected tiers
     $(selectedIcon).addClass('secondary selected').attr('icon', 'check');
+
     // 2 - add the tier name to the #display-army-tier that is clickable to reopen the .tiered-army-list-choice
     var tierChoiceReadout = '<span onclick="showTierOptions()" style="cursor:pointer;">'+tierObject['name']+' - tier '+level+'</span>';
     $('#display-army-tier').html(tierChoiceReadout);
+
     // 2.1 update the tier icon on the warcasters block to indicate that a tier has been chosen, on click relaunch the .tiered-army-list-choice
     $('.leader .view-tiers').addClass('secondary selected');
-    // 2.2 remove all previously chosen tier rules
+
     // 3 - apply the tier 1 rules
+    if (level > 0){
+        // 2.2 remove tier 2+ previously chosen tier rules
+        resetTierRulesToBase();  // this action will need to reset the army list - need to populate warning yes/no
+        applyTierRules(tierObject, 1);
+    }
+
     // 4 if level > 1 apply the tier 2 rules
+    if (level > 1){
+        applyTierRules(tierObject, 2);
+    }
+
     // 5 if level > 2 apply the tier 3 rules
+    if (level > 2){
+        applyTierRules(tierObject, 3);
+    }
+
     // 6 if level > 3 apply the tier 4 rules
-    applyTierRules(tierObject, level);
-    // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none. --- perhaps do a fade out?
+    if (level > 3){
+        applyTierRules(tierObject, 4);
+    }
+
+    // 7 update the tempList with the selected tier
+    tempList['tierListId'] = tierObject['id'];
+    tempList['tierListLevelSet'] = level;
+
+    // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none.
+    $('.ajax-loader.tiered-army-list-choice').animate({
+        opacity:0
+    }, 1000, function(){
+        $('.ajax-loader.tiered-army-list-choice').hide().css('opacity',1);
+    });
+    $('#notice-shadow').animate({
+        opacity:0
+    }, 1000, function(){
+        $('#notice-shadow').hide().css('opacity',.5);
+    });
+
     armyListBuilderShortSave();
 }
 
 function showTierOptions(){
     $('.tiered-army-list-choice').show();
     $('#notice-shadow').show();
+}
+
+function resetTierRulesToBase (){
+    // adjust the page to reflect only tier one.
+    unsetTierBonus(tempList['tierList2Ben'], 2); // val = rule to be rest, key+2 = level
+    unsetTierBonus(tempList['tierList3Ben'], 3); // val = rule to be rest, key+2 = level
+    unsetTierBonus(tempList['tierList4Ben'], 4); // val = rule to be rest, key+2 = level
+
+    // reset tempList object requirements to contain only tier 1 to start run
+    tempList['tierList2Req'] = [];
+    tempList['tierList3Req'] = [];
+    tempList['tierList4Req'] = [];
 }
 
 function removeTierList(){
@@ -83,7 +130,7 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         applyBonusRules(val,1); // val = rule to apply, 1 = tier level
         //console.log('tier 1 bonus '+val);
     });
-    if (level > 1){ // run the tier 2 level rules
+    if (level == 2){ // run the tier 2 level rules
         var tier2BonusRules = tierObject['tier2_bonus'].substring(1,(tierObject['tier2_bonus'].length - 1)); // remove the open and close []
         tier2BonusRules = tier2BonusRules.split(']['); // create an array of the rules
         $(tier2BonusRules).each(function(key, val){
@@ -93,7 +140,7 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         // populate requirements block
         processTierReq(tierObject['tier2_req'], level); // tierObject['tier2_req'] = tier 2 requirement rule, level = tier level set
     }
-    if (level > 2){ // run the tier 3 level rules
+    if (level == 3){ // run the tier 3 level rules
         var tier3BonusRules = tierObject['tier3_bonus'].substring(1,(tierObject['tier3_bonus'].length - 1)); // remove the open and close []
         tier3BonusRules = tier3BonusRules.split(']['); // create an array of the rules
         $(tier3BonusRules).each(function(key, val){
@@ -103,7 +150,7 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
         // populate requirements block
         processTierReq(tierObject['tier3_req'], level); // tierObject['tier3_req'] = tier 3 requirement rule, level = tier level set
     }
-    if (level > 3){ // run the tier 4 level rules
+    if (level == 4){ // run the tier 4 level rules
         var tier4BonusRules = tierObject['tier4_bonus'].substring(1,(tierObject['tier4_bonus'].length - 1)); // remove the open and close []
         tier4BonusRules = tier4BonusRules.split(']['); // create an array of the rules
         $(tier4BonusRules).each(function(key, val) {
@@ -171,13 +218,20 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
             else if (opp == '='){ newVal = val;}
             else if (opp == '-'){ newVal = currentVal - val;}
             $(loc).find('.field-allowance').text(newVal);
-
+            // apply bonus to tempList object
+            var newBenefit = {modelId: id, field: field, newValue: newVal};
+            tempList['tierList'+level+'Ben'].push(newBenefit);
+            // apply to page
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
         }
     } else if (rule.indexOf('special_ability') > -1 || rule.indexOf('new_ability') > -1){ // check if the action is to add a special ability or a new ability
         var ruleMsg = rule.substr(rule.indexOf('|')+1);
         if (!$(loc).hasClass('tier-rule-applied-level'+level)){
             $(loc).addClass('tier-rule-applied-level'+level);
+            // apply bonus to tempList object
+            var newBenefit = {modelId: id, newAbility: ruleMsg};
+            tempList['tierList'+level+'Ben'].push(newBenefit);
+            // apply to page
             getModelDisplayAndBuildMessage(id, ruleMsg, level); // id = model id affected, ruleMsg = front facing message, level = tier level
         }
     } else if (rule.indexOf('Cost') > -1){ // check if the action is to adjust the Cost of the unit
@@ -193,11 +247,14 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
             else if (opp == '=') {
                 newVal = val;
             }
-            else if (opp == '-') {
+           else if (opp == '-') {
                 newVal = currentVal - val;
             }
             $(loc).find('.unit-cost').text(newVal + 'pts.');
-
+            // apply bonus to tempList object
+            var newBenefit = {modelId: id, field: field, newValue: newVal};
+            tempList['tierList'+level+'Ben'].push(newBenefit);
+            // apply to page
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
         }
     }
@@ -256,33 +313,24 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
     });
 }
 
-
-//// start tier requirements
-
-// public variables
-var requirementsTier2 = '',
-    requirementsTier3 = '',
-    requirementsTier4 = '';
-
 function processTierReq(tierReq, level){
     tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
     var tierBreakdown = tierReq.split(',');
-    listBuildingRequirements['tier'+level] = []; // build subarray
-    listBuildingRequirements['tier'+level]['modelId'] = tierBreakdown[0]; //add model id to tierLevel subarray
-    listBuildingRequirements['tier'+level]['rule'] = tierBreakdown[1]; // add rule to tierLevel subarray
+    var newReq = {modelId: tierBreakdown[0], rule: tierBreakdown[1]};
+    tempList['tierList'+level+'Req'][level] = (newReq);
     armyListBuilderShortSave();
 }
 
 function runTierRequirements(){ // process all tier requirement which can be found on the page within the listBuildingRequirements array
-    if (typeof listBuildingRequirements['tier2'] !== 'undefined'){
-        buildTierRequirementsNotice(2, listBuildingRequirements['tier2']['modelId'],listBuildingRequirements['tier2']['rule']);
-    }
-    if (typeof listBuildingRequirements['tier3'] !== 'undefined'){
-        buildTierRequirementsNotice(3, listBuildingRequirements['tier3']['modelId'],listBuildingRequirements['tier3']['rule']);
-    }
-    if (typeof listBuildingRequirements['tier4'] !== 'undefined'){
-        buildTierRequirementsNotice(4, listBuildingRequirements['tier4']['modelId'],listBuildingRequirements['tier4']['rule']);
-    }
+    //if (typeof listBuildingRequirements['tier2'] !== 'undefined'){
+    //    buildTierRequirementsNotice(2, listBuildingRequirements['tier2']['modelId'],listBuildingRequirements['tier2']['rule']);
+    //}
+    //if (typeof listBuildingRequirements['tier3'] !== 'undefined'){
+    //    buildTierRequirementsNotice(3, listBuildingRequirements['tier3']['modelId'],listBuildingRequirements['tier3']['rule']);
+    //}
+    //if (typeof listBuildingRequirements['tier4'] !== 'undefined'){
+    //    buildTierRequirementsNotice(4, listBuildingRequirements['tier4']['modelId'],listBuildingRequirements['tier4']['rule']);
+    //}
 }
 
 function buildTierRequirementsNotice(level, modelId, qty){ // level = tier level, modelId = needs to be the model id (we'll cross the caster exception if we see it), qty = qty(> < >= <=)X
@@ -341,4 +389,9 @@ function getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIde
         }
     }
     return innerHtml;
+}
+
+function unsetTierBonus(rule, level){
+    console.log(rule);
+    console.log(level);
 }
