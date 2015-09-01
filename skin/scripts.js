@@ -181,6 +181,9 @@ $(document).ready(function(){
     // size the info block if there is an additional toolbar present
     infoBlockToolsResize();
 
+    //size the info block if there is a h2 title above the infoblocks
+    infoBlockTitleResize();
+
     // adds larger drop shadow to buttons on hover
     $('.paper-button').hover(
         function(){
@@ -206,6 +209,16 @@ function infoBlockToolsResize(){
     var infoBlockTools = $('.info-block-tools');
     var infotH = $(infoBlockTools).height();
     var th = $(window).height() - 100;
+    $(infoBlockTools).css('max-height',th);
+    if (infotH+100 > $(window).height()){
+        $(infoBlockTools).css('overflow-y', 'auto');
+    }
+}
+
+function infoBlockTitleResize(){
+    var infoBlockTools = $('.info-block-title');
+    var infotH = $(infoBlockTools).height();
+    var th = $(window).height() - 125;
     $(infoBlockTools).css('max-height',th);
     if (infotH+100 > $(window).height()){
         $(infoBlockTools).css('overflow-y', 'auto');
