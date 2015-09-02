@@ -13,7 +13,6 @@
         <paper-toolbar class="primary">
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
         </paper-toolbar>
-        <?php include 'login/index.php'; ?>
         <?php include 'nav/main-nav.php'; ?>
     </paper-header-panel>
 
@@ -78,9 +77,6 @@
                 <paper-button raised class="full-button link-armybuilder-home">
                     Create a New Army List
                 </paper-button>
-                <paper-material elevation="1" class="small cushion">
-                    <?php include 'footer/index.php'; ?>
-                </paper-material>
             </div>
         </div>
     </paper-header-panel>

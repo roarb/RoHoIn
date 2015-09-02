@@ -73,6 +73,7 @@ paper-fab#close-ua-choice {position:absolute; top:-15px; right:-15px;}
 
 /* paper-menu updates */
 .paper-menu {height:100%; border-right:1px solid #d1d1d1;}
+.main-nav .paper-menu {height:auto; border:0;}
 
 /* paper-button updates */
 paper-button.full-button {width:90%; margin:25px 5%;}

@@ -78,9 +78,7 @@
             <paper-toolbar class="primary">
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
             </paper-toolbar>
-            <?php include '../../login/index.php'; ?>
             <?php include '../../nav/main-nav.php'; ?>
-            <paper-fab mini icon="arrow-back" class="nav-back link-out primary-focus" data-src="/admin/builder.php"></paper-fab>
         </paper-header-panel>
 
         <paper-header-panel main>

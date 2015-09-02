@@ -184,6 +184,9 @@ $(document).ready(function(){
     //size the info block if there is a h2 title above the infoblocks
     infoBlockTitleResize();
 
+    //size the main nav block
+    mainNavResize();
+
     // adds larger drop shadow to buttons on hover
     $('.paper-button').hover(
         function(){
@@ -219,6 +222,16 @@ function infoBlockTitleResize(){
     var infoBlockTools = $('.info-block-title');
     var infotH = $(infoBlockTools).height();
     var th = $(window).height() - 125;
+    $(infoBlockTools).css('max-height',th);
+    if (infotH+100 > $(window).height()){
+        $(infoBlockTools).css('overflow-y', 'auto');
+    }
+}
+
+function mainNavResize(){
+    var infoBlockTools = $('#main-nav');
+    var infotH = $(infoBlockTools).height();
+    var th = $(window).height() - 64;
     $(infoBlockTools).css('max-height',th);
     if (infotH+100 > $(window).height()){
         $(infoBlockTools).css('overflow-y', 'auto');
