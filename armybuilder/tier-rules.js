@@ -87,15 +87,14 @@ function showTierOptions(){
 }
 
 function resetTierRulesToBase (){
-    // adjust the page to reflect only tier one.
-    unsetTierBonus(tempList['tierList2Ben'], 2); // val = rule to be rest, key+2 = level
-    unsetTierBonus(tempList['tierList3Ben'], 3); // val = rule to be rest, key+2 = level
-    unsetTierBonus(tempList['tierList4Ben'], 4); // val = rule to be rest, key+2 = level
-
     // reset tempList object requirements to contain only tier 1 to start run
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
     tempList['tierList4Req'] = [];
+    // adjust the page to reflect only tier one.
+    unsetTierBonus(tempList['tierList2Ben'], 2); // val = rule to be rest, key+2 = level
+    unsetTierBonus(tempList['tierList3Ben'], 3); // val = rule to be rest, key+2 = level
+    unsetTierBonus(tempList['tierList4Ben'], 4); // val = rule to be rest, key+2 = level
 }
 
 function removeTierList(){
@@ -392,6 +391,36 @@ function getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIde
 }
 
 function unsetTierBonus(rule, level){
-    console.log(rule);
-    console.log(level);
+
+    // currently not loading more than once, please revisit
+
+    
+        if (rule[0] != undefined) { // check to see if the rule is set
+            if (rule[0].modelId.length > 0) {
+                if (rule[0].modelId == 'caster') { // execute caster item removal
+
+                    if (rule[0].newAbility.length > 0) { // remove new tier ability display
+                        var unitTitle = $('.battle-group-built .leader .unit-title').text(); /// find and replace unit tile update
+                        unitTitle = unitTitle.replace(' - New Tier Ability', '');
+                        $('.battle-group-built .leader .unit-title').text(unitTitle);
+                        $('.battle-group-built .leader .special-abilities .tier-added').remove();
+                    }
+
+                } else { // assume that modelId is a int - execute item removal
+
+                    if (rule[0].newAbility.length > 0) { // remove new tier ability display
+                        var unitTitle = $('.model-id-' + rule[0].modelId + ' .unit-label .unit-title').text(); /// find and replace unit tile update
+                        unitTitle = unitTitle.replace(' - New Tier Ability', '');
+                        $('.model-id-' + rule[0].modelId + ' .unit-label .unit-title').text(unitTitle);
+                        $('.model-id-' + rule[0].modelId + ' .special-abilities .tier-added').remove();
+                        console.log('removal on modelId -new tier ability runs');
+                    }
+                }
+            }
+
+            console.log(rule[0]);
+            console.log(level);
+        }
+
+
 }

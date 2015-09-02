@@ -1,5 +1,8 @@
 /* CSS Responsive Document */
 
 @media screen and (max-width:767px){
-    .col2-set .col-1, .col2-set .col-2 {width:100%;}
+    paper-drawer-panel {position:relative; height:auto; overflow:visible;}
+    .col2-set {display:block !important;}
+    .col2-set .col-1, .col2-set .col-2 {width:96%; max-height:inherit !important; padding:1% 2%; overflow-y:hidden !important;}
+    .cushion-sides {padding:0 2%;}
 }

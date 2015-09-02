@@ -219,7 +219,7 @@ function infoBlockToolsResize(){
 function infoBlockTitleResize(){
     var infoBlockTools = $('.info-block-title');
     var infotH = $(infoBlockTools).height();
-    var th = $(window).height() - 125;
+    var th = $(window).height() - 115;
     $(infoBlockTools).css('max-height',th);
     if (infotH+100 > $(window).height()){
         $(infoBlockTools).css('overflow-y', 'auto');
