@@ -1,0 +1,5 @@
+/* CSS Responsive Document */
+
+@media screen and (max-width:767px){
+    .col2-set .col-1, .col2-set .col-2 {width:100%;}
+}

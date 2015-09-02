@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/skin/styles.css">
+<link rel="stylesheet" type="text/css" href="/skin/responsive.css">
     <!-- Angular Material Dependencies -->
 <?php /*<link rel="stylesheet" href="/skin/angular/angular_material/0.7.1/angular-material.min.css">
 <script src="/skin/angular/angularjs/1.3.6/angular.min.js"></script>

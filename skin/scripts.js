@@ -138,13 +138,11 @@ function toggleLoggedInMoreMenu(){
     var menu = $('#login-more-menu');
     if ($(menu).height() == 0){
         $(menu).animate({
-            height: 32,
-            padding: 10
+            height: 32
         }, 500)
     } else {
         $(menu).animate({
-            height: 0,
-            padding: 0
+            height: 0
         }, 500)
     }
 }
