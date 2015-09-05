@@ -160,6 +160,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
         <?php endif ?>
     </div>
     <div class="flex-2 added-to-list-panel info-block-tools" style="overflow-y:auto;">
+        <div id="tier-list-req-notice"></div>
         <form method="post" name="create-army-list" id="create-army-list" action="save-list.php">
             <paper-material id="requirements" class="hidden"></paper-material>
             <paper-material class="battle-group-built m-cushion" id="battlegroup-1-built" style="display:none;"></paper-material>

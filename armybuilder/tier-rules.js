@@ -40,6 +40,11 @@ function selectTierList(tierObject, level){
     // 2.1 update the tier icon on the warcasters block to indicate that a tier has been chosen, on click relaunch the .tiered-army-list-choice
     $('.leader .view-tiers').addClass('secondary selected');
 
+    // 2.2 update the tempList with the selected tier
+    tempList['tierListId'] = tierObject['id'];
+    tempList['tierListLevelSet'] = level;
+    tempList['tierObject'] = tierObject;
+
     // 3 - apply the tier 1 rules
     if (level > 0){
         // 2.2 remove tier 2+ previously chosen tier rules
@@ -62,10 +67,6 @@ function selectTierList(tierObject, level){
         applyTierRules(tierObject, 4);
     }
 
-    // 7 update the tempList with the selected tier
-    tempList['tierListId'] = tierObject['id'];
-    tempList['tierListLevelSet'] = level;
-
     // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none.
     $('.ajax-loader.tiered-army-list-choice').animate({
         opacity:0
@@ -87,6 +88,8 @@ function showTierOptions(){
 }
 
 function resetTierRulesToBase (){
+    // reset the #tier-list-req-notice level 2 3 4 blocks
+    $('#tier-list-req-notice').html('');
     // reset tempList object requirements to contain only tier 1 to start run
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
@@ -127,7 +130,6 @@ function applyTierRules(tierObject, level, run){ // tierObject = tier rules in o
     tier1BonusRules = tier1BonusRules.split(']['); // create an array of the rules
     $(tier1BonusRules).each(function(key, val){ // loop through each model affected to apply rules
         applyBonusRules(val,1); // val = rule to apply, 1 = tier level
-        //console.log('tier 1 bonus '+val);
     });
     if (level == 2){ // run the tier 2 level rules
         var tier2BonusRules = tierObject['tier2_bonus'].substring(1,(tierObject['tier2_bonus'].length - 1)); // remove the open and close []
@@ -320,16 +322,34 @@ function processTierReq(tierReq, level){
     armyListBuilderShortSave();
 }
 
-function runTierRequirements(){ // process all tier requirement which can be found on the page within the listBuildingRequirements array
-    //if (typeof listBuildingRequirements['tier2'] !== 'undefined'){
-    //    buildTierRequirementsNotice(2, listBuildingRequirements['tier2']['modelId'],listBuildingRequirements['tier2']['rule']);
-    //}
-    //if (typeof listBuildingRequirements['tier3'] !== 'undefined'){
-    //    buildTierRequirementsNotice(3, listBuildingRequirements['tier3']['modelId'],listBuildingRequirements['tier3']['rule']);
-    //}
-    //if (typeof listBuildingRequirements['tier4'] !== 'undefined'){
-    //    buildTierRequirementsNotice(4, listBuildingRequirements['tier4']['modelId'],listBuildingRequirements['tier4']['rule']);
-    //}
+function runTierRequirements(){ // process all tier requirement on short saves
+    console.log(tempList);
+    // apply forward facing text to the #tier-list-req-notice div
+    var tierNotice = $('#tier-list-req-notice');
+    if (tempList['tierListLevelSet'] > 0){
+        if ($(tierNotice).find('.tier-1-notice').length == 0){
+            $(tierNotice).append('<div class="tier-1-notice"><strong>Tier 1 Requirements:</strong> '+tempList["tierObject"]["tier1_req_front"]+' <span class="count-left"></span></div>');
+        }
+    }
+    if (tempList['tierListLevelSet'] > 1){
+        if ($(tierNotice).find('.tier-2-notice').length == 0){
+            $(tierNotice).append('<div class="tier-2-notice"><strong>Tier 2 Requirements:</strong> '+tempList["tierObject"]["tier2_req_front"]+' <span class="count-left"></span></div>');
+        }
+
+    }
+    if (tempList['tierListLevelSet'] > 2){
+        if ($(tierNotice).find('.tier-3-notice').length == 0){
+            $(tierNotice).append('<div class="tier-3-notice"><strong>Tier 3 Requirements:</strong> '+tempList["tierObject"]["tier3_req_front"]+' <span class="count-left"></span></div>');
+        }
+
+    }
+    if (tempList['tierListLevelSet'] > 3){
+        if ($(tierNotice).find('.tier-4-notice').length == 0){
+            $(tierNotice).append('<div class="tier-4-notice"><strong>Tier 4 Requirements:</strong> '+tempList["tierObject"]["tier4_req_front"]+' <span class="count-left"></span></div>');
+        }
+
+    }
+
 }
 
 function buildTierRequirementsNotice(level, modelId, qty){ // level = tier level, modelId = needs to be the model id (we'll cross the caster exception if we see it), qty = qty(> < >= <=)X
@@ -393,34 +413,39 @@ function getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIde
 function unsetTierBonus(rule, level){
 
     // currently not loading more than once, please revisit
+    if (level > tempList['tierListLevelSet']) {
+        // remove tier level classes
+        $('.tier-rule-applied-level'+level).removeClass('tier-rule-applied-level'+level);
+        $('.tier-'+level+'-rule-applied').removeClass('tier-'+level+'-rule-applied');
 
-    
-        if (rule[0] != undefined) { // check to see if the rule is set
-            if (rule[0].modelId.length > 0) {
-                if (rule[0].modelId == 'caster') { // execute caster item removal
+        $(rule).each(function(key, rule){
+            if (rule != undefined) { // check to see if the rule is set
+                if (rule.modelId.length > 0) {
+                    if (rule.modelId == 'caster') { // execute caster item removal
 
-                    if (rule[0].newAbility.length > 0) { // remove new tier ability display
-                        var unitTitle = $('.battle-group-built .leader .unit-title').text(); /// find and replace unit tile update
-                        unitTitle = unitTitle.replace(' - New Tier Ability', '');
-                        $('.battle-group-built .leader .unit-title').text(unitTitle);
-                        $('.battle-group-built .leader .special-abilities .tier-added').remove();
-                    }
+                        if (rule.newAbility.length > 0) { // remove new tier ability display
+                            var unitTitle = $('.battle-group-built .leader .unit-title').text(); /// find and replace unit tile update
+                            unitTitle = unitTitle.replace(' - New Tier Ability', '');
+                            $('.battle-group-built .leader .unit-title').text(unitTitle);
+                            $('.battle-group-built .leader .special-abilities .tier-added').remove();
+                        }
 
-                } else { // assume that modelId is a int - execute item removal
+                    } else { // assume that modelId is a int - execute item removal
 
-                    if (rule[0].newAbility.length > 0) { // remove new tier ability display
-                        var unitTitle = $('.model-id-' + rule[0].modelId + ' .unit-label .unit-title').text(); /// find and replace unit tile update
-                        unitTitle = unitTitle.replace(' - New Tier Ability', '');
-                        $('.model-id-' + rule[0].modelId + ' .unit-label .unit-title').text(unitTitle);
-                        $('.model-id-' + rule[0].modelId + ' .special-abilities .tier-added').remove();
-                        console.log('removal on modelId -new tier ability runs');
+                        if (rule.newAbility.length > 0) { // remove new tier ability display
+                            var unitTitle = $('.model-id-' + rule.modelId + ' .unit-label .unit-title').text(); /// find and replace unit tile update
+                            unitTitle = unitTitle.replace(' - New Tier Ability', '');
+                            $('.model-id-' + rule.modelId + ' .unit-label .unit-title').text(unitTitle);
+                            $('.model-id-' + rule.modelId + ' .special-abilities .tier-added').remove();
+                        }
                     }
                 }
+
+                console.log(rule);
+                console.log(level);
             }
-
-            console.log(rule[0]);
-            console.log(level);
-        }
+        });
 
 
+    }
 }

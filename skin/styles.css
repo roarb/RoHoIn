@@ -343,6 +343,10 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 .remove-tiered-list paper-icon-button {padding:4px; border-radius:30px;}
 .battlegroup .unit.tier-chosen, .units .unit.tier-chosen, .solos .unit.tier-chosen, .battle-engines .unit.tier-chosen {display:none;}
 .battlegroup .unit.tier-chosen.in-tier, .units .unit.tier-chosen.in-tier, .solos .unit.tier-chosen.in-tier, .battle-engines .unit.tier-chosen.in-tier {display:block;}
+.tier-rule-applied-level1 {border-color:#888 !important;}
+.tier-rule-applied-level2 {border-color:#777 !important;}
+.tier-rule-applied-level3 {border-color:#666 !important;}
+.tier-rule-applied-level4 {border-color:#555 !important;}
 
 /* view army lists */
 .army-list-link {cursor:pointer;}

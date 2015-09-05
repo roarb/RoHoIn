@@ -4,7 +4,6 @@
 
 function armyListBuilderShortSave(){
     runTierRequirements();
-    console.log(tempList);
 }
 
 function armyListBuilderBoot(faction, points, armyName){
@@ -99,7 +98,7 @@ function leaderSelected(count, object){ // count = battle group 1-4, object = mo
     $('#solo-picker').show();
     $('#battle-engine-picker').show();
     addLeaderToBattleGroup(count,object);
-    armyListBuilderShortSave();
+    //armyListBuilderShortSave();
 }
 
 function applyBGPointsToToolbar(bg){
