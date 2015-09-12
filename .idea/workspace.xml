@@ -22,18 +22,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="113" column="23" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="23" />
-              <folding>
-                <marker date="1441465371318" expanded="true" signature="2057:2072" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main-nav.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nav/main-nav.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -59,8 +47,8 @@
       <file leaf-file-name="army-builder.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.6545454">
-              <caret line="162" column="37" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="37" />
+            <state vertical-scroll-proportion="-6.6">
+              <caret line="166" column="30" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -91,8 +79,8 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skin/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.965517">
-              <caret line="348" column="55" selection-start-line="348" selection-start-column="55" selection-end-line="348" selection-end-column="55" />
+            <state vertical-scroll-proportion="-7.37931">
+              <caret line="351" column="21" selection-start-line="351" selection-start-column="21" selection-end-line="351" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -121,12 +109,24 @@
       <file leaf-file-name="army-builder.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09883721">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.58380204">
+              <caret line="324" column="200" selection-start-line="324" selection-start-column="200" selection-end-line="324" selection-end-column="200" />
               <folding>
-                <marker date="1441466162239" expanded="true" signature="10194:10205" placeholder="..." />
-                <marker date="1441466162239" expanded="true" signature="13886:13897" placeholder="..." />
-                <marker date="1441466162239" expanded="true" signature="19340:19351" placeholder="..." />
+                <marker date="1441849200147" expanded="true" signature="10684:10695" placeholder="..." />
+                <marker date="1441849200147" expanded="true" signature="14486:14497" placeholder="..." />
+                <marker date="1441849200147" expanded="true" signature="20244:20255" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.62069">
+              <caret line="376" column="37" selection-start-line="376" selection-start-column="37" selection-end-line="376" selection-end-column="37" />
+              <folding>
+                <marker date="1441848198772" expanded="true" signature="2057:2072" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -202,8 +202,8 @@
         <option value="$PROJECT_DIR$/admin/header.php" />
         <option value="$PROJECT_DIR$/skin/responsive.css" />
         <option value="$PROJECT_DIR$/skin/scripts.js" />
-        <option value="$PROJECT_DIR$/skin/styles.css" />
         <option value="$PROJECT_DIR$/ajax/army-builder.php" />
+        <option value="$PROJECT_DIR$/skin/styles.css" />
         <option value="$PROJECT_DIR$/armybuilder/tier-rules.js" />
         <option value="$PROJECT_DIR$/armybuilder/army-builder.js" />
       </list>
@@ -451,7 +451,9 @@
     </ignored-roots>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -507,14 +509,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3173759">
           <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nav/main-nav.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9615384">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -775,14 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.576923">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/login/views/logged_in.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.230769">
@@ -835,40 +821,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skin/styles.css">
+    <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.965517">
-          <caret line="348" column="55" selection-start-line="348" selection-start-column="55" selection-end-line="348" selection-end-column="55" />
+        <state vertical-scroll-proportion="-6.576923">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nav/main-nav.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9615384">
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6545454">
-          <caret line="162" column="37" selection-start-line="162" selection-start-column="17" selection-end-line="162" selection-end-column="37" />
+        <state vertical-scroll-proportion="-6.6">
+          <caret line="166" column="30" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skin/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.37931">
+          <caret line="351" column="21" selection-start-line="351" selection-start-column="21" selection-end-line="351" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="23" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="23" />
+        <state vertical-scroll-proportion="-5.62069">
+          <caret line="376" column="37" selection-start-line="376" selection-start-column="37" selection-end-line="376" selection-end-column="37" />
           <folding>
-            <marker date="1441465371318" expanded="true" signature="2057:2072" placeholder="..." />
+            <marker date="1441848198772" expanded="true" signature="2057:2072" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09883721">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.58380204">
+          <caret line="324" column="200" selection-start-line="324" selection-start-column="200" selection-end-line="324" selection-end-column="200" />
           <folding>
-            <marker date="1441466162239" expanded="true" signature="10194:10205" placeholder="..." />
-            <marker date="1441466162239" expanded="true" signature="13886:13897" placeholder="..." />
-            <marker date="1441466162239" expanded="true" signature="19340:19351" placeholder="..." />
+            <marker date="1441849200147" expanded="true" signature="10684:10695" placeholder="..." />
+            <marker date="1441849200147" expanded="true" signature="14486:14497" placeholder="..." />
+            <marker date="1441849200147" expanded="true" signature="20244:20255" placeholder="..." />
           </folding>
         </state>
       </provider>

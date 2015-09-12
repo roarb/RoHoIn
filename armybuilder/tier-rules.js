@@ -79,7 +79,7 @@ function selectTierList(tierObject, level){
         $('#notice-shadow').hide().css('opacity',.5);
     });
 
-    armyListBuilderShortSave();
+    runTierRequirements();
 }
 
 function showTierOptions(){
@@ -89,7 +89,7 @@ function showTierOptions(){
 
 function resetTierRulesToBase (){
     // reset the #tier-list-req-notice level 2 3 4 blocks
-    $('#tier-list-req-notice').html('');
+    $('#tier-list-req-notice').html('<div class="tier-1-notice"></div><div class="tier-2-notice"></div><div class="tier-3-notice"></div><div class="tier-4-notice"></div>');
     // reset tempList object requirements to contain only tier 1 to start run
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
@@ -191,14 +191,51 @@ function defineBonusRuleLoc(rawLoc, rule, level){
     } else if (rawLoc.indexOf('type') > -1 || rawLoc.indexOf('modelType') > -1){ // 'rule location is type or modelType';
         // to get the type for heavy/light warjack/vector/myrmidon/warbeast loop through the battlegroup unit objects looking for unit type.
         var type = rawLoc.substring(rawLoc.indexOf('==')+2);
-        $(bgUnitObject).each(function(key,val){
-            if (typeof val != 'undefined'){
-                if (val['type'] == type){
-                    loc = $('.model-id-'+val['id']);
-                    defineBonusRuleAction(loc, rule, val['id'], level);
+
+        if (type == 'Unit' || type == 'Character Unit' || type == 'Cavalry Unit') {// run adjustment on UNITS
+            $(unitModelObject).each(function (key, val) {
+                if (typeof val != 'undefined') {
+                    if (val['type'] == type) {
+                        loc = $('.model-id-' + val['id']);
+                        defineBonusRuleAction(loc, rule, val['id'], level);
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        else if (type == 'Solo' || type == 'Character Solo') { // run adjustment on SOLOS
+            $(soloModelObject).each(function (key, val) {
+                if (typeof val != 'undefined') {
+                    if (val['type'] == type) {
+                        loc = $('.model-id-' + val['id']);
+                        defineBonusRuleAction(loc, rule, val['id'], level);
+                    }
+                }
+            });
+        }
+
+        else if (type == 'Battle Engine'){
+            $(battleEngineModelObjectt).each(function(key,val){ // run adjustment on Battle Engines
+                if (typeof val != 'undefined'){
+                    if (val['type'] == type){
+                        loc = $('.model-id-'+val['id']);
+                        defineBonusRuleAction(loc, rule, val['id'], level);
+                    }
+                }
+            });
+        }
+
+        else {
+            $(bgUnitObject).each(function(key,val){ // run adjustment on Battlegroup models
+                if (typeof val != 'undefined'){
+                    if (val['type'] == type){
+                        loc = $('.model-id-'+val['id']);
+                        defineBonusRuleAction(loc, rule, val['id'], level);
+                    }
+                }
+            });
+        }
+
     } else { // location is model id
         loc = $('.model-id-'+rawLoc);
         defineBonusRuleAction(loc, rule, rawLoc, level);
@@ -242,18 +279,22 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
         if (!$(loc).hasClass('tier-rule-applied-level'+level)) {
             $(loc).addClass('tier-rule-applied-level'+level);
             currentVal = parseInt($(loc).find('.unit-cost').text());
+            var adjustVal = '';
             if (opp == '+') {
                 newVal = currentVal + val;
+                adjustVal = '+'+val;
             }
             else if (opp == '=') {
                 newVal = val;
+                adjustVal = val;
             }
            else if (opp == '-') {
                 newVal = currentVal - val;
+                adjustVal = '-'+val;
             }
             $(loc).find('.unit-cost').text(newVal + 'pts.');
             // apply bonus to tempList object
-            var newBenefit = {modelId: id, field: field, newValue: newVal};
+            var newBenefit = {modelId: id, field: field, newValue: newVal, adjustValue: adjustVal};
             tempList['tierList'+level+'Ben'].push(newBenefit);
             // apply to page
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
@@ -293,6 +334,12 @@ function getModelObjectAndAdjusts(loc, id, field, newVal, level){
     }
 }
 
+function processShortSaveTierBen(tierBenObj){ // fired when adding model to the list - will apply the new ability to the model entry
+    if (typeof tierBenObj.newAbility != 'undefined'){
+        getModelDisplayAndBuildMessage(tierBenObj.modelId, tierBenObj.newAbility, tempList['tierListLevelSet']);
+    }
+}
+
 function getModelDisplayAndBuildMessage(id, ruleMsg, level){
     var modelId = '';
     if (id == 'caster'){
@@ -317,87 +364,57 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
 function processTierReq(tierReq, level){
     tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
     var tierBreakdown = tierReq.split(',');
-    var newReq = {modelId: tierBreakdown[0], rule: tierBreakdown[1]};
+    var newReq = {modelId: tierBreakdown[0], ruleString: tierBreakdown[1]};
     tempList['tierList'+level+'Req'][level] = (newReq);
     armyListBuilderShortSave();
 }
 
-function runTierRequirements(){ // process all tier requirement on short saves
-    console.log(tempList);
+function runTierRequirements(shortSave){ // process all tier requirement on short saves - if shortSave = true it came from the army-builder.js shortsave
+    //console.log(tempList);
     // apply forward facing text to the #tier-list-req-notice div
+
     var tierNotice = $('#tier-list-req-notice');
+    $(tierNotice).addClass('active');
     if (tempList['tierListLevelSet'] > 0){
-        if ($(tierNotice).find('.tier-1-notice').length == 0){
-            $(tierNotice).append('<div class="tier-1-notice"><strong>Tier 1 Requirements:</strong> '+tempList["tierObject"]["tier1_req_front"]+' <span class="count-left"></span></div>');
+        $(tierNotice).find('.tier-1-notice').html('<strong>Tier 1 Requirements:</strong> '+tempList["tierObject"]["tier1_req_front"]+' <span class="count-left"></span>');
+    }
+    if (shortSave === true){
+        console.log('found to be shortsave function');
+        if (tempList['tierListLevelSet'] > 1){
+            var req2Needed = $(tierNotice).find('.tier-2-notice .req-msg');
+            var notice = getLiveRequiredNotice(tempList['tierList2Req']);
+            $(req2Needed).html(notice);
+        }
+        if (tempList['tierListLevelSet'] > 2){
+            var req3Needed = $(tierNotice).find('.tier-3-notice .req-msg');
+            var notice = getLiveRequiredNotice(tempList['tierList3Req']);
+            $(req3Needed).html(notice);
+        }
+        if (tempList['tierListLevelSet'] > 3){
+            var req4Needed = $(tierNotice).find('.tier-4-notice .req-msg');
+            var notice = getLiveRequiredNotice(tempList['tierList4Req']);
+            $(req4Needed).html(notice);
+        }
+    } else {
+        if (tempList['tierListLevelSet'] > 1){
+            var tier2notice = $(tierNotice).find('.tier-2-notice');
+            var notice = '<strong>Tier 2 Requirements:</strong> '+tempList["tierObject"]["tier2_req_front"]+' ';
+            notice += getLiveRequiredNotice(tempList['tierList2Req']);
+            $(tier2notice).html(notice);
+        }
+        if (tempList['tierListLevelSet'] > 2){
+            var tier3notice = $(tierNotice).find('.tier-3-notice');
+            var notice = '<strong>Tier 3 Requirements:</strong> '+tempList["tierObject"]["tier3_req_front"]+' ';
+            notice += getLiveRequiredNotice(tempList['tierList3Req']);
+            $(tier3notice).html(notice);
+        }
+        if (tempList['tierListLevelSet'] > 3){
+            var tier4notice = $(tierNotice).find('.tier-4-notice');
+            var notice = '<strong>Tier 4 Requirements:</strong> '+tempList["tierObject"]["tier4_req_front"]+' ';
+            notice += getLiveRequiredNotice(tempList['tierList4Req']);
+            $(tier4notice).html(notice);
         }
     }
-    if (tempList['tierListLevelSet'] > 1){
-        if ($(tierNotice).find('.tier-2-notice').length == 0){
-            $(tierNotice).append('<div class="tier-2-notice"><strong>Tier 2 Requirements:</strong> '+tempList["tierObject"]["tier2_req_front"]+' <span class="count-left"></span></div>');
-        }
-
-    }
-    if (tempList['tierListLevelSet'] > 2){
-        if ($(tierNotice).find('.tier-3-notice').length == 0){
-            $(tierNotice).append('<div class="tier-3-notice"><strong>Tier 3 Requirements:</strong> '+tempList["tierObject"]["tier3_req_front"]+' <span class="count-left"></span></div>');
-        }
-
-    }
-    if (tempList['tierListLevelSet'] > 3){
-        if ($(tierNotice).find('.tier-4-notice').length == 0){
-            $(tierNotice).append('<div class="tier-4-notice"><strong>Tier 4 Requirements:</strong> '+tempList["tierObject"]["tier4_req_front"]+' <span class="count-left"></span></div>');
-        }
-
-    }
-
-}
-
-function buildTierRequirementsNotice(level, modelId, qty){ // level = tier level, modelId = needs to be the model id (we'll cross the caster exception if we see it), qty = qty(> < >= <=)X
-    // for modelId = we'll need to add in an exception to handel doing model type - ie. Heavy Warbeast
-    var modelIdentifier = '';
-    if(modelId.indexOf('type') > -1){ // true == this modelId is a model type.
-        modelIdentifier = modelId.substring((modelId.indexOf('==')+2));
-        var modelIdentifierArray = modelIdentifier.split('|');
-        console.log(modelIdentifierArray);
-    }
-
-    var opp = qty.substring(4,3); // gets the opperand, we're assuming this is a single character > or < or =
-    var finalCount = parseInt(qty.substring(5,4)); // assumes opperand is 1 character long, also assumes the qty is 1 character long
-
-    var modelInListCount = $('.added-to-list-panel .model-id-'+modelId).length;
-    var reqBlock = $('#requirements');
-    var innerHtml = '';
-
-    $(reqBlock).removeClass('hidden'); // make the requirements block visible --- add more logic in here...
-
-    if (level > 2){
-        if (level == 3 || requirementsTier2 == ''){ // only need to set this variable once, if it runs again for level 4 it will be written as undefined. or if just tier 4 is applied and tier 2 remains unset
-            requirementsTier2 = $(reqBlock).find('.tier-2-requirements').html();
-        }
-        innerHtml += requirementsTier2;
-    }
-    if (level == 4){
-        requirementsTier3 = $(reqBlock).find('.tier-3-requirements').html();
-        innerHtml += requirementsTier3;
-    }
-
-    if (level == 2){ // get existing level 2 tier requirement and add to the tier notice.
-        innerHtml += '<div class="tier-2-requirements"><p class="sub-head">Tier 2 Requirements</p>';
-        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
-        innerHtml += '</div>';
-    }
-    if (level == 3){ // get existing level 3 tier requirement and add to the tier notice.
-        innerHtml += '<div class="tier-3-requirements"><p class="sub-head">Tier 3 Requirements</p>';
-        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
-        innerHtml += '</div>';
-    }
-    if (level == 4){
-        innerHtml += '<div class="tier-4-requirements"><p class="sub-head">Tier 4 Requirements</p>';
-        innerHtml += getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level);
-        innerHtml += '</div>';
-    }
-
-    $(reqBlock).html(innerHtml);
 }
 
 function getTierRequirementsNoticeBlock(opp,modelInListCount,finalCount,modelIdentifier,level){
@@ -432,20 +449,57 @@ function unsetTierBonus(rule, level){
 
                     } else { // assume that modelId is a int - execute item removal
 
-                        if (rule.newAbility.length > 0) { // remove new tier ability display
+                        if (typeof rule.newAbility != 'undefined') { // remove new tier ability display
                             var unitTitle = $('.model-id-' + rule.modelId + ' .unit-label .unit-title').text(); /// find and replace unit tile update
                             unitTitle = unitTitle.replace(' - New Tier Ability', '');
                             $('.model-id-' + rule.modelId + ' .unit-label .unit-title').text(unitTitle);
                             $('.model-id-' + rule.modelId + ' .special-abilities .tier-added').remove();
                         }
+                        if (typeof rule.field != 'undefined'){ // check for stat update
+                            if (rule.field == "cost"){ // adjust for cost
+                                var unitCost = $('.model-id-' + rule.modelId + ' .unit-cost').text(); // find and replace the unit cost field
+                                if (rule.adjustValue.substring(0,1) == '-'){
+                                    unitCost = parseInt(rule.adjustValue.substring(1,2)) + parseInt(unitCost);
+                                } else if (rule.adjustValue.substring(0,1) == '+'){
+                                    unitCost = parseInt(rule.adjustValue.substring(1,2)) - parseInt(unitCost);
+                                }
+                                $('.model-id-' + rule.modelId + ' .unit-cost').text(unitCost+' pts');
+                            } else if (rule.field == "FA"){ // adjust for field allowance
+
+                            }
+                        }
                     }
                 }
-
-                console.log(rule);
-                console.log(level);
             }
         });
 
 
     }
+}
+
+function getLiveRequiredNotice(req){
+    var definedReq = {};
+    $(req).each(function(key, val){ // remove empty sets from the array
+        if (typeof val != 'undefined'){
+            definedReq = val;
+        }
+    });
+
+    var liveNotice = '<span class="notice">';
+    if (definedReq.modelId.indexOf('ype') > -1){ // found a modelType or type
+        console.log('found a modelType or type');
+    } else { // assume a modelId #
+        var qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length -1)) + 1;
+        var inlist = $('#create-army-list .model-id-'+definedReq.modelId).length;
+        var stillNeed = qtyNeeded - inlist;
+        if (stillNeed > 0){
+            liveNotice += '<span class="req-msg req-needed">Still need '+stillNeed+' more</span>';
+        } else {
+            liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
+        }
+    }
+
+    liveNotice += '</span>';
+
+    return liveNotice;
 }

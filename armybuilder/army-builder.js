@@ -2,8 +2,20 @@
  * Created by RMP2 on 5/3/2015.
  */
 
-function armyListBuilderShortSave(){
-    runTierRequirements();
+function armyListBuilderShortSave(modelId){
+
+    if (typeof modelId != "undefined"){
+        var i = 1;
+        while (i <= tempList['tierListLevelSet']){
+            $(tempList['tierList'+i+'Ben']).each(function(key, val){
+                if (val.modelId == modelId){ // found a matching id in the tempList object under tier benefits
+                    processShortSaveTierBen(val);
+                }
+            });
+            i++;
+        }
+        runTierRequirements(true); // states this comes from the shortsave unit addition function
+    }
 }
 
 function armyListBuilderBoot(faction, points, armyName){
@@ -147,13 +159,13 @@ function addToBattleGroup(count, object, pos){ // count = battle group 1-4, obje
         addUnitPointsToToolbar(object['cost']);
         addUnitToBattleGroup(count, object);
         updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
-        armyListBuilderShortSave();
+        //armyListBuilderShortSave();
     }
 }
 
 // creates the visual block for the new leader model in it's battlegroup , called from leaderSelected()
 function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, object = model object
-    console.log('addLeaderToBattleGroup function fires');
+    //console.log('addLeaderToBattleGroup function fires');
     if (object['possible_ua'] != '') {
         displayUnitAttachmentChoice(object['possible_ua'], object['id']); // pass the returned unit models to the popup builder, then this model's id
     }
@@ -240,7 +252,7 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
             innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
             innerHtml += '</span>';
             $(bgBlock).append(innerHtml);
-            armyListBuilderShortSave();
+            armyListBuilderShortSave(object["id"]);
             hideAjaxLoading();
         });
     });
@@ -258,13 +270,15 @@ function addUnitToArmy(object,pos){
             var attachments = Array;
             $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
                 var modelIdDisplay = 'model-id-'+object["id"];
+                var uaOptions = false;
                 if ($('.'+modelIdDisplay).length > 1){
                     modelIdDisplay = modelIdDisplay+'-'+$('.'+modelIdDisplay).length;
                 } else {
                     modelIdDisplay = modelIdDisplay+'-1';
                 }
                 if (data) {
-                    displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
+                    //displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
+                    uaOptions = true; console.log(data);
                 }
                 var unitBlock = '';
                 var unitType = '';
@@ -306,7 +320,11 @@ function addUnitToArmy(object,pos){
                 innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
                 innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
                 innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
-                innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div><div class="clearer"></div>';
+                innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+                if (uaOptions == true){
+                    innerHtml += '<paper-icon-button icon="visibility" class="optional-unit-attachments"></paper-icon-button>'; //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
+                }
+                innerHtml += '<div class="clearer"></div>';
                 $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
                     innerHtml += data;
                     innerHtml += '<input name="' + unitType + '-' + i + '" value="' + object["name"] + '|';
@@ -332,7 +350,7 @@ function addUnitToArmy(object,pos){
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
-                    armyListBuilderShortSave();
+                    armyListBuilderShortSave(object["id"]);
                     hideAjaxLoading();
                 });
             });
@@ -393,7 +411,7 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
-                    armyListBuilderShortSave();
+                    armyListBuilderShortSave(object["id"]);
                     hideAjaxLoading();
                 });
             });
@@ -651,5 +669,4 @@ function removeModelIdFromTempList(id){
             delete tempList['companionModel'][key]; i++;
         }
     });
-    console.log(tempList);
 }

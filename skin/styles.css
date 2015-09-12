@@ -347,6 +347,7 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 .tier-rule-applied-level2 {border-color:#777 !important;}
 .tier-rule-applied-level3 {border-color:#666 !important;}
 .tier-rule-applied-level4 {border-color:#555 !important;}
+#tier-list-req-notice.active {padding:20px 10px; margin:10px; box-shadow:#d1d1d1 1px 1px 3px 1px; -webkit-box-shadow:#d1d1d1 1px 1px 3px 1px;}
 
 /* view army lists */
 .army-list-link {cursor:pointer;}
