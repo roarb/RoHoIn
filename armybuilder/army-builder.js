@@ -166,8 +166,13 @@ function addToBattleGroup(count, object, pos){ // count = battle group 1-4, obje
 // creates the visual block for the new leader model in it's battlegroup , called from leaderSelected()
 function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, object = model object
     //console.log('addLeaderToBattleGroup function fires');
+    var uaOptions = false;
+    var modelIdDisplay = 'model-id-'+object["id"];
     if (object['possible_ua'] != '') {
-        displayUnitAttachmentChoice(object['possible_ua'], object['id']); // pass the returned unit models to the popup builder, then this model's id
+        uaOptions = true;
+        tempList['ua-'+object["id"]] = object['possible_ua'];
+        var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
+        //displayUnitAttachmentChoice(object['possible_ua'], object['id']); // pass the returned unit models to the popup builder, then this model's id
     }
     // update tempList with leader(x) = modelId
     if (count == 1){
@@ -186,6 +191,11 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
     innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
     innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
+    if (uaOptions == true){
+        innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+        innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
+        //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
+    }
     var tiers = '';
     if (object['tiers'] != ''){
         innerHtml += '<div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="displayTierListSelection(this';
@@ -217,13 +227,17 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
     showAjaxLoading();
     $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
         var modelIdDisplay = 'model-id-'+object["id"];
+        var uaOptions = false;
         if ($('.'+modelIdDisplay).length > 1){
             modelIdDisplay = modelIdDisplay+'-'+$('.'+modelIdDisplay).length;
         } else {
             modelIdDisplay = modelIdDisplay+'-1';
         }
-        if (data) {
-            displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
+        if (data){
+            uaOptions = true;
+            tempList['ua-'+object["id"]] = data;
+            var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
+            //displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
         }
         // add battlegroup model to the tempList object
         if (count == 1){
@@ -245,7 +259,12 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
         innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
         innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
         innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
-        innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div><div class="clearer"></div>';
+        innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+        if (uaOptions == true){
+            innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+            innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
+            //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
+        }
         $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
             innerHtml += data;
             innerHtml += '<input name="battlegroup-' + count + '-' + i + '" value="' + object["name"] + '|1" class="hidden ' + object["id"] + '" /></paper-material>';
@@ -277,8 +296,9 @@ function addUnitToArmy(object,pos){
                     modelIdDisplay = modelIdDisplay+'-1';
                 }
                 if (data) {
-                    //displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
-                    uaOptions = true; console.log(data);
+                    uaOptions = true;
+                    tempList['ua-'+object["id"]] = data;
+                    var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
                 }
                 var unitBlock = '';
                 var unitType = '';
@@ -322,7 +342,9 @@ function addUnitToArmy(object,pos){
                 innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
                 innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
                 if (uaOptions == true){
-                    innerHtml += '<paper-icon-button icon="visibility" class="optional-unit-attachments"></paper-icon-button>'; //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
+                    innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+                    innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
+                    //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
                 }
                 innerHtml += '<div class="clearer"></div>';
                 $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
@@ -364,13 +386,17 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
         $.each(data, function(key, object){
             $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
                 var modelIdDisplay = 'model-id-'+object["id"];
-                if ($('.'+modelIdDisplay).length > 1){
-                    modelIdDisplay = modelIdDisplay+'-'+$('.'+modelIdDisplay).length;
+                var uaOptions = false;
+                if ($('.model-id-'+object["id"]).length > 1){
+                    modelIdDisplay = modelIdDisplay+'-'+$('.model-id-'+object["id"]).length;
                 } else {
                     modelIdDisplay = modelIdDisplay+'-1';
                 }
                 if (data){
-                    displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
+                    uaOptions = true;
+                    tempList['ua-'+object["id"]] = data;
+                    var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
+                    //displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
                 }
                 removeNotice();
                 var unitBlock = $('#units-built');// need to switch this based on unit type.
@@ -392,7 +418,12 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                 innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
                 innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
                 innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
-                innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div><div class="clearer"></div>';
+                innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+                if (uaOptions == true){
+                    innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+                    innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
+                    //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
+                }
                 $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
                     innerHtml += data;
                     innerHtml += '<input name="unit-' + i + '" value="' + object["name"] + '|' + count + '" class="hidden ' + object["id"] + '" /></paper-material>';
@@ -498,15 +529,16 @@ function displayMinMaxChoice(min, max, cost, unit){ // min = minimum unit count,
 function displayUnitAttachmentChoice(attachedUnits, sourceId){ // attachedUnits = object returned from original model's possible_ua field, source is the original unit added id
     var msg = ''; var i = 0;
     var UAFAHit = false;
+    attachedUnits = tempList[attachedUnits];
     $.each(attachedUnits, function(key, val){
         // add check to see if this unit has hit it's FA already.
-        if (val['field_allowance'] <= $('.model-id-'+val["id"]).length){
+        if (val.field_allowance <= $('.model-id-'+val.id).length){
             UAFAHit = true;
         }
         if (UAFAHit == false){
             msg += '<paper-fab mini icon="close" id="close-ua-choice" class="accent"></paper-fab>';
             msg += '<paper-button raised class="add-unit-attachment" id="add-attachment-'+i+'">';
-            msg += 'Attach '+val["name"]+' for '+val["cost"]+'pts. to this unit.</paper-button><br />';
+            msg += 'Attach '+val.name+' for '+val.cost+'pts. to this unit.</paper-button><br />';
             i++;
         }
     });
@@ -514,7 +546,7 @@ function displayUnitAttachmentChoice(attachedUnits, sourceId){ // attachedUnits 
         msg += '<paper-button raised class="cancel" id="cancel-ua-choice">No Thanks</paper-button>';
         var choiceBox = '<div class="ajax-loader unit-attachment-choice" id="choice-loader">'+msg; var x = 0;
         $.each(attachedUnits, function(key, val){
-            choiceBox += '<script>$(window).ready(function(){$("#add-attachment-'+x+'").on("touchstart click", function(){addUnitAttachmentToArmy('+val["id"]+',"'+val["name"]+'",'+val["cost"]+', "'+val["title"]+'","'+sourceId+'")})});</script>';
+            choiceBox += '<script>$(window).ready(function(){$("#add-attachment-'+x+'").on("touchstart click", function(){addUnitAttachmentToArmy('+val.id+',"'+val.name+'",'+val.cost+', "'+val.title+'","'+sourceId+'")})});</script>';
             x++;
         });
         choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
@@ -526,6 +558,9 @@ function displayUnitAttachmentChoice(attachedUnits, sourceId){ // attachedUnits 
 }
 
 function addUnitAttachmentToArmy(unitId, unitName, unitCost, unitTitle, parentUnit){ // attached unit id, attached unit name, attached unit cost, attached unit title, parent model-id-XX
+    // move the paperclip and make it non-clickable
+    $('#'+parentUnit+' .unit-attachments').css({'top':'27px','z-index':2,'cursor':'default'}).attr('onclick','').attr('onmouseover','').attr('onmouseout','');
+    $('#'+parentUnit+' .mo-notice').removeClass('active').addClass('hidden');
     // locate the paper-material of the parent unit and add this just below as an attachment
     var parentPaperMaterial = $('#'+parentUnit).parent();
     // get total number of existing ua models

@@ -325,6 +325,7 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 .remove-unit-from-army paper-icon-button {padding:4px;}
 .remove-unit-from-army:hover {color:#a3403d;}
 #choice-loader .unit-count-select {width:100%; margin:5px 0;}
+.unit-attachments {float:right; position:relative; cursor:pointer; color:#555;}
 
 /* expanded single model view */
 .additional-model-info table.stats-bars {width:50%;}

@@ -621,36 +621,36 @@ class AllUnits
                 if ($modelCheck['attached_to'] == 'Faction Warcaster' || $modelCheck['attached_to'] == 'faction warcaster'){
                     if ($modelCheck['cost'] != '-'){
                         $outputModels[$i] = $modelCheck;
+						$i++;
                     }
                 }
-                $i++;
             }
         } if ($unit['type'] == 'Warlock' || $unit['type'] == 'Warlock Unit'){ // check for warlocks
             foreach ($factionHaveAttached as $modelCheck){
                 if ($modelCheck['attached_to'] == 'Faction Warlock' || $modelCheck['attached_to'] == 'faction warlock'){
                     if ($modelCheck['cost'] != '-'){
                         $outputModels[$i] = $modelCheck;
+						$i++;
                     }
                 }
-                $i++;
             }
         } if ($unit['type'] == 'Unit' || $unit['type'] == 'Character Unit'){ // check by unit type 'unit or character unit'
             foreach ($factionHaveAttached as $modelCheck){
                 if ($modelCheck['attached_to'] == 'Faction Unit' || $modelCheck['attached_to'] == 'faction unit'){
                     if ($modelCheck['cost'] != '-'){
                         $outputModels[$i] = $modelCheck;
+						$i++;
                     }
                 }
-                $i++;
             }
         }
         foreach ($factionHaveAttached as $modelCheck){ // final check - check by name
             if ($modelCheck['attached_to'] == $unit['name']){
                 if ($modelCheck['cost'] != '-'){
                     $outputModels[$i] = $modelCheck;
+					$i++;
                 }
             }
-            $i++;
         }
 
         return $outputModels;
