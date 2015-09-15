@@ -183,6 +183,10 @@ function applyBonusRules(rule,level){
 
 function defineBonusRuleLoc(rawLoc, rule, level){
     var loc = '';
+    var multiRules = false;
+    if (rule.indexOf('&&') > -1) { // there are 2 conditions - set multiRules to true.
+        multiRules = true;
+    }
     if (rawLoc == ''){
         return;
     } else if (rawLoc == 'caster'){ // rule location is the caster model
@@ -215,7 +219,7 @@ function defineBonusRuleLoc(rawLoc, rule, level){
         }
 
         else if (type == 'Battle Engine'){
-            $(battleEngineModelObjectt).each(function(key,val){ // run adjustment on Battle Engines
+            $(battleEngineModelObject).each(function(key,val){ // run adjustment on Battle Engines
                 if (typeof val != 'undefined'){
                     if (val['type'] == type){
                         loc = $('.model-id-'+val['id']);
@@ -235,6 +239,36 @@ function defineBonusRuleLoc(rawLoc, rule, level){
                 }
             });
         }
+
+    } else if (rawLoc.indexOf('Title') > -1){  // checking for modelTitle key
+        var title = rawLoc.substring(rawLoc.indexOf('==')+2);
+
+        $(unitModelObject).each(function (key, val) { // run adjustment on Units
+            if (val['title'].indexOf(title) > -1){
+                loc = $('.model-id-'+val['id']);
+                defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(soloModelObject).each(function (key, val) { // run adjustment on Solos
+            if (val['title'].indexOf(title) > -1){
+                loc = $('.model-id-'+val['id']);
+                defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(battleEngineModelObject).each(function(key,val){ // run adjustment on Battle Engines
+            if (val['title'].indexOf(title) > -1){
+                loc = $('.model-id-'+val['id']);
+                defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(bgUnitObject).each(function(key,val){ // run adjustment on Battlegroup models
+            if (val != undefined){
+                if (val['title'].indexOf(title) > -1){
+                    loc = $('.model-id-'+val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
+                }
+            }
+        });
 
     } else { // location is model id
         loc = $('.model-id-'+rawLoc);
@@ -484,22 +518,60 @@ function getLiveRequiredNotice(req){
             definedReq = val;
         }
     });
+    console.log(definedReq);
 
+    var qtyNeeded = 0;
+    var inlist = 0;
+    var stillNeed = 0;
     var liveNotice = '<span class="notice">';
-    if (definedReq.modelId.indexOf('ype') > -1){ // found a modelType or type
-        console.log('found a modelType or type');
-    } else { // assume a modelId #
-        var qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length -1)) + 1;
-        var inlist = $('#create-army-list .model-id-'+definedReq.modelId).length;
-        var stillNeed = qtyNeeded - inlist;
+
+    if (definedReq.modelId.indexOf('Type') > -1){ // found a modelType or type
+
+        qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
+        var modelType = definedReq.modelId.substr(definedReq.modelId.indexOf('==')+2);
+        if (modelType == 'Solo'){
+            inlist = $('#solos-built .unit-model').length;
+        }
+
+        stillNeed = qtyNeeded - inlist;
         if (stillNeed > 0){
             liveNotice += '<span class="req-msg req-needed">Still need '+stillNeed+' more</span>';
         } else {
             liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
         }
+
+    } else if (definedReq.modelId.indexOf('title') > -1){ // look for unitTitle
+
+        var modelTitle = definedReq.modelId.substr(definedReq.modelId.indexOf('==')+2);
+        console.log(modelTitle);
+        console.log('found a modelTitle match');
+
+    } else { // assume a modelId #
+
+        if (definedReq.modelId.indexOf('||') > -1){ // this is an or statement, multiple modelIds are valid
+            var modelItem = definedReq.modelId.split('||');
+            qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
+            $(modelItem).each(function(key, val){
+                inlist += $('#create-army-list .model-id-'+val).length;
+            });
+            stillNeed = qtyNeeded - inlist;
+            if (stillNeed > 0){
+                liveNotice += '<span class="req-msg req-needed">Still need '+stillNeed+' more</span>';
+            } else {
+                liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
+            }
+        } else { // single modelId in statement
+            qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
+            inlist = $('#create-army-list .model-id-'+definedReq.modelId).length;
+            stillNeed = qtyNeeded - inlist;
+            if (stillNeed > 0){
+                liveNotice += '<span class="req-msg req-needed">Still need '+stillNeed+' more</span>';
+            } else {
+                liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
+            }
+        }
     }
 
     liveNotice += '</span>';
-
     return liveNotice;
 }
