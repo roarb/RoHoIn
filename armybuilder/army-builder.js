@@ -201,7 +201,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
         innerHtml += '<div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="displayTierListSelection(this';
         var i = 0;
         $(object['tiers']).each(function(){ // loop through all possible tiers and display each as a new object to the displayTierListSelection function
-            innerHtml += ',\''+object["tiers"][i]["id"]+'|\'';
+            innerHtml += ','+object["tiers"][i]["id"];
             i++;
         });
         innerHtml += ')">';
@@ -223,7 +223,8 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
 }
 
 // creates a model entry under the warcaster in its battlegroup - called from addToBattleGroup()
-function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, object = model object
+function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4, object = model object, free = bool
+    console.log(free);
     showAjaxLoading();
     $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
         var modelIdDisplay = 'model-id-'+object["id"];
@@ -253,13 +254,27 @@ function addUnitToBattleGroup (count, object){ // count = battlegroup 1-4, objec
         var bgBlock = $('#battlegroup-' + count + '-built');
         var i = modelCountInCurrentBattleGroup(count);
         var innerHtml = '<span class="wrapper">';
-        innerHtml += '<paper-material elevation="1" class="child-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'"><div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
-        innerHtml += object["title"] + '</span> | <span class="points">' + object["cost"] + '</span> pts</div>';
+        innerHtml += '<paper-material elevation="1" class="';
+        if (free == true) {
+            innerHtml += 'free-child-model';
+        } else {
+            innerHtml += 'child-model';
+        }
+        innerHtml += ' model-id-'+object["id"]+'" id="'+modelIdDisplay+'"><div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+        innerHtml += object["title"] + '</span> | <span class="points">';
+        if (free == true) {
+            innerHtml += 0;
+        } else {
+            innerHtml += object["cost"];
+        }
+        innerHtml += '</span> pts</div>';
         innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
         innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
         innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
-        innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
-        innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+        if (free != true) {
+            innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+            innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+        }
         if (uaOptions == true){
             innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
             innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';

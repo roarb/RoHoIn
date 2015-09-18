@@ -1,10 +1,11 @@
-function displayTierListSelection(el,tierListId){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
+function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
     // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
-    if ($('.tiered-army-list-choice').length > 0){
-        showTierOptions();
+    var tierListIds = [tierListId1,tierListId2];
+    if (tierListId2 != undefined){
+        showTierOptions(tierListId1,tierListId2);
     } else {
-        var tierListIds = tierListId.split('|');
         $(tierListIds).each(function(key, id){
+            console.log(id);
             if (id != '') { // need to add a check for cases where there are more than one tier list option returned.
                 showAjaxLoading();
                 var msg = '';
@@ -82,8 +83,12 @@ function selectTierList(tierObject, level){
     runTierRequirements();
 }
 
-function showTierOptions(){
-    $('.tiered-army-list-choice').show();
+function showTierOptions(id1,id2){
+    var w = ($(window).width()/2)-150;
+    var h = ($(window).height()/2)-90;
+    var innerHtml = 'testing '+id1+'<br />';
+    innerHtml += 'testing '+id2;
+    $('.tiered-army-list-choice').show().css({'top':h,'left':w}).html(innerHtml);
     $('#notice-shadow').show();
 }
 
@@ -231,11 +236,10 @@ function defineBonusRuleLoc(rawLoc, rule, level){
 
         else {
             $(bgUnitObject).each(function(key,val){ // run adjustment on Battlegroup models
+                //console.log('found that the benefit applies to battlegroup models');
                 if (typeof val != 'undefined'){
-                    if (val['type'] == type){
-                        loc = $('.model-id-'+val['id']);
-                        defineBonusRuleAction(loc, rule, val['id'], level);
-                    }
+                    loc = $('.model-id-'+val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
                 }
             });
         }
@@ -277,6 +281,7 @@ function defineBonusRuleLoc(rawLoc, rule, level){
 }
 
 function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'caster'
+
     // find the model and add class 'tier-x-rule-applied'
     if (rule.indexOf('FA') > -1 ){ // check if the action is to adjust the FA
         var field = 'field_allowance';
@@ -297,16 +302,19 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
         }
     } else if (rule.indexOf('special_ability') > -1 || rule.indexOf('new_ability') > -1){ // check if the action is to add a special ability or a new ability
+        //console.log($(loc));
         var ruleMsg = rule.substr(rule.indexOf('|')+1);
         if (!$(loc).hasClass('tier-rule-applied-level'+level)){
             $(loc).addClass('tier-rule-applied-level'+level);
             // apply bonus to tempList object
             var newBenefit = {modelId: id, newAbility: ruleMsg};
+            //console.log(newBenefit);
             tempList['tierList'+level+'Ben'].push(newBenefit);
             // apply to page
             getModelDisplayAndBuildMessage(id, ruleMsg, level); // id = model id affected, ruleMsg = front facing message, level = tier level
         }
-    } else if (rule.indexOf('Cost') > -1){ // check if the action is to adjust the Cost of the unit
+    } else if (rule.indexOf('Cost') > -1 || rule.indexOf('cost') > -1){ // check if the action is to adjust the Cost of the unit
+        console.log('tier cost benefit');
         field = 'cost';
         opp = rule.substring(5,4); // gets the opperand, we're assuming this is a single character
         val = parseInt(rule.substring(6,5)); // gets the new cost value to adjust by, we're assuming this is a single character
@@ -333,6 +341,15 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
             // apply to page
             getModelObjectAndAdjusts(loc, id, field, newVal, level);
         }
+    } else if (rule.indexOf('auto_add_battlegroup') > -1){
+        $(bgUnitObject).each(function(key, val){
+           if (val != undefined){
+               if (val['id'] == id){
+                   // need to get the model object then push to addUnitToBattleGroup(1,object)
+                   addUnitToBattleGroup(1,val,true);
+               }
+           }
+        });
     }
 }
 
@@ -361,8 +378,10 @@ function getModelObjectAndAdjusts(loc, id, field, newVal, level){
     }
     if ($(loc).hasClass('battle-group-unit')) { // loop through all battle group units looking for matches to the model id - if found update the field with the newVal
         $(bgUnitObject).each(function(key,val){
-            if (val['id'] == id){
-                val[field] = newVal;
+            if (val != undefined){
+                if (val['id'] == id){
+                    val[field] = newVal;
+                }
             }
         });
     }
@@ -531,6 +550,19 @@ function getLiveRequiredNotice(req){
         var modelType = definedReq.modelId.substr(definedReq.modelId.indexOf('==')+2);
         if (modelType == 'Solo'){
             inlist = $('#solos-built .unit-model').length;
+        } else if (modelType == 'Unit') {
+            inlist = $('#units-built .unit-model').length;
+        } else if (modelType == 'Battlegroup'){
+            inlist = $('#battlegroup-1-built .child-model').length;
+        }else if (modelType.indexOf('Heavy') > -1){ // found a Heavy model type model
+            var i = 0;
+            $('#battlegroup-1-built .child-model').each(function(key, val){
+                var unitTitle = $(val).find('.unit-title').text();
+                if (unitTitle.indexOf('Heavy') > -1){
+                    i++;
+                }
+            });
+            inlist = i;
         }
 
         stillNeed = qtyNeeded - inlist;

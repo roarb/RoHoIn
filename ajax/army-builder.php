@@ -197,6 +197,8 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
         </form>
     </div>
 </div>
+<div class="tiered-army-list-choice" style="display:none;"></div>
+<div class="shadow" id="notice-shadow" style="display:none;"></div>
 
 <script>
     $(document).ready(function(){

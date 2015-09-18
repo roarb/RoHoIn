@@ -90,7 +90,7 @@
                         <span class="points-block"><strong>75 points</strong><br />Grand Melee<br />1 Caster</span>
                     </paper-button>
                 </div>
-                <div class="flex-1 horizontal layout">
+                <div class="flex-1 horizontal layout hidden">
                     <paper-button raised class="points-block-item flex-5 army-points-100" id="army-points-100">
                         <input type="radio" name="pointsValue" value="100" class="hidden" id="points-100">
                         <span class="points-block"><strong>100 points</strong><br />Grand Melee<br />1 or 2 Casters</span>
