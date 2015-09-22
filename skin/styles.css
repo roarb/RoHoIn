@@ -350,7 +350,9 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 .tier-rule-applied-level3 {border-color:#666 !important;}
 .tier-rule-applied-level4 {border-color:#555 !important;}
 #tier-list-req-notice.active {padding:20px 10px; margin:10px; box-shadow:#d1d1d1 1px 1px 3px 1px; -webkit-box-shadow:#d1d1d1 1px 1px 3px 1px;}
-.tiered-army-list-choice {width:300px; height:180px; background:#fff; position:fixed; z-index:1000; display:block; text-align:center;}
+.tiered-army-list-options {width:300px; height:180px; background:#fff; position:fixed; z-index:1000; display:block; text-align:center;}
+.caster-tier-list-choice .sub-head {font-size:20px; width:90%; margin:3px 5% 7px; border-bottom:1px solid #d1d1d1; display:inline-block; padding-bottom:4px;}
+.caster-tier-list-choice paper-button {padding:5px 0;}
 
 /* view army lists */
 .army-list-link {cursor:pointer;}

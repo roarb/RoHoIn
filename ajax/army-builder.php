@@ -197,7 +197,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
         </form>
     </div>
 </div>
-<div class="tiered-army-list-choice" style="display:none;"></div>
+<div class="tiered-army-list-options" style="display:none;"></div>
 <div class="shadow" id="notice-shadow" style="display:none;"></div>
 
 <script>
@@ -211,5 +211,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
         $('#go-back').on('touchstart click', function(){
             backToCreateArmyStepOne()
         });
-    })
+    });
+
+    var casterTierListObj = [];
 </script>

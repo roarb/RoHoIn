@@ -1,8 +1,9 @@
 function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
     // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
-    var tierListIds = [tierListId1,tierListId2];
-    if (tierListId2 != undefined){
+    var tierListIds = [tierListId1];
+    if (tierListId2 != undefined && tempList['tierListLevelSet'] == undefined){
         showTierOptions(tierListId1,tierListId2);
+        tierListIds.push(tierListId2);
     } else {
         $(tierListIds).each(function(key, id){
             console.log(id);
@@ -22,6 +23,27 @@ function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked e
                         hideAjaxLoading();
                     }
                 });
+            }
+        });
+    }
+}
+
+function displayTierListSelectionPostChoice(el,tierListId){
+    // run only after pop up tier list choice options fires and is selected.
+    if (tierListId != '') { // need to add a check for cases where there are more than one tier list option returned.
+        showAjaxLoading();
+        var msg = '';
+        var choiceBox = '<div class="ajax-loader tiered-army-list-choice" id="choice-loader">';
+        $.ajax({
+            url: '/ajax/view-tier-list-on-builder-page.php?id='+tierListId,
+            type: 'post',
+            dataType: 'html',
+            success: function(data) {
+                msg += data;
+                choiceBox += msg;
+                choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
+                $('body').append(choiceBox);
+                hideAjaxLoading();
             }
         });
     }
@@ -74,22 +96,24 @@ function selectTierList(tierObject, level){
     }, 1000, function(){
         $('.ajax-loader.tiered-army-list-choice').hide().css('opacity',1);
     });
-    $('#notice-shadow').animate({
+    $('.shadow').animate({
         opacity:0
     }, 1000, function(){
-        $('#notice-shadow').hide().css('opacity',.5);
+        $('.shadow').hide().css('opacity',.5);
     });
 
     runTierRequirements();
 }
 
-function showTierOptions(id1,id2){
-    var w = ($(window).width()/2)-150;
-    var h = ($(window).height()/2)-90;
-    var innerHtml = 'testing '+id1+'<br />';
-    innerHtml += 'testing '+id2;
-    $('.tiered-army-list-choice').show().css({'top':h,'left':w}).html(innerHtml);
-    $('#notice-shadow').show();
+function showTierOptions(id1,id2){ // get tier 1 id then name, get tier 2 id then name - assuming only ever 2 tier lists per caster
+    var innerHtml = '<div class="caster-tier-list-choice cushion"><span class="sub-head center">Select a Tier List:</span><br />';
+    $(casterTierListObj[0]).each(function(key,val){
+        if (id1 == val['id'] || id2 == val['id']){
+            innerHtml += '<paper-button class="button paper-button" raised onclick="removeNotice(), displayTierListSelectionPostChoice(this,'+val["id"]+')">'+val["name"]+'</paper-button><br />';
+        }
+    });
+    innerHtml += '</div>';
+    displayNotice(innerHtml,true);
 }
 
 function resetTierRulesToBase (){
@@ -119,6 +143,7 @@ function removeTierList(){
 function applyTierRules(tierObject, level, run){ // tierObject = tier rules in object - level = tier level chosen, run = null or 'add' if on a unit model addition call
 
     var caster = $('#model-id-'+tierObject["caster"]).parent().attr('id');
+    console.log(caster);
     var battlegroupNumber = caster.replace('battlegroup-','');
         battlegroupNumber = battlegroupNumber.replace('-built','');
     var battleGroup = '#battlegroup-'+battlegroupNumber;

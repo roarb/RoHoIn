@@ -204,6 +204,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
             innerHtml += ','+object["tiers"][i]["id"];
             i++;
         });
+        casterTierListObj.push(object["tiers"]); // load the active caster's tier object to a page variable
         innerHtml += ')">';
         innerHtml += '<paper-icon-button icon="class" class="view-tiers"></paper-icon-button><span class="mo-notice hidden">View Tier Lists</span></div>';
     }
