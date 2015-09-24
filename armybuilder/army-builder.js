@@ -225,7 +225,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
 
 // creates a model entry under the warcaster in its battlegroup - called from addToBattleGroup()
 function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4, object = model object, free = bool
-    console.log(free);
+
     showAjaxLoading();
     $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
         var modelIdDisplay = 'model-id-'+object["id"];
@@ -414,7 +414,6 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                     var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
                     //displayUnitAttachmentChoice(data, modelIdDisplay); // pass the returned unit models to the popup builder, then this model's id
                 }
-                removeNotice();
                 var unitBlock = $('#units-built');// need to switch this based on unit type.
                 $(unitBlock).show();
                 var i = modelCountInArmy();
@@ -458,6 +457,9 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
+                    console.log('fire remove() now');
+                    $('.shadow').remove();
+                    $('.unit-min-max-choice').remove();
                     armyListBuilderShortSave(object["id"]);
                     hideAjaxLoading();
                 });
@@ -538,7 +540,7 @@ function displayMinMaxChoice(min, max, cost, unit){ // min = minimum unit count,
         choiceBox += '<script>$(window).ready(function(){$("#add-min-unit").on("touchstart click", function(){addMinMaxUnitToArmy('+min+', '+costArry[0]+', '+unit["id"]+')})});</script>';
         choiceBox += '<script>$(window).ready(function(){$("#add-max-unit").on("touchstart click", function(){addMinMaxUnitToArmy('+max+', '+costArry[1]+', '+unit["id"]+')})});</script></div>';
         choiceBox += '<div class="shadow" id="notice-shadow"></div>';
-        choiceBox += '<script>$("#notice-shadow").on("touchstart click", function(){removeNotice();});</script>';
+        //choiceBox += '<script>$("#notice-shadow").on("touchstart click", function(){removeNotice();});</script>';
     $('body').append(choiceBox);
 }
 
@@ -565,10 +567,10 @@ function displayUnitAttachmentChoice(attachedUnits, sourceId){ // attachedUnits 
             choiceBox += '<script>$(window).ready(function(){$("#add-attachment-'+x+'").on("touchstart click", function(){addUnitAttachmentToArmy('+val.id+',"'+val.name+'",'+val.cost+', "'+val.title+'","'+sourceId+'")})});</script>';
             x++;
         });
-        choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
+        choiceBox += '</div><div class="shadow" id="notice-shadow">';
         choiceBox += '<script>$("#notice-shadow").on("touchstart click", function(){removeNotice();});</script>';
         choiceBox += '<script>$("#cancel-ua-choice").on("touchstart click", function(){removeNotice();});</script>';
-        choiceBox += '<script>$("#close-ua-choice").on("touchstart click", function(){removeNotice();});</script>';
+        choiceBox += '<script>$("#close-ua-choice").on("touchstart click", function(){removeNotice();});</script></div>';
         $('body').append(choiceBox);
     }
 }

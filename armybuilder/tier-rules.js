@@ -1,9 +1,13 @@
 function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
     // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
+    console.log($('#choice-loader').length);
     var tierListIds = [tierListId1];
     if (tierListId2 != undefined && tempList['tierListLevelSet'] == undefined){
         showTierOptions(tierListId1,tierListId2);
         tierListIds.push(tierListId2);
+    } else if($('#choice-loader').length > 0){
+        $('#tier-choice-shadow').show();
+        $('#choice-loader').show();
     } else {
         $(tierListIds).each(function(key, id){
             console.log(id);
@@ -18,7 +22,7 @@ function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked e
                     success: function(data) {
                         msg += data;
                         choiceBox += msg;
-                        choiceBox += '</div><div class="shadow" id="notice-shadow"></div>';
+                        choiceBox += '</div><div class="tier-choice-shadow" id="tier-choice-shadow"></div>';
                         $('body').append(choiceBox);
                         hideAjaxLoading();
                     }
@@ -96,10 +100,10 @@ function selectTierList(tierObject, level){
     }, 1000, function(){
         $('.ajax-loader.tiered-army-list-choice').hide().css('opacity',1);
     });
-    $('.shadow').animate({
+    $('.tier-choice-shadow').animate({
         opacity:0
     }, 1000, function(){
-        $('.shadow').hide().css('opacity',.5);
+        $('.tier-choice-shadow').hide().css('opacity',.5);
     });
 
     runTierRequirements();
