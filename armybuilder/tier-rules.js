@@ -1,6 +1,5 @@
 function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked element, tierListId = the id of the available tiered lists separated by |
     // check first if another .tiered-army-list-choice window was populated if so, reshow that , if not build one.
-    console.log($('#choice-loader').length);
     var tierListIds = [tierListId1];
     if (tierListId2 != undefined && tempList['tierListLevelSet'] == undefined){
         showTierOptions(tierListId1,tierListId2);
@@ -33,9 +32,12 @@ function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked e
 }
 
 function displayTierListSelectionPostChoice(el,tierListId){
+    $('#notice-shadow').remove();
+    console.log('remove shadow fires');
     // run only after pop up tier list choice options fires and is selected.
     if (tierListId != '') { // need to add a check for cases where there are more than one tier list option returned.
         showAjaxLoading();
+        $('#tier-choice-shadow').hide();
         var msg = '';
         var choiceBox = '<div class="ajax-loader tiered-army-list-choice" id="choice-loader">';
         $.ajax({
@@ -105,6 +107,13 @@ function selectTierList(tierObject, level){
     }, 1000, function(){
         $('.tier-choice-shadow').hide().css('opacity',.5);
     });
+    if ($('.shadow').length > 0){
+        $('.shadow').animate({
+            opacity:0
+        }, 1000, function(){
+            $('.shadow').remove();
+        })
+    }
 
     runTierRequirements();
 }
@@ -461,7 +470,7 @@ function runTierRequirements(shortSave){ // process all tier requirement on shor
         $(tierNotice).find('.tier-1-notice').html('<strong>Tier 1 Requirements:</strong> '+tempList["tierObject"]["tier1_req_front"]+' <span class="count-left"></span>');
     }
     if (shortSave === true){
-        console.log('found to be shortsave function');
+        console.log('run from shortsave function');
         if (tempList['tierListLevelSet'] > 1){
             var req2Needed = $(tierNotice).find('.tier-2-notice .req-msg');
             var notice = getLiveRequiredNotice(tempList['tierList2Req']);
@@ -572,26 +581,61 @@ function getLiveRequiredNotice(req){
     var inlist = 0;
     var stillNeed = 0;
     var liveNotice = '<span class="notice">';
+    var i = 0;
 
     if (definedReq.modelId.indexOf('Type') > -1){ // found a modelType or type
+        var modelType = definedReq.modelId.substr(definedReq.modelId.indexOf('==') + 2);
 
-        qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
-        var modelType = definedReq.modelId.substr(definedReq.modelId.indexOf('==')+2);
-        if (modelType == 'Solo'){
-            inlist = $('#solos-built .unit-model').length;
-        } else if (modelType == 'Unit') {
-            inlist = $('#units-built .unit-model').length;
-        } else if (modelType == 'Battlegroup'){
-            inlist = $('#battlegroup-1-built .child-model').length;
-        }else if (modelType.indexOf('Heavy') > -1){ // found a Heavy model type model
-            var i = 0;
-            $('#battlegroup-1-built .child-model').each(function(key, val){
-                var unitTitle = $(val).find('.unit-title').text();
-                if (unitTitle.indexOf('Heavy') > -1){
-                    i++;
+        if (definedReq.ruleString.indexOf('unique_qty') > -1) { // checks for unique entries of a certain type
+
+            var unqUnitNames = [], prev = '';
+            qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)); // assuming =
+
+            if (modelType.indexOf('Light') > -1) { // found a Light model type model
+                var unitName = []; var x = 0;
+                $('#battlegroup-1-built .child-model').each(function (key, val) {
+                    if ($(val).find('.unit-title').text().indexOf('Light') > -1) {
+                        unitName[x] = $(val).find('.unit-name').text();
+                        x++;
+                    }
+                });
+            }
+
+            unitName.sort();
+            for (var y = 0; y < unitName.length; y++){
+                if (unitName[y] !== prev){
+                    unqUnitNames.push(unitName[y]);
                 }
-            });
-            inlist = i;
+                prev = unitName[y];
+            }
+            inlist = unqUnitNames.length;
+
+        } else if (definedReq.ruleString.indexOf('qty>') > -1){ // checks for qty>x
+
+            qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1; // assuming <
+            if (modelType == 'Solo') {
+                inlist = $('#solos-built .unit-model').length;
+            } else if (modelType == 'Unit') {
+                inlist = $('#units-built .unit-model').length;
+            } else if (modelType == 'Battlegroup') {
+                inlist = $('#battlegroup-1-built .child-model').length;
+            } else if (modelType.indexOf('Heavy') > -1) { // found a Heavy model type model
+                $('#battlegroup-1-built .child-model').each(function (key, val) {
+                    var unitTitle = $(val).find('.unit-title').text();
+                    if (unitTitle.indexOf('Heavy') > -1) {
+                        i++;
+                    }
+                });
+                inlist = i;
+            } else if (modelType.indexOf('Light') > -1) { // found a Light model type model
+                $('#battlegroup-1-built .child-model').each(function (key, val) {
+                    var unitTitle = $(val).find('.unit-title').text();
+                    if (unitTitle.indexOf('Light') > -1) {
+                        i++;
+                    }
+                });
+                inlist = i;
+            }
         }
 
         stillNeed = qtyNeeded - inlist;
@@ -601,9 +645,9 @@ function getLiveRequiredNotice(req){
             liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
         }
 
-    } else if (definedReq.modelId.indexOf('title') > -1){ // look for unitTitle
+    } else if (definedReq.modelId.indexOf('title') > -1) { // look for unitTitle
 
-        var modelTitle = definedReq.modelId.substr(definedReq.modelId.indexOf('==')+2);
+        var modelTitle = definedReq.modelId.substr(definedReq.modelId.indexOf('==') + 2);
         console.log(modelTitle);
         console.log('found a modelTitle match');
 
