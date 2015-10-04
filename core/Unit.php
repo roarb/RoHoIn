@@ -1096,6 +1096,7 @@ class AllUnits
 		elseif ($unit['type'] == "Battle Engine"):
 			$unitsList = $this->getBattleEngineUnits();
 		endif;
+
         $averages = $this->getAveragesWarcasterWarlock($unitsList);
 		$outputHtml = '';
 		$outputHtml .= '<div class="cushion">';

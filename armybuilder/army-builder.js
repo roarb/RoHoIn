@@ -58,7 +58,6 @@ function setActivePoints(val, e){
 function startArmyListBuilder(){
     // remove these two lines when you want this running
     //displayNotice('This section is not complete yet, please check back later.',true);
-    //return;
 
     // need to add in a validator, if that's true then proceed.
     showAjaxLoading();
@@ -111,6 +110,74 @@ function leaderSelected(count, object){ // count = battle group 1-4, object = mo
     $('#battle-engine-picker').show();
     addLeaderToBattleGroup(count,object);
     //armyListBuilderShortSave();
+}
+
+// add a model to the list by model id
+function addNewModelToList(rule){
+    $.getJSON('/ajax/get-unit-by-id.php?id='+rule, function(data) {
+        // set variables
+        var model = data[0];
+        $.get('/ajax/unit-model-stats.php?id='+model.id, function(stats) {
+            var pickerBlock = '',
+                wrapperClass = '',
+                modelBlock = '',
+                addUnitToArmy = '';
+            // find the correct picker block
+            if (model.type.indexOf('Unit') > -1) { // found a unit model
+                pickerBlock = $('#unit-picker');
+                unitModelObject.push(model);
+                wrapperClass += 'unit unit-model-option model-id-'+model.id;
+                addUnitToArmy += 'addUnitToArmy(unitModelObject, '+(unitModelObject.length - 1)+');';
+            } else if (model.type.indexOf('Heavy') > -1 || model.type.indexOf('Light') > -1 || model.type.indexOf('Lesser') > -1){ // found a battle group model - assuming battle group one
+                pickerBlock = $('#battlegroup-1 .battlegroup-1');
+                bgUnitObject.push(model);
+                wrapperClass += 'unit battle-group-unit model-id-'+model.id;
+                addUnitToArmy += 'addToBattleGroup(1, bgUnitObject, '+(bgUnitObject.length - 1)+');';
+            } else if (model.type.indexOf('Solo') > -1){ // found a solo model
+                pickerBlock = $('#solo-picker');
+                soloModelObject.push(model);
+                wrapperClass += 'unit solo-model model-id-'+model.id;
+                addUnitToArmy += 'addUnitToArmy(soloModelObject, '+(soloModelObject.length - 1)+');';
+            } else if (model.type.indexOf('Engine') > -1){ // found a battle engine
+                pickerBlock = $('#battle-engine-picker');
+                battleEngineModelObject.push(model);
+                wrapperClass += 'unit battle-engine-model model-id-'+model.id;
+                addUnitToArmy += 'addUnitToArmy(battleEngineModelObject, '+(battleEngineModelObject.length - 1)+');';
+            }
+
+            // apply updates to the correct block
+            modelBlock += '<div class="'+wrapperClass+'">';
+            modelBlock += '<div class="add-model-to-list" onclick="'+addUnitToArmy+'" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+            modelBlock += '<paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>';
+            modelBlock += '<span class="mo-notice hidden">Add to List</span></div>';
+            modelBlock += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
+            modelBlock += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
+            modelBlock += '<span class="mo-notice hidden">View Stats</span></div>';
+            modelBlock += '<div class="focus-circle">';
+            modelBlock += '<span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>';
+            modelBlock += '<span class="field-allowance">';
+            if (model.field_allowance == 'U'){
+                modelBlock += '&#x221e;</span></div>';
+            } else {
+                modelBlock += model.field_allowance + '</span></div>';
+            }
+            modelBlock += '<label for="'+ model.name+'" class="unit-label">';
+            modelBlock += '<span class="unit-name">'+ model.name+'</span><br /><span class="unit-title">'+ model.title+'</span></label>';
+            modelBlock += '<div class="unit-cost">';
+            var pts = model.cost.split(',');
+            modelBlock += pts[0]+'pts';
+            if (pts[1] != undefined){
+                modelBlock += ' | '+pts[1]+'pts';
+            }
+            modelBlock += '</div>';
+            modelBlock += '<div class="clearer"></div>';
+            modelBlock += '<div class="additional-model-info" style="display:none;">';
+            modelBlock += stats+'</div></div>';
+
+            $(pickerBlock).append(modelBlock);
+
+        });
+    });
 }
 
 function applyBGPointsToToolbar(bg){

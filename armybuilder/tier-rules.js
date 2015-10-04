@@ -212,9 +212,9 @@ function tierFocusedModelDisplay(section,rules){
         rules = rules.split('][');
         $(rules).each(function(key, val){
             var models = val.split(',');
-            if (models[1] == 99){ // unlimited models can be added for this model id
+            //if (models[1] == 99){ // unlimited models can be added for this model id --- no longer a need for this check
                 $(section).find('.model-id-'+models[0]).addClass('in-tier');
-            }
+            //}
         })
     }
 }
@@ -230,8 +230,9 @@ function defineBonusRuleLoc(rawLoc, rule, level){
     if (rule.indexOf('&&') > -1) { // there are 2 conditions - set multiRules to true.
         multiRules = true;
     }
-    if (rawLoc == ''){
-        return;
+    if (rawLoc.indexOf('newListModel') > -1){
+        addNewModelToList(rule);
+
     } else if (rawLoc == 'caster'){ // rule location is the caster model
         loc = $('#battlegroup-1-built .leader');
         defineBonusRuleAction(loc, rule, rawLoc, level);
@@ -282,35 +283,64 @@ function defineBonusRuleLoc(rawLoc, rule, level){
             });
         }
 
-    } else if (rawLoc.indexOf('Title') > -1){  // checking for modelTitle key
-        var title = rawLoc.substring(rawLoc.indexOf('==')+2);
+    } else if (rawLoc.indexOf('Title') > -1) {  // checking for modelTitle key
+        var title = rawLoc.substring(rawLoc.indexOf('==') + 2);
 
         $(unitModelObject).each(function (key, val) { // run adjustment on Units
-            if (val['title'].indexOf(title) > -1){
-                loc = $('.model-id-'+val['id']);
+            if (val['title'].indexOf(title) > -1) {
+                loc = $('.model-id-' + val['id']);
                 defineBonusRuleAction(loc, rule, val['id'], level);
             }
         });
         $(soloModelObject).each(function (key, val) { // run adjustment on Solos
-            if (val['title'].indexOf(title) > -1){
-                loc = $('.model-id-'+val['id']);
+            if (val['title'].indexOf(title) > -1) {
+                loc = $('.model-id-' + val['id']);
                 defineBonusRuleAction(loc, rule, val['id'], level);
             }
         });
-        $(battleEngineModelObject).each(function(key,val){ // run adjustment on Battle Engines
-            if (val['title'].indexOf(title) > -1){
-                loc = $('.model-id-'+val['id']);
+        $(battleEngineModelObject).each(function (key, val) { // run adjustment on Battle Engines
+            if (val['title'].indexOf(title) > -1) {
+                loc = $('.model-id-' + val['id']);
                 defineBonusRuleAction(loc, rule, val['id'], level);
             }
         });
-        $(bgUnitObject).each(function(key,val){ // run adjustment on Battlegroup models
-            if (val != undefined){
-                if (val['title'].indexOf(title) > -1){
-                    loc = $('.model-id-'+val['id']);
+        $(bgUnitObject).each(function (key, val) { // run adjustment on Battlegroup models
+            if (val != undefined) {
+                if (val['title'].indexOf(title) > -1) {
+                    loc = $('.model-id-' + val['id']);
                     defineBonusRuleAction(loc, rule, val['id'], level);
                 }
             }
         });
+
+    } else if (rawLoc.indexOf('allModels') > -1) { // apply rule to all models possible to add to list
+        loc = $('#battlegroup-1-built .leader'); // define rules on caster
+        defineBonusRuleAction(loc, rule, rawLoc, level);
+        $(unitModelObject).each(function (key, val) { // define rules on unitModels
+            if (typeof val != 'undefined') {
+                    loc = $('.model-id-' + val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(battleEngineModelObject).each(function(key,val){ // run adjustment on Battle Engines
+            if (typeof val != 'undefined'){
+                    loc = $('.model-id-'+val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(bgUnitObject).each(function(key,val){ // run adjustment on Battlegroup models
+            if (typeof val != 'undefined'){
+                loc = $('.model-id-'+val['id']);
+                defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+        $(soloModelObject).each(function (key, val) { // define rules on soloModels
+            if (typeof val != 'undefined') {
+                    loc = $('.model-id-' + val['id']);
+                    defineBonusRuleAction(loc, rule, val['id'], level);
+            }
+        });
+
 
     } else { // location is model id
         loc = $('.model-id-'+rawLoc);

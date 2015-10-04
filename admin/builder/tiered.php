@@ -128,7 +128,7 @@
                                     <textarea required id="tier-2-bonus-front" name="tier-2-bonus-front" rows="4" placeholder="Bonus Description for Tier 2"></textarea>
                                 </paper-input-container>
                                 <paper-input-container>
-                                    <label>Tier 1 Bonus</label>
+                                    <label>Tier 2 Bonus</label>
                                     <input id="tier-2-bonus" name="tier-2-bonus" is="iron-input">
                                 </paper-input-container>
                                 <paper-input-container>
