@@ -21,6 +21,21 @@ class AllFactions
 		}
 		return $factionsBuild;
 	}
+
+    public function getFactionIdByName($name){
+        $core = new AllCore();
+        $conn = $core->connect();
+
+        $query = "SELECT id FROM faction WHERE name = '".$name."'";
+        $return = $conn->query($query);
+        $returnId = '';
+        if ($return->num_rows > 0) {
+            while($row = $return->fetch_assoc()) {
+                $returnId = $row;
+            }
+        }
+        return $returnId;
+    }
 	
 	function saveFaction($data){
 		$core = new AllCore();

@@ -121,21 +121,22 @@ class AllUnits
 		return $unitsBuild;
 	}
 	
-	public function getFactionByUnitName($unitName){
-		$core = new AllCore();
-		$conn = $core->connect();
-		
-		$unitName = "'".$unitName."'";
-		
-		$factionSql = "SELECT faction FROM core WHERE name=".$unitName." ORDER BY faction";
-		$factionResult = $conn->query($factionSql);
-		$faction = '';
-		foreach ($factionResult as $result){
-			$faction = $result['faction'];
-		}
-		return $faction;
-	}
-	
+	public function getFactionByUnitName($unitName)
+    {
+        $core = new AllCore();
+        $conn = $core->connect();
+
+        $unitName = "'" . $unitName . "'";
+
+        $factionSql = "SELECT faction FROM core WHERE name=" . $unitName . " ORDER BY faction";
+        $factionResult = $conn->query($factionSql);
+        $faction = '';
+        foreach ($factionResult as $result) {
+            $faction = $result['faction'];
+        }
+        return $faction;
+    }
+
 	// get only the name for all units
 	function getAllUnitsName(){
 		$core = new AllCore();
