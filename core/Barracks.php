@@ -100,8 +100,10 @@ class Barracks
 		// add in unit class for getting the faction of the units
 		include 'Unit.php';
 		$unit = new AllUnits;
+        //include 'Faction.php';
+        $allFactions = new AllFactions;
 		
-		$sql = "SELECT * FROM barracks WHERE user_id = ".$userId." ORDER BY id";
+		$sql = "SELECT * FROM barracks WHERE user_id = ".$userId." AND owned_qty > 0 ORDER BY id";
 		$modelsResult = $conn->query($sql);
 		$finalResuts = ''; $i = 0;
 		
@@ -110,6 +112,9 @@ class Barracks
 			// get the faction of the unit in this row
 			$unitFaction = $unit->getFactionByUnitName($row['unit_name']);
 			$finalResults[$i]['faction'] = $unitFaction;
+            $unitFactionId = $allFactions->getFactionIdByName($unitFaction);
+            $finalResults[$i]['faction_id'] = intval($unitFactionId['id']);
+            $finalResults[$i]['model_link'] = "/playtest/single-unit.php?name=".$row['unit_name'];
 			$i++;
 		}
 		if ($finalResults == ''){

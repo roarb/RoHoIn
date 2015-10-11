@@ -7,6 +7,18 @@
     include '../core/Barracks.php';
     $barracks = new Barracks;
     $allFactions = new AllFactions; ?>
+    <script src="/skin/jsgrid/src/jsgrid.core.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.load-indicator.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.load-strategies.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.sort-strategies.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.text.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.number.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.select.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.checkbox.js"></script>
+    <script src="/skin/jsgrid/src/jsgrid.field.control.js"></script>
+    <link rel="stylesheet" type="text/css" href="/skin/jsgrid/css/jsgrid.css" />
+    <link rel="stylesheet" type="text/css" href="/skin/jsgrid/css/theme.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Your RoHo.in Barracks</title>
 </head>
@@ -29,7 +41,7 @@
                     <img src="/skin/images/roho-logo.png" alt="Reactive Online Hobby Organizational . Interface" /></a>
             </div>
         </paper-toolbar>
-        <?php if (isset($_SESSION['user_name'])): ?>
+        <?php /*if (isset($_SESSION['user_name'])): ?>
             <?php $models = $barracks->getAllUserModels($_SESSION['user_id']) ?>
             <paper-toolbar class="front-toolbar faction-select-toolbar secondary">
                 <?php // get all faction and cross reference with the factions returned for this users $models ?>
@@ -42,9 +54,10 @@
                     <?php $i++; ?>
                 <?php endforeach; ?>
             </paper-toolbar>
-        <?php endif; ?>
-        <div class="info-block cushion">
+        <?php endif;*/ ?>
+        <div class="info-block cushion" style="overflow:scroll; padding-bottom:15px;">
             <?php if (isset($_SESSION['user_name'])): ?>
+                <?php $models = $barracks->getAllUserModels($_SESSION['user_id']) ?>
                 <paper-material elevation="1" class="cushion">
                     <paper-material elevation="1" class="barracks cushion">
                         <p class="large">Welcome <?php echo $_SESSION['user_name'] ?>, this is your Barracks dashboard.</p>
@@ -58,7 +71,80 @@
                             <p>Below you'll see all of your models in your barracks. The toolbar on top will allow you narrow your barracks to select Factions.</p>
                         <?php endif; ?>
                     </paper-material>
-                    <table class="barracks-entries">
+                    <div id="jsGrid"></div>
+
+                    <script>
+                        (function() {
+
+                            var db = {
+
+                                loadData: function(filter) {
+                                    return $.grep(this.models, function(model) {
+                                        return (!filter.name || model.name.indexOf(filter.name) > -1)
+                                            && (!filter.faction || model.faction === filter.faction)
+                                            //&& (!filter.Country || client.Country === filter.Country)
+                                            && (!filter.owned_qty || model.owned_qty === filter.owned_qty)
+                                            && (!filter.painted_qty || model.painted_qty === filter.painted_qty);
+                                    });
+                                }
+
+                            };
+
+                            window.db = db;
+
+                            db.factions = [
+                                { Name: "", Id: '' },
+                                { Name: "Circle Orboros", Id: 8 },
+                                { Name: "Convergence of Cyriss", Id: 1 },
+                                { Name: "Cryx", Id: 2 },
+                                { Name: "Cygnar", Id: 3 },
+                                { Name: "Khador", Id: 4 },
+                                { Name: "Legion of Everblight", Id: 9 },
+                                { Name: "Mercenaries", Id: 7 },
+                                { Name: "Minions", Id: 12 },
+                                { Name: "Retribution of Scyrah", Id: 5 },
+                                { Name: "Skorne", Id: 10 },
+                                { Name: "The Protectorate of Menoth", Id: 6 },
+                                { Name: "Trollbloods", Id: 11 }
+                            ];
+
+                            db.models = <?php echo json_encode($models) ?>;
+
+                        }());
+                        //console.log(<?php echo json_encode($models) ?>);
+                        console.log(db);
+                        $(function() {
+
+                            $("#jsGrid").jsGrid({
+                                height: "90%",
+                                width: "100%",
+
+                                filtering: true,
+                                editing: false,
+                                sorting: true,
+                                paging: true,
+                                autoload: true,
+
+                                pageSize: 15,
+                                pageButtonCount: 5,
+
+                                controller: db,
+
+                                fields: [
+                                    { title: "Name", name: "unit_name", type: "text", width: 150, link: "model_link" }, // need to make the line clickable - src to the single model viewer
+                                    { title: "Owned", name: "owned_qty", type: "text", width: 50 },
+                                    { title: "Painted", name: "painted_qty", type: "text", width:50 },
+                                    { title: "Faction", name: "faction_id", type: "select", items: db.factions, valueField: "Id", textField: "Name" }//,
+                                    //{ type: "control" } // default jsGrid is control to show the edit/delete options - look to building a custom edit if the list is owner is viewing
+                                ]
+                            });
+
+                        });
+                    </script>
+
+
+                    <hr />
+                    <?php /*<table class="barracks-entries">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -79,7 +165,7 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                         </tbody>
-                    </table>
+                    </table>*/ ?>
                 </paper-material>
             <?php else: ?>
                 <paper-material elevation="1" class="cushion">
