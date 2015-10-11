@@ -384,30 +384,48 @@ function defineBonusRuleAction(loc, rule, id, level){ // loc = model Id or 'cast
     } else if (rule.indexOf('Cost') > -1 || rule.indexOf('cost') > -1){ // check if the action is to adjust the Cost of the unit
         console.log('tier cost benefit');
         field = 'cost';
+        var currentVal = [], unitObjNewVal = '';
         opp = rule.substring(5,4); // gets the opperand, we're assuming this is a single character
-        val = parseInt(rule.substring(6,5)); // gets the new cost value to adjust by, we're assuming this is a single character
+        var aVal = parseInt(rule.substring(6,5)); // gets the new cost value to adjust by, we're assuming this is a single character
         if (!$(loc).hasClass('tier-rule-applied-level'+level)) {
             $(loc).addClass('tier-rule-applied-level'+level);
-            currentVal = parseInt($(loc).find('.unit-cost').text());
+            var costField = $(loc).find('.unit-cost').text();
+            if (costField.indexOf('|') > -1){ // unit with split costs
+                var costFields = costField.split('|');
+                $(costFields).each(function(key,val){
+                   currentVal[key] = parseInt(val);
+                });
+            } else {
+                currentVal = parseInt(costField);
+            }
             var adjustVal = '';
-            if (opp == '+') {
-                newVal = currentVal + val;
-                adjustVal = '+'+val;
-            }
-            else if (opp == '=') {
-                newVal = val;
-                adjustVal = val;
-            }
-           else if (opp == '-') {
-                newVal = currentVal - val;
-                adjustVal = '-'+val;
-            }
-            $(loc).find('.unit-cost').text(newVal + 'pts.');
+            $(currentVal).each(function(key,cVal){
+                if (opp == '+') {
+                    newVal = cVal + aVal;
+                    adjustVal = '+'+aVal;
+                }
+                else if (opp == '=') {
+                    newVal = aVal;
+                    adjustVal = aVal;
+                }
+                else if (opp == '-') {
+                    newVal = cVal - aVal;
+                    adjustVal = '-'+aVal;
+                }
+                if (key == 0){
+                    $(loc).find('.unit-cost').text(newVal + 'pts');
+                    unitObjNewVal = newVal;
+                } else {
+                    $(loc).find('.unit-cost').append(' | '+newVal + 'pts');
+                    unitObjNewVal += ', '+newVal;
+                }
+            });
+
             // apply bonus to tempList object
-            var newBenefit = {modelId: id, field: field, newValue: newVal, adjustValue: adjustVal};
+            var newBenefit = {modelId: id, field: field, newValue: unitObjNewVal, adjustValue: aVal};
             tempList['tierList'+level+'Ben'].push(newBenefit);
             // apply to page
-            getModelObjectAndAdjusts(loc, id, field, newVal, level);
+            getModelObjectAndAdjusts(loc, id, field, unitObjNewVal, level);
         }
     } else if (rule.indexOf('auto_add_battlegroup') > -1){
         $(bgUnitObject).each(function(key, val){
@@ -483,10 +501,20 @@ function getModelDisplayAndBuildMessage(id, ruleMsg, level){
 }
 
 function processTierReq(tierReq, level){
+    console.log(tempList);
     tierReq = tierReq.substring(1,(tierReq.length -1)); // remove the opening and closing brackets [  and ]
     var tierBreakdown = tierReq.split(',');
-    var newReq = {modelId: tierBreakdown[0], ruleString: tierBreakdown[1]};
-    tempList['tierList'+level+'Req'][level] = (newReq);
+    //if (tierBreakdown[0].indexOf('|') > -1){
+    //    var modelIds = tierBreakdown[0].split('|');
+    //    console.log(modelIds);
+    //    $(modelIds).each(function(key, val){
+    //        console.log(key+' - '+val);
+    //        tempList['tierList'+level+'Req'].push({modelId: val, ruleString: tierBreakdown[1]});
+    //    });
+    //} else {
+        tempList['tierList'+level+'Req'][0] = ({modelId: tierBreakdown[0], ruleString: tierBreakdown[1]});
+    //}
+    console.log(tempList);
     armyListBuilderShortSave();
 }
 
@@ -683,18 +711,34 @@ function getLiveRequiredNotice(req){
 
     } else { // assume a modelId #
 
-        if (definedReq.modelId.indexOf('||') > -1){ // this is an or statement, multiple modelIds are valid
+        if (definedReq.modelId.indexOf('||') > -1) { // this is an or statement, multiple modelIds are valid
             var modelItem = definedReq.modelId.split('||');
             qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
-            $(modelItem).each(function(key, val){
-                inlist += $('#create-army-list .model-id-'+val).length;
+            $(modelItem).each(function (key, val) {
+                inlist += $('#create-army-list .model-id-' + val).length;
             });
             stillNeed = qtyNeeded - inlist;
-            if (stillNeed > 0){
-                liveNotice += '<span class="req-msg req-needed">Still need '+stillNeed+' more</span>';
+            if (stillNeed > 0) {
+                liveNotice += '<span class="req-msg req-needed">Still need ' + stillNeed + ' more</span>';
             } else {
-                liveNotice += '<span class="req-msg req-fulfilled">All set with  '+inlist+'</span>';
+                liveNotice += '<span class="req-msg req-fulfilled">All set with  ' + inlist + '</span>';
             }
+        } else if (definedReq.modelId.indexOf('&') > -1) { // need the matching qty for each model id
+            console.log(req);
+            var modelIds = definedReq.modelId.split('&'), modelNeed = [];
+            qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
+            //qtyNeeded = (parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1 ) * modelIds.length;
+            $(modelIds).each(function(key,modelId){
+                inlist = $('#create-army-list .model-id-'+modelId).length;
+                modelNeed[key] = qtyNeeded - inlist;
+                stillNeed += qtyNeeded - inlist;
+            });
+            if (stillNeed > 0){
+                liveNotice += '<span class="req-msg req-needed">Still need ( '+modelNeed[0]+' | '+modelNeed[1]+' ) more</span>'; // assuming just 2 models in this situation
+            } else {
+                liveNotice += '<span class="req-msg req-fulfilled">Required models added.</span>';
+            }
+
         } else { // single modelId in statement
             qtyNeeded = parseInt(definedReq.ruleString.substr(definedReq.ruleString.length - 1)) + 1;
             inlist = $('#create-army-list .model-id-'+definedReq.modelId).length;

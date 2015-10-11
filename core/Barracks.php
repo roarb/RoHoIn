@@ -113,7 +113,7 @@ class Barracks
 			$unitFaction = $unit->getFactionByUnitName($row['unit_name']);
 			$finalResults[$i]['faction'] = $unitFaction;
             $unitFactionId = $allFactions->getFactionIdByName($unitFaction);
-            $finalResults[$i]['faction_id'] = intval($unitFactionId['id']);
+            $finalResults[$i]['faction_id'] = $unitFactionId['id'];
             $finalResults[$i]['model_link'] = "/playtest/single-unit.php?name=".$row['unit_name'];
 			$i++;
 		}

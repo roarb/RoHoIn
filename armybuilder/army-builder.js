@@ -366,6 +366,7 @@ function addUnitToArmy(object,pos){
     if (canThisModelBeAddedToArmy(object) == true) {
         // check for min - max unit possibilities - if it has then, launch pop up to ask min or max then on selection finish add to army with addMinMaxUnitToArmy()
         if (parseInt(object['purchased_low']) < parseInt(object['purchased_high'])) {
+            console.log(object);
             displayMinMaxChoice(object['purchased_low'], object['purchased_high'], object['cost'], object);
         } else { // if there is no min / max option, add the unit to the army
             showAjaxLoading();
@@ -594,6 +595,7 @@ function backToCreateArmyStepOne(){
 }
 
 function displayMinMaxChoice(min, max, cost, unit){ // min = minimum unit count, max = maximum unit count, unit = unit object
+    console.log(cost);
     var costArry = cost.split(',');
     var leader = ' ';
     if (unit['unit_leader'] != null){

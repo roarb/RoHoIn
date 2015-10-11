@@ -58,6 +58,7 @@
         <div class="info-block cushion" style="overflow:scroll; padding-bottom:15px;">
             <?php if (isset($_SESSION['user_name'])): ?>
                 <?php $models = $barracks->getAllUserModels($_SESSION['user_id']) ?>
+                <?php $factions = $allFactions->getAllFactions() ?>
                 <paper-material elevation="1" class="cushion">
                     <paper-material elevation="1" class="barracks cushion">
                         <p class="large">Welcome <?php echo $_SESSION['user_name'] ?>, this is your Barracks dashboard.</p>
@@ -79,9 +80,10 @@
                             var db = {
 
                                 loadData: function(filter) {
+                                    console.log(filter);
                                     return $.grep(this.models, function(model) {
                                         return (!filter.name || model.name.indexOf(filter.name) > -1)
-                                            && (!filter.faction || model.faction === filter.faction)
+                                            && (!filter.faction_id || model.faction_id === filter.faction_id)
                                             //&& (!filter.Country || client.Country === filter.Country)
                                             && (!filter.owned_qty || model.owned_qty === filter.owned_qty)
                                             && (!filter.painted_qty || model.painted_qty === filter.painted_qty);
@@ -92,27 +94,14 @@
 
                             window.db = db;
 
-                            db.factions = [
-                                { Name: "", Id: '' },
-                                { Name: "Circle Orboros", Id: 8 },
-                                { Name: "Convergence of Cyriss", Id: 1 },
-                                { Name: "Cryx", Id: 2 },
-                                { Name: "Cygnar", Id: 3 },
-                                { Name: "Khador", Id: 4 },
-                                { Name: "Legion of Everblight", Id: 9 },
-                                { Name: "Mercenaries", Id: 7 },
-                                { Name: "Minions", Id: 12 },
-                                { Name: "Retribution of Scyrah", Id: 5 },
-                                { Name: "Skorne", Id: 10 },
-                                { Name: "The Protectorate of Menoth", Id: 6 },
-                                { Name: "Trollbloods", Id: 11 }
-                            ];
+                            var factionsDb = <?php echo json_encode($factions) ?>;
+                            db.factions = $.merge([ { name: "", id: "" } ], factionsDb);
 
                             db.models = <?php echo json_encode($models) ?>;
 
                         }());
-                        //console.log(<?php echo json_encode($models) ?>);
-                        console.log(db);
+                        //console.log(<?php echo json_encode($factions) ?>);
+                        //console.log(db);
                         $(function() {
 
                             $("#jsGrid").jsGrid({
@@ -134,7 +123,7 @@
                                     { title: "Name", name: "unit_name", type: "text", width: 150, link: "model_link" }, // need to make the line clickable - src to the single model viewer
                                     { title: "Owned", name: "owned_qty", type: "text", width: 50 },
                                     { title: "Painted", name: "painted_qty", type: "text", width:50 },
-                                    { title: "Faction", name: "faction_id", type: "select", items: db.factions, valueField: "Id", textField: "Name" }//,
+                                    { title: "Faction", name: "faction_id", type: "select", items: db.factions, valueField: "id", textField: "name" }//,
                                     //{ type: "control" } // default jsGrid is control to show the edit/delete options - look to building a custom edit if the list is owner is viewing
                                 ]
                             });
