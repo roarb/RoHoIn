@@ -1,4 +1,8 @@
 <?php include('../login/index-start.php'); ?>
+<?php if ($_SESSION['user_id'] != ''){
+    $loggedIn = true;
+    $creatorName = $_SESSION['user_name'];
+} ?>
 <html lang="en">
 <head>
     <?php include '../admin/header.php';
@@ -43,8 +47,8 @@
             <div id="army-name" class="flex-1">
                 <?php //<h2 class="full-page-title">Create a New Army List</h2> ?>
                 <paper-input-container style="width:80%; margin:0 10%;">
-                    <label>Army Name</label>
-                    <input required id="army-list-name" name="army-list-name" is="iron-input">
+                    <label>Give Your Army A Name</label>
+                    <input required id="army-list-name" name="army-list-name" is="iron-input" placeholder="<?php if ($loggedIn == true){echo $creatorName.'\'s Army';} ?>" />
                 </paper-input-container>
             </div>
             <div id="army-faction">
@@ -54,7 +58,7 @@
                     <div class="flex-1 horizontal layout">
                 <?php endif; ?>
                 <div class="faction-block flex-6">
-                    <img src="/skin/images/faction/<?php echo str_replace(' ','',$faction['name']) ?>.png" class="faction-icon" onclick="setActiveFaction('<?php echo str_replace(' ','',$faction['name']) ?>',event);" />
+                    <img src="/skin/images/faction/<?php echo str_replace(' ','',$faction['name']) ?>.png" class="faction-icon" onclick="setActiveFaction('<?php echo str_replace(' ','',$faction['name']) ?>',event, '<?php echo $faction['name'] ?>');" />
                 </div>
                 <?php if ($i == 5 || $i == 11): ?>
                     </div>
@@ -134,6 +138,7 @@
     tempList['bg4Models'] = [];
     tempList['merArmyModels'] = [];
     tempList['mercbg1Models'] = [];
+    tempList['points_used'] = 0;
     tempList['uaModel'] = [];
     tempList['companionModel'] = [];
     tempList['tierList1Ben'] = [];
@@ -144,6 +149,7 @@
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
     tempList['tierList4Req'] = [];
+    tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
 
     $('#start-army-list-builder').on('touchstart click', function(){
         // first run validation on army selected and points selected

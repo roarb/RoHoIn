@@ -31,6 +31,10 @@ function displayTierListSelection(el,tierListId1,tierListId2){ // el = clicked e
     }
 }
 
+function previewTierListSelection(el, tierListId1, tierListId2){
+
+}
+
 function displayTierListSelectionPostChoice(el,tierListId){
     $('#notice-shadow').remove();
     console.log('remove shadow fires');

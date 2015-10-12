@@ -40,11 +40,19 @@ function addBattleGroup(faction, count){
 }
 
 // functions for creating new army lists
-function setActiveFaction(id, e){
+function setActiveFaction(id, e, name){
     $('.faction-block').removeClass('active');
     $(e.target).parent().addClass('active');
     $('#'+id).attr('checked', 'checked');
     tempList['faction'] = id;
+    // update army name with the faction name
+    var cArmyName = $('#army-list-name').attr('placeholder');
+    if (cArmyName.indexOf('Army') > -1){
+        cArmyName = cArmyName.substring(0, (cArmyName.indexOf("'s")+3)) + name + " Army";
+    } else {
+        cArmyName = id+" Army";
+    }
+    $('#army-list-name').attr('placeholder', cArmyName);
 }
 
 
@@ -53,6 +61,15 @@ function setActivePoints(val, e){
     $(e).addClass('primary-focus');
     $('#points-'+val).attr('checked', 'checked');
     tempList['points'] = val;
+    // update army name with the faction name
+    var cArmyName = $('#army-list-name').attr('placeholder');
+    //if (cArmyName.indexOf('Army') > -1){
+    //    console.log($(name));
+    //    cArmyName = cArmyName.substring(0, (cArmyName.indexOf("'s")+3)) + name + " Army";
+    //} else {
+        //cArmyName = id+" Army";
+    //}
+    //$('#army-list-name').attr('placeholder', cArmyName);
 }
 
 function startArmyListBuilder(){
@@ -195,28 +212,52 @@ function applyBGPointsToToolbar(bg){
 
 // add a model/unit points cost to the army total, flag with class error if it exceeds the army total
 function addUnitPointsToToolbar(points){
-    var totalPoints = $('#total-points-allowed').text(),
-        startingPoints = $('#points-count-up'),
-        hiddenPoints = $('#input-army-points');
-    var endingPoints = parseInt(startingPoints.text()) + parseInt(points);
-    if (endingPoints <= parseInt(totalPoints)){
-        var htmlOutput = '<span>'+endingPoints+'</span>';
-        $(startingPoints).html(htmlOutput);
+    tempList['points_used'] = parseInt(points) + tempList['points_used'];
+    var totalPoints = $('#total-points-allowed').text();
+    if (tempList['points_used'] <= parseInt(totalPoints)){
+        var htmlOutput = '<span>'+tempList['points_used']+'</span>';
+        $('#points-count-up').html(htmlOutput);
     }
     else {
-        var htmlOutput = '<span class="error">'+endingPoints+'</span>';
-        $(startingPoints).html(htmlOutput);
+        var htmlOutput = '<span class="error">'+tempList['points_used']+'</span>';
+        $('#points-count-up').html(htmlOutput);
     }
-    $(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
+
+    //////////// old code /////////
+    //var totalPoints = $('#total-points-allowed').text(),
+    //    startingPoints = $('#points-count-up'),
+    //    hiddenPoints = $('#input-army-points');
+    //var endingPoints = parseInt(startingPoints.text()) + parseInt(points);
+    //if (endingPoints <= parseInt(totalPoints)){
+    //    var htmlOutput = '<span>'+endingPoints+'</span>';
+    //    $(startingPoints).html(htmlOutput);
+    //}
+    //else {
+    //    var htmlOutput = '<span class="error">'+endingPoints+'</span>';
+    //    $(startingPoints).html(htmlOutput);
+    //}
+    //$(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
 }
 
 // add a model/unit points cost to the army total, flag with class error if it exceeds the army total
 function removeUnitPointsFromToolbar(points){
-    var startingPoints = $('#points-count-up'),
-        hiddenPoints = $('#input-army-points');
-    var endingPoints = parseInt(startingPoints.text()) - parseInt(points);
-    $(startingPoints).html(endingPoints); // update new points total in toolbar.
-    $(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
+    tempList['points_used'] = tempList['points_used'] - parseInt(points);
+    var totalPoints = $('#total-points-allowed').text();
+    if (tempList['points_used'] <= parseInt(totalPoints)){
+        var htmlOutput = '<span>'+tempList['points_used']+'</span>';
+        $('#points-count-up').html(htmlOutput);
+    }
+    else {
+        var htmlOutput = '<span class="error">'+tempList['points_used']+'</span>';
+        $('#points-count-up').html(htmlOutput);
+    }
+
+    ///////// old code /////////
+    //var startingPoints = $('#points-count-up'),
+    //    hiddenPoints = $('#input-army-points');
+    //var endingPoints = parseInt(startingPoints.text()) - parseInt(points);
+    //$(startingPoints).html(endingPoints); // update new points total in toolbar.
+    //$(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
 }
 
 // add a model to a warcaster's battlegroup - called from battlegroup-build
@@ -518,14 +559,13 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                     }
                     innerHtml += '</span>';
                     $(unitBlock).append(innerHtml);
-                    addUnitPointsToToolbar(object['cost']);
+                    addUnitPointsToToolbar(cost);
                     updateFAonAddedUnit(object);
                     if (typeof tierList !== 'undefined') { // check if a tier list has been defined
                         var tierStr = $('#display-army-tier span').text();
                         var tier = tierStr.substr(tierStr.length -1);
                         applyTierRules(tierList, tier, 'add'); // tierList = tier object, tier = tier level selected, 'add' means this is on a unit model addition run
                     }
-                    console.log('fire remove() now');
                     $('.shadow').remove();
                     $('.unit-min-max-choice').remove();
                     armyListBuilderShortSave(object["id"]);
@@ -749,6 +789,7 @@ function moNoticeOut(el){
 }
 
 function removeModelIdFromTempList(id){
+    console.log(tempList);
     $(tempList['armyModels']).each(function(key, val){
         var i = 0; // make sure to only remove 1 element from the list.
         if (val.modelId == id && i == 0){ /// removing just the first found match may lead to some unit size option varients that are mismatched on a save / reload
