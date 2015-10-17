@@ -1,16 +1,20 @@
 <?php include('../login/index-start.php'); ?>
-<?php if ($_SESSION['user_id'] != ''){
-    $loggedIn = true;
-    $creatorName = $_SESSION['user_name'];
-} ?>
+
 <html lang="en">
 <head>
-    <?php include '../admin/header.php';
+    <?php
+    include '../admin/header.php';
     include '../core/ArmyBuilder.php';
     include '../core/Faction.php';
     include '../core/Core.php';
     $allFactions = new AllFactions();
-    $factions = $allFactions->getAllFactions(); ?>
+    $factions = $allFactions->getAllFactions();
+    $core = new AllCore();
+    if ($core->getLoggedIn()){
+        $loggedIn = true;
+        $creatorName = $_SESSION['user_name'];
+    }
+    ?>
     <script src="army-builder.js"></script>
     <script src="tier-rules.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -48,7 +52,7 @@
                 <?php //<h2 class="full-page-title">Create a New Army List</h2> ?>
                 <paper-input-container style="width:80%; margin:0 10%;">
                     <label>Give Your Army A Name</label>
-                    <input required id="army-list-name" name="army-list-name" is="iron-input" placeholder="<?php if ($loggedIn == true){echo $creatorName.'\'s Army';} ?>" />
+                    <input required id="army-list-name" name="army-list-name" is="iron-input" value="<?php if ($loggedIn == true){echo $creatorName.'\'s Army';} ?>" />
                 </paper-input-container>
             </div>
             <div id="army-faction">
@@ -124,7 +128,7 @@
         </div>
         <paper-toast id="faction-error" text="Please Choose a Faction"></paper-toast>
         <paper-toast id="points-error" text="Please Choose a Points Value"></paper-toast>
-        <paper-toast id="single-caster-error" text="I'm sorry, we're still in beta phase and can only create armies with a single battlegroup. Please check back again in a few weeks"></paper-toast>
+        <paper-toast id="single-caster-error" text="I'm sorry, we're still in beta phase and can only create armies with a single battlegroup. Please check back again in the future"></paper-toast>
     </paper-header-panel>
 </paper-drawer-panel>
 
@@ -149,6 +153,9 @@
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
     tempList['tierList4Req'] = [];
+    tempList['publicList'] = 1;
+    tempList['barracksModels'] = 0;
+    tempList['paintedBarracksModels'] = 0;
     tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
 
     $('#start-army-list-builder').on('touchstart click', function(){

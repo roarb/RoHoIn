@@ -321,6 +321,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $faction = "'".$faction."'";
         $units = "SELECT *
         FROM core
@@ -349,6 +356,15 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
                 $i++;
             }
         } else {
@@ -381,6 +397,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $faction = "'".$faction."'";
         $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Unit' OR  type = 'Character Unit' OR  type = 'Weapon Crew Unit' OR  type = 'Cavalry Unit' ) ORDER BY  name" ;
         $unitsResult = $conn->query($units);
@@ -392,6 +415,15 @@ class AllUnits
                 // remove cost '-' units from this list
                 if ($row['cost'] != '-') {
                     $unitsBuild[$i] = $row;
+					if ($loggedIn){
+						$barracksModels = $barracks->getAllUserModels($userId);
+						foreach ($barracksModels as $modelItem){
+							if ($modelItem['model_id'] == $row['id']){
+								$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+								$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+							}
+						}
+					}
                     $i++;
                 }
             }
@@ -425,6 +457,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $faction = "'".$faction."'";
         $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Solo' OR  type = 'Character Solo' ) ORDER BY name" ;
         $unitsResult = $conn->query($units);
@@ -436,6 +475,15 @@ class AllUnits
                 // remove cost '-' solos from this list
                 if ($row['cost'] != '-') {
                     $unitsBuild[$i] = $row;
+					if ($loggedIn){
+						$barracksModels = $barracks->getAllUserModels($userId);
+						foreach ($barracksModels as $modelItem){
+							if ($modelItem['model_id'] == $row['id']){
+								$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+								$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+							}
+						}
+					}
                     $i++;
                 }
             }
@@ -469,6 +517,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $faction = "'".$faction."'";
         $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND type = 'Battle Engine' ORDER BY  name" ;
         $unitsResult = $conn->query($units);
@@ -478,6 +533,15 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
                 $i++;
             }
         } else {

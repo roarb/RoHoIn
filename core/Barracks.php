@@ -37,7 +37,7 @@ class Barracks
 				return 'This unit has been updated to '.$count.' '.$typeMessage.'.';
 			} 
 			else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+				echo "Error: <br>" . $conn->error;
 			}
 			
 			$conn->close();	
@@ -98,7 +98,7 @@ class Barracks
 		$core = new AllCore();
 		$conn = $core->connect();
 		// add in unit class for getting the faction of the units
-		include 'Unit.php';
+		//include 'Unit.php';
 		$unit = new AllUnits;
         //include 'Faction.php';
         $allFactions = new AllFactions;
@@ -115,6 +115,7 @@ class Barracks
             $unitFactionId = $allFactions->getFactionIdByName($unitFaction);
             $finalResults[$i]['faction_id'] = $unitFactionId['id'];
             $finalResults[$i]['model_link'] = "/playtest/single-unit.php?name=".$row['unit_name'];
+			$finalResults[$i]['model_id'] = $unit->getUnitIdByName($row['unit_name']);
 			$i++;
 		}
 		if ($finalResults == ''){

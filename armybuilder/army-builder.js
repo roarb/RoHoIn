@@ -46,13 +46,13 @@ function setActiveFaction(id, e, name){
     $('#'+id).attr('checked', 'checked');
     tempList['faction'] = id;
     // update army name with the faction name
-    var cArmyName = $('#army-list-name').attr('placeholder');
+    var cArmyName = $('#army-list-name').attr('value');
     if (cArmyName.indexOf('Army') > -1){
         cArmyName = cArmyName.substring(0, (cArmyName.indexOf("'s")+3)) + name + " Army";
     } else {
-        cArmyName = id+" Army";
+        cArmyName = name+" Army";
     }
-    $('#army-list-name').attr('placeholder', cArmyName);
+    $('#army-list-name').attr('value', cArmyName);
 }
 
 
@@ -832,4 +832,19 @@ function removeModelIdFromTempList(id){
             delete tempList['companionModel'][key]; i++;
         }
     });
+}
+
+function useOnlyBarracksModels(bool, obj){
+    if (bool == true){
+        $('.all-units-panel .unit').addClass('barracks-active');
+        $('.all-units-panel .single-caster').addClass('barracks-active');
+        tempList['barracksModelsOwned'] = obj;
+        $(obj).each(function(key, val){
+            $('.model-id-'+val.model_id).addClass('in-barracks');
+        })
+    } else {
+        $('.all-units-panel .unit').removeClass('barracks-active').removeClass('in-barracks');
+        $('.all-units-panel .single-caster').removeClass('barracks-active').removeClass('in-barracks');
+    }
+    console.log(tempList);
 }

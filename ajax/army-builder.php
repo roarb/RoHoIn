@@ -5,11 +5,15 @@
  * Date: 5/3/2015
  * Time: 8:20 PM
  */
-
+session_start();
 include '../core/Core.php';
 include '../core/Unit.php';
+include '../core/Barracks.php';
+include '../core/Faction.php';
 $allUnits = new AllUnits();
-
+$Core = new AllCore();
+$Barracks = new Barracks();
+$loggedIn = $Core->getLoggedIn();
 $faction = $_GET['faction'];
 $points = $_GET['points'];
 $name = $_GET['name'];
@@ -76,8 +80,19 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                         <span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>
                         <span class="field-allowance"><?php if ($unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $unit['field_allowance']; ?><?php endif; ?></span>
                     </div>
+                    <div class="model-image">
+                        <?php // need to make thumbnail images here a future priority for page load speed ?>
+                        <?php echo $allUnits->getUnitImageName($unit['name']) ?>
+                    </div>
                     <label for="<?php echo $unit['name'] ?>" class="unit-label">
-                        <span class="unit-name"><?php echo $unit['name'] ?></span><br /><span class="unit-title"><?php echo $unit['title'] ?></span>
+                        <span class="unit-name"><?php echo $unit['name'] ?></span><br />
+                        <span class="unit-title"><?php echo $unit['title'] ?></span><br />
+                        <?php if ($loggedIn): ?>
+                            <div class="barracks-qty-wrapper">
+                                <span class="owned-qty">Owned: <?php if (isset($unit['owned_models'])){echo $unit['owned_models'];} else {echo '0';} ?></span> -
+                                <span class="painted-qty">Painted: <?php if (isset($unit['painted_models'])){echo $unit['painted_models'];} else {echo '0';} ?></span>
+                            </div>
+                        <?php endif; ?>
                     </label>
                     <div class="unit-cost"><?php $pts = explode(',', $unit['cost']); echo $pts[0]; ?>pts
                     <?php if ($pts[1] != ''): echo ' | ' . $pts[1]; ?>pts<?php endif; ?></div>
@@ -108,10 +123,25 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     </div>
                     <div class="focus-circle">
                         <span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>
-                        <span class="field-allowance"><?php if ($solo['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $solo['field_allowance']; ?><?php endif; ?></span>
+                        <span class="field-allowance">
+                            <?php if ($solo['field_allowance'] == 'U'): echo '&#x221e;'; ?>
+                            <?php else: echo $solo['field_allowance']; ?>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                    <div class="model-image">
+                        <?php // need to make thumbnail images here a future priority for page load speed ?>
+                        <?php echo $allUnits->getUnitImageName($solo['name']) ?>
                     </div>
                     <label for="<?php echo $solo['name'] ?>" class="unit-label">
-                        <span class="unit-name"><?php echo $solo['name'] ?></span><br /><span class="unit-title"><?php echo $solo['title'] ?></span>
+                        <span class="unit-name"><?php echo $solo['name'] ?></span><br />
+                        <span class="unit-title"><?php echo $solo['title'] ?></span><br />
+                        <?php if ($loggedIn): ?>
+                            <div class="barracks-qty-wrapper">
+                                <span class="owned-qty">Owned: <?php if (isset($solo['owned_models'])){echo $solo['owned_models'];} else {echo '0';} ?></span> -
+                                <span class="painted-qty">Painted: <?php if (isset($solo['painted_models'])){echo $solo['painted_models'];} else {echo '0';} ?></span>
+                            </div>
+                        <?php endif; ?>
                     </label>
                     <div class="unit-cost"><?php echo $solo['cost']?> pts</div>
                     <div class="clearer"></div>
@@ -144,8 +174,19 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                             <span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>
                             <span class="field-allowance"><?php if ($battleEngine['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $battleEngine['field_allowance']; ?><?php endif; ?></span>
                         </div>
+                        <div class="model-image">
+                            <?php // need to make thumbnail images here a future priority for page load speed ?>
+                            <?php echo $allUnits->getUnitImageName($battleEngine['name']) ?>
+                        </div>
                         <label for="<?php echo $battleEngine['name'] ?>" class="unit-label">
-                            <span class="unit-name"><?php echo $battleEngine['name'] ?></span><br /><span class="unit-title"><?php echo $battleEngine['title'] ?></span>
+                            <span class="unit-name"><?php echo $battleEngine['name'] ?></span><br />
+                            <span class="unit-title"><?php echo $battleEngine['title'] ?></span><br />
+                            <?php if ($loggedIn): ?>
+                                <div class="barracks-qty-wrapper">
+                                    <span class="owned-qty">Owned: <?php if (isset($battleEngine['owned_models'])){echo $battleEngine['owned_models'];} else {echo '0';} ?></span> -
+                                    <span class="painted-qty">Painted: <?php if (isset($battleEngine['painted_models'])){echo $battleEngine['painted_models'];} else {echo '0';} ?></span>
+                                </div>
+                            <?php endif; ?>
                         </label>
                         <div class="unit-cost"><?php echo $battleEngine['cost']?> pts</div>
                         <div class="clearer"></div>
@@ -186,6 +227,12 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     <label style="margin-right:10px;">Save as Public Army List</label><paper-toggle-button id="public-list-toggle" checked></paper-toggle-button>
                     <input id="public-input" name="public" value="1" class="hidden" />
                 </paper-switch-container>
+                <?php if ($Core->getLoggedIn()): ?>
+                    <paper-switch-container>
+                        <label style="margin-right:10px;">Use only models from your Barracks</label><paper-toggle-button id="barracks-models-toggle"></paper-toggle-button>
+                        <input id="barracks-models-input" name="barracks-models" value="0" class="hidden" />
+                    </paper-switch-container>
+                <?php endif; ?>
                 <paper-input-container style="padding:0 20px;">
                     <textarea rows="4" id="notes" name="notes" placeholder="Army Notes:"></textarea>
                 </paper-input-container>
@@ -204,7 +251,25 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
     $(document).ready(function(){
         $('#public-list-toggle').on('touchstart click', function(){
             toggleCheckbox('#public-input');
+            if (tempList['publicList'] == 1){
+                tempList['publicList'] = 0;
+            } else {
+                tempList['publicList'] = 1;
+            }
         });
+        <?php if ($Core->getLoggedIn()): ?>
+            $('#barracks-models-toggle').on('touchstart click', function(){
+                toggleCheckbox('#barracks-models-input');
+                var barracksModels = <?php echo json_encode($Barracks->getAllUserModels($Core->getUserId())) ?>;
+                if (tempList['barracksModels'] == 1){
+                    useOnlyBarracksModels(false, '');
+                    tempList['barracksModels'] = 0;
+                } else {
+                    useOnlyBarracksModels(true, barracksModels);
+                    tempList['barracksModels'] = 1;
+                }
+            });
+        <?php endif; ?>
         $('#submit').on('touchstart click', function(){
             submitForm('#create-army-list');
         });

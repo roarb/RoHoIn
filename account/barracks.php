@@ -5,6 +5,7 @@
     include '../core/Core.php';
     include '../core/Faction.php';
     include '../core/Barracks.php';
+    include '../core/Unit.php';
     $barracks = new Barracks;
     $allFactions = new AllFactions; ?>
     <script src="/skin/jsgrid/src/jsgrid.core.js"></script>
