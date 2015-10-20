@@ -266,7 +266,7 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #army-name paper-input-container {padding:25px 0;}
 #display-army-points, #display-army-name, #display-faction, #display-army-tier {padding:12px 0; color:#f3ffe2; font-weight:bold; text-align:center;}
 #army-list-name {font-size:26px; text-align:center;}
-
+#start-building .paper-button {padding:18px 50px; font-size:1.2em; font-weight:bold;}
 .army-builder-content .faction-block {padding:10px; text-align:center;}
 .army-builder-content .faction-block .faction-icon {max-width:65%; cursor:pointer; opacity:.6;}
 .army-builder-content .faction-block .faction-icon:hover, .army-builder-content .faction-block.active .faction-icon {max-width:65%; cursor:pointer; opacity:1;}
@@ -291,7 +291,8 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #ajax-armybuilder .unit.active.full {color:#f3ffe2; background:#eb7f00;}
 #ajax-armybuilder .all-units-panel, #ajax-armybuilder .added-to-list-panel {margin:0 5px;}
 .warcaster .single-caster, .battlegroup .unit, .units .unit, .solos .unit, .battle-engines .unit {padding:10px; display:block; background:#fff; border:1px solid #d1d1d1; margin:30px 5px; height:36px; clear:both;}
-#ajax-armybuilder .focus-circle, #ajax-armybuilder .battlegroup .single-caster .focus-circle {color:#333; float:left; overflow:hidden; height:90px; width:90px; background:#fff; border-radius:60px; position:relative; top:-23px; left:-24px; border:1px solid #333; line-height:60px; text-align:center; margin-right:-15px;}
+#ajax-armybuilder .focus-circle {color:#333; float:left; overflow:hidden; height:66px; width:66px; background:#fff; border-radius:60px; position:relative; top:-13px; left:0; border:1px solid #d1d1d1; line-height:66px; text-align:center; margin-right:0;}
+#ajax-armybuilder .battlegroup .single-caster .focus-circle {color:#333; float:left; overflow:hidden; height:90px; width:90px; background:#fff; border-radius:60px; position:relative; top:-23px; left:-24px; border:1px solid #333; line-height:60px; text-align:center; margin-right:-15px;}
 #ajax-armybuilder .focus-circle.warcaster-portrait img {width:100px; margin-top:-5px; margin-left:-5px; border-radius:60px;}
 #ajax-armybuilder .battlegroup .focus-circle, #ajax-armybuilder .units .focus-circle, #ajax-armybuilder .solos .focus-circle, #ajax-armybuilder .battle-engines .focus-circle {float:right;}
 #ajax-armybuilder .add-model-to-list {float:right; position:relative;}

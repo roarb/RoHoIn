@@ -48,8 +48,7 @@
             </div>
         </paper-toolbar>
         <div class="vertical layout info-block army-builder-content">
-            <div id="army-name" class="flex-1">
-                <?php //<h2 class="full-page-title">Create a New Army List</h2> ?>
+            <div id="army-name">
                 <paper-input-container style="width:80%; margin:0 10%;">
                     <label>Give Your Army A Name</label>
                     <input required id="army-list-name" name="army-list-name" is="iron-input" value="<?php if ($loggedIn == true){echo $creatorName.'\'s Army';} ?>" />

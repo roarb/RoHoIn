@@ -223,6 +223,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $faction = "'".$faction."'";
         $units = "SELECT *
         FROM core
@@ -241,6 +248,15 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
                 $i++;
             }
         } else {
