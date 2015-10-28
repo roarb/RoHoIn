@@ -114,7 +114,7 @@ function hideArmyListCreationStartScreen(faction, points, armyName){
 
 // add a leader to its battlegroup
 function leaderSelected(e, count, object){ // count = battle group 1-4, object = model object
-    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+    if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
     }
@@ -138,6 +138,7 @@ function addNewModelToList(rule){
     $.getJSON('/ajax/get-unit-by-id.php?id='+rule, function(data) {
         // set variables
         var model = data[0];
+        console.log(model);
         $.get('/ajax/unit-model-stats.php?id='+model.id, function(stats) {
             var pickerBlock = '',
                 wrapperClass = '',
@@ -246,7 +247,7 @@ function removeUnitPointsFromToolbar(points){
 
 // add a model to a warcaster's battlegroup - called from battlegroup-build
 function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, object = model object
-    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+    if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
     }
@@ -282,7 +283,9 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     }
 
     var bgBlock = $('#battlegroup-'+count+'-built');
-    var innerHtml = '<paper-material elevation="1" class="leader" id="model-id-'+object["id"]+'"><div class="model-added-basics"><span class="unit-name">'+object["name"]+'</span><br /><span class="unit-title">';
+    var innerHtml = '<paper-material elevation="1" class="leader" id="model-id-'+object["id"]+'">';
+    innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
+    innerHtml += '<div class="model-added-basics"><span class="unit-name">'+object["name"]+'</span><br /><span class="unit-title">';
     innerHtml += object['title'] + '</span></div>';
     innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
     innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
@@ -357,7 +360,9 @@ function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4,
         } else {
             innerHtml += 'child-model';
         }
-        innerHtml += ' model-id-'+object["id"]+'" id="'+modelIdDisplay+'"><div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+        innerHtml += ' model-id-'+object["id"]+'" id="'+modelIdDisplay+'">';
+        innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
+        innerHtml += '<div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
         innerHtml += object["title"] + '</span> | <span class="points">';
         if (free == true) {
             innerHtml += 0;
@@ -391,7 +396,7 @@ function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4,
 
 // adds units / solos / battle engines to the army
 function addUnitToArmy(e, object,pos){
-    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+    if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
     }
@@ -432,7 +437,9 @@ function addUnitToArmy(e, object,pos){
                 $(unitBlock).show();
                 var i = modelCountInArmy();
                 var innerHtml = '<span class="wrapper">';
-                innerHtml += '<paper-material elevation="1" class="unit-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'"><div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+                innerHtml += '<paper-material elevation="1" class="unit-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'">';
+                innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
+                innerHtml += '<div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
                 if (object['purchased_low'] > 0) {
                     if (object['unit_leader'] == 'included') {
                         innerHtml += object['purchased_low'] + ' Grunts &amp; Leader for <span class="points">' + object['cost'] + '</span> pts</span>';
@@ -519,7 +526,9 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                 $(unitBlock).show();
                 var i = modelCountInArmy();
                 var innerHtml = '<span class="wrapper">';
-                innerHtml += '<paper-material elevation="1" class="unit-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'"><div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+                innerHtml += '<paper-material elevation="1" class="unit-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'">';
+                innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
+                innerHtml += '<div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
                 if (object['unit_leader'] == 'included') {
                     innerHtml += count + ' Grunts &amp; Leader for <span class="points">' + cost + '</span> pts</span>';
                 } else {

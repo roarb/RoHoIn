@@ -248,6 +248,7 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
 				if ($loggedIn){
 					$barracksModels = $barracks->getAllUserModels($userId);
 					foreach ($barracksModels as $modelItem){
@@ -372,6 +373,7 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row["name"]);
 				if ($loggedIn){
 					$barracksModels = $barracks->getAllUserModels($userId);
 					foreach ($barracksModels as $modelItem){
@@ -431,6 +433,7 @@ class AllUnits
                 // remove cost '-' units from this list
                 if ($row['cost'] != '-') {
                     $unitsBuild[$i] = $row;
+					$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
 					if ($loggedIn){
 						$barracksModels = $barracks->getAllUserModels($userId);
 						foreach ($barracksModels as $modelItem){
@@ -491,6 +494,7 @@ class AllUnits
                 // remove cost '-' solos from this list
                 if ($row['cost'] != '-') {
                     $unitsBuild[$i] = $row;
+					$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
 					if ($loggedIn){
 						$barracksModels = $barracks->getAllUserModels($userId);
 						foreach ($barracksModels as $modelItem){
@@ -549,6 +553,7 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
 				if ($loggedIn){
 					$barracksModels = $barracks->getAllUserModels($userId);
 					foreach ($barracksModels as $modelItem){
@@ -680,6 +685,7 @@ class AllUnits
             $i = 0;
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
                 $i++;
             }
         } else {
