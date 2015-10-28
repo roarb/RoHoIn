@@ -308,7 +308,7 @@ function expandUnitDisplay(el){
     var openHeight = $(addBlock).height() + 80;
     if ($(addBlock).hasClass('open')){
         $(el).parent().animate({
-            height: 28
+            height: 36
         }, 1000);
         $(addBlock).animate({
             opacity: 0

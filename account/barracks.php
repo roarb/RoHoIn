@@ -81,11 +81,10 @@
                             var db = {
 
                                 loadData: function(filter) {
-                                    console.log(filter);
+
                                     return $.grep(this.models, function(model) {
                                         return (!filter.name || model.name.indexOf(filter.name) > -1)
                                             && (!filter.faction_id || model.faction_id === filter.faction_id)
-                                            //&& (!filter.Country || client.Country === filter.Country)
                                             && (!filter.owned_qty || model.owned_qty === filter.owned_qty)
                                             && (!filter.painted_qty || model.painted_qty === filter.painted_qty);
                                     });
@@ -101,8 +100,7 @@
                             db.models = <?php echo json_encode($models) ?>;
 
                         }());
-                        //console.log(<?php echo json_encode($factions) ?>);
-                        //console.log(db);
+
                         $(function() {
 
                             $("#jsGrid").jsGrid({
@@ -132,30 +130,6 @@
                         });
                     </script>
 
-
-                    <hr />
-                    <?php /*<table class="barracks-entries">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Owned</th>
-                            <th>Painted</th>
-                            <th>Faction</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($models as $model): ?>
-                            <?php if ($model['owned_qty'] > 0): ?>
-                                <tr class="show <?php if ($model['painted_qty'] > 0){echo 'painted';}?> <?php echo str_replace(' ', '-', $model['faction']) ?>">
-                                    <td class="name"><a href="http://roho.in/playtest/single-unit.php?name=<?php echo $model['unit_name'] ?>" title="<?php echo $model['unit_name'] ?>"><?php echo $model['unit_name'] ?></a></td>
-                                    <td class="owned"><?php echo $model['owned_qty'] ?></td>
-                                    <td class="painted"><?php echo $model['painted_qty'] ?></td>
-                                    <td class="faction"><?php echo $model['faction'] ?></td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>*/ ?>
                 </paper-material>
             <?php else: ?>
                 <paper-material elevation="1" class="cushion">

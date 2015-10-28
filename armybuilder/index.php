@@ -28,17 +28,17 @@
         </paper-toolbar>
         <div class="horizontal layout info-block">
             <div class="flex-2">
-                <paper-button raised class="full-button" onclick="location.href='/armybuilder/create.php'">
+                <paper-button raised class="full-button link-armybuilder-new" onclick="location.href='/armybuilder/create.php'">
                     Create a New Army List
                 </paper-button>
             </div>
             <div class="flex-2">
                 <?php if ($_SESSION['user_id'] != ''): ?>
-                    <paper-button raised class="full-button" onclick="location.href='/armybuilder/view-owned.php'">
+                    <paper-button raised class="full-button link-armybuilder-mylists" onclick="location.href='/armybuilder/view-owned.php'">
                         View My Army Lists
                     </paper-button>
                 <?php endif; ?>
-                <paper-button raised class="full-button" onclick="location.href='/armybuilder/view-public.php'">
+                <paper-button raised class="full-button link-armybuilder-publiclists" onclick="location.href='/armybuilder/view-public.php'">
                     View Public Army Lists
                 </paper-button>
             </div>

@@ -581,10 +581,12 @@
             if($.isFunction(field.cellRenderer)) {
                 $result = $(field.cellRenderer(fieldValue, item));
             } else {
-                //console.log(field);
                 if (typeof field.link != "undefined") { // rob addition to check for link field and apply a link to the cell
-                    $result = $("<td>").append('<a href="'+field.link+'">'+field.itemTemplate(fieldValue, item)+'</a>');// this won't work, we'll need to save a new field to be the link directly
-                    //console.log(field.link+' link field found');
+                    if (typeof item.model_link != "undefined"){ // this is for displaying the model link in the Barracks
+                        $result = $('<td>').append('<a href="'+item.model_link+'" class="line-item-link">'+field.itemTemplate(fieldValue, item)+'</a>');
+                    } else if (typeof item.armyList_link != "undefined"){ // this is for displaying the army link in the army list viewer
+                        $result = $("<td>").append('<a href="'+item.armyList_link+'"  class="line-item-link">'+field.itemTemplate(fieldValue, item)+'</a>');
+                    }
                 } else {
                     $result = $("<td>").append(field.itemTemplate ? field.itemTemplate(fieldValue, item) : fieldValue);
                 }

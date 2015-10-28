@@ -36,7 +36,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
     <?php foreach ($warcasters as $warcaster): ?>
         <script>var unitObject<?php echo $i ?> = <?php echo json_encode($warcaster) ?>;</script>
         <div class="single-caster unit <?php echo $warcaster['id'].'-'.$count ?> model-id-<?php echo $warcaster['id'] ?>">
-            <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageName($warcaster['name']) ?></div>
+            <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?></div>
             <label for="<?php echo $warcaster['name'] ?>" class="warcaster<?php echo $count ?>">
                 <span class="unit-name"><?php echo $warcaster['name'] ?></span><br />
                 <span class="unit-title"><?php echo $warcaster['title'] ?></span><div class="bg-points">BG+<?php echo $warcaster['bg_points']?></div><br />
@@ -47,7 +47,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                     </div>
                 <?php endif; ?>
             </label>
-            <div class="add-model-to-list" onclick="leaderSelected(<?php echo $count ?>, unitObject<?php echo $i ?>)" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+            <div class="add-model-to-list" onclick="leaderSelected(this, <?php echo $count ?>, unitObject<?php echo $i ?>)" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                 <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                 <span class="mo-notice hidden">Add to List</span>
             </div>
@@ -80,7 +80,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
         <?php $_unit = $allUnits->getUnitByName($bgUnit['name']); ?>
         <script>bgUnitObject[<?php echo $i ?>] = <?php echo json_encode($bgUnit) ?>;</script>
         <div class="unit battle-group-unit model-id-<?php echo $_unit['id'] ?>">
-            <div class="add-model-to-list" onclick="addToBattleGroup(<?php echo $count ?>, bgUnitObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+            <div class="add-model-to-list" onclick="addToBattleGroup(this, <?php echo $count ?>, bgUnitObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                 <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                 <span class="mo-notice hidden">Add to List</span>
             </div>
@@ -94,7 +94,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
             </div>
             <div class="model-image">
                 <?php // need to make thumbnail images here a future priority for page load speed ?>
-                <?php echo $allUnits->getUnitImageName($bgUnit['name']) ?>
+                <?php echo $allUnits->getUnitImageThumbnail($bgUnit['name']) ?>
             </div>
             <label for="<?php echo $_unit['name'] ?>" class="unit-label">
                 <span class="unit-name"><?php echo $_unit['name'] ?></span><br />
@@ -116,3 +116,4 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
         <?php $i++ ?>
     <?php endforeach; ?>
 </div>
+<paper-toast style="z-index:1;" id="not-in-barracks" text="This models is not in your Barracks and cannot be added to the army list while 'Use only models from your Barracks' is selected."></paper-toast>

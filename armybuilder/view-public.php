@@ -114,7 +114,7 @@
                             // will need to add some custom functionality to build in a link to view the list and show a 'view' icon in the grid display
                             // perhaps a slide open on hover to display more list information (or a separate warcaster field)
                             // could possibly add in support for why the list was created as well, for a certain event? need to tie that to list creation though
-                            { title: "Name", name: "name", type: "text", width: 150 },
+                            { title: "Name", name: "name", type: "text", width: 150, link: "armyList_link" },
                             { title: "Faction", name: "faction", type: "select", items: db.factions, valueField: "Code", textField: "Name" },
                             { title: "Points", name: "points", type: "select", items: db.points, valueField: "Value", textField: "Value" }//,
                             //{ type: "control" } // default jsGrid is control to show the edit/delete options - look to building a custom edit if the list is owner is viewing

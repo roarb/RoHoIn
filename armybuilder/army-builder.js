@@ -113,7 +113,11 @@ function hideArmyListCreationStartScreen(faction, points, armyName){
 }
 
 // add a leader to its battlegroup
-function leaderSelected(count, object){ // count = battle group 1-4, object = model object
+function leaderSelected(e, count, object){ // count = battle group 1-4, object = model object
+    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+        document.querySelector('#not-in-barracks').show();
+        return false;
+    }
     applyBGPointsToToolbar(parseInt(object['bg_points']));
     showBattleGroup(count);
     $('.battlegroup'+count+'-title .leader-name').html(object['name']+"'s Batlle Group");
@@ -223,20 +227,6 @@ function addUnitPointsToToolbar(points){
         $('#points-count-up').html(htmlOutput);
     }
 
-    //////////// old code /////////
-    //var totalPoints = $('#total-points-allowed').text(),
-    //    startingPoints = $('#points-count-up'),
-    //    hiddenPoints = $('#input-army-points');
-    //var endingPoints = parseInt(startingPoints.text()) + parseInt(points);
-    //if (endingPoints <= parseInt(totalPoints)){
-    //    var htmlOutput = '<span>'+endingPoints+'</span>';
-    //    $(startingPoints).html(htmlOutput);
-    //}
-    //else {
-    //    var htmlOutput = '<span class="error">'+endingPoints+'</span>';
-    //    $(startingPoints).html(htmlOutput);
-    //}
-    //$(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
 }
 
 // add a model/unit points cost to the army total, flag with class error if it exceeds the army total
@@ -252,16 +242,14 @@ function removeUnitPointsFromToolbar(points){
         $('#points-count-up').html(htmlOutput);
     }
 
-    ///////// old code /////////
-    //var startingPoints = $('#points-count-up'),
-    //    hiddenPoints = $('#input-army-points');
-    //var endingPoints = parseInt(startingPoints.text()) - parseInt(points);
-    //$(startingPoints).html(endingPoints); // update new points total in toolbar.
-    //$(hiddenPoints).val(endingPoints); // add the new points total to the hidden form input for points.
 }
 
 // add a model to a warcaster's battlegroup - called from battlegroup-build
-function addToBattleGroup(count, object, pos){ // count = battle group 1-4, object = model object
+function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, object = model object
+    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+        document.querySelector('#not-in-barracks').show();
+        return false;
+    }
     object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
     if (canThisModelBeAddedToBattleGroup(object) == true) {
         addUnitPointsToToolbar(object['cost']);
@@ -402,7 +390,11 @@ function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4,
 }
 
 // adds units / solos / battle engines to the army
-function addUnitToArmy(object,pos){
+function addUnitToArmy(e, object,pos){
+    if (!$(e).parents('.barracks-active').hasClass('in-barracks')){
+        document.querySelector('#not-in-barracks').show();
+        return false;
+    }
     object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
     if (canThisModelBeAddedToArmy(object) == true) {
         // check for min - max unit possibilities - if it has then, launch pop up to ask min or max then on selection finish add to army with addMinMaxUnitToArmy()

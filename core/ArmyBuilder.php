@@ -73,6 +73,7 @@ class ArmyBuilder {
         $publicList = '';
         foreach ($result as $row){
             $publicList[$i] = $row;
+            $publicList[$i]['armyList_link'] = "/armybuilder/view-army-list.php?id=".$row['id'];
             $i++;
         }
         return $publicList;
@@ -87,6 +88,7 @@ class ArmyBuilder {
         $ownedList = '';
         foreach ($result as $row){
             $ownedList[$i] = $row;
+            $ownedList[$i]['armyList_link'] = "/armybuilder/view-army-list.php?id=".$row['id'];
             $i++;
         }
         return $ownedList;

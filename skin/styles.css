@@ -328,8 +328,8 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 .remove-unit-from-army:hover {color:#a3403d;}
 #choice-loader .unit-count-select {width:100%; margin:5px 0;}
 .unit-attachments {float:right; position:relative; cursor:pointer; color:#555;}
-#ajax-armybuilder .barracks-active {display:none;}
-#ajax-armybuilder .barracks-active.in-barracks {display:block;}
+#ajax-armybuilder .barracks-active {opacity:.5;}
+#ajax-armybuilder .barracks-active.in-barracks {opacity:1;}
 #ajax-armybuilder .model-image {float:left; position:relative; display:block; top:-19px; left:-22px; height:80px; width:80px; overflow:hidden; margin-right:-28px; border-radius:40px; -webkit-border-radius:40px; border:1px solid #333; background:#fff;}
 #ajax-armybuilder .model-image img {min-width:90px; min-height:90px; position:relative; top:-5px; left:-5px; max-width:100px;}
 .barracks-qty-wrapper {font-size:10px; margin-left:31px;}
@@ -395,6 +395,9 @@ paper-toast#bug-toast {left:auto; bottom:14px; right:90px;}
 .link-playtest-home paper-material {background:#689f38; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-account-barracks paper-material {background:#536dfe url(/skin/images/barracks.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-armybuilder-home paper-material {background:#ed3b3b url(/skin/images/army-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-armybuilder-new paper-material {background:#ed3b3b url(/skin/images/army-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-armybuilder-mylists paper-material {background:#d45515 url(/skin/images/army-my-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
+.link-armybuilder-publiclists paper-material {background:#e3b322 url(/skin/images/army-public-list.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-playtest-single-unit paper-material {background:#ef6c00 url(/skin/images/single-model.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-admin-home paper-material {background:#658092 url(/skin/images/admin.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}
 .link-stat-o-matic paper-material {background:#eac75d url(/skin/images/stats.png) no-repeat right bottom; opacity:.8; height:100px; line-height:62px; font-size:24px; text-align:left;}

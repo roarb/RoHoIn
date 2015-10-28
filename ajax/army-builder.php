@@ -68,7 +68,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                 <?php $_unit = $allUnits->getUnitByName($unit['name']); ?>
                 <script>unitModelObject[<?php echo $i ?>] = <?php echo json_encode($unit) ?>;</script>
                 <div class="unit unit-model-option model-id-<?php echo $unit['id'] ?>">
-                    <div class="add-model-to-list" onclick="addUnitToArmy(unitModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                    <div class="add-model-to-list" onclick="addUnitToArmy(this, unitModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                         <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                         <span class="mo-notice hidden">Add to List</span>
                     </div>
@@ -82,7 +82,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     </div>
                     <div class="model-image">
                         <?php // need to make thumbnail images here a future priority for page load speed ?>
-                        <?php echo $allUnits->getUnitImageName($unit['name']) ?>
+                        <?php echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
                     </div>
                     <label for="<?php echo $unit['name'] ?>" class="unit-label">
                         <span class="unit-name"><?php echo $unit['name'] ?></span><br />
@@ -113,7 +113,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                 <?php $_unit = $allUnits->getUnitByName($solo['name']); ?>
                 <script>soloModelObject[<?php echo $i ?>] = <?php echo json_encode($solo) ?>;</script>
                 <div class="unit solo-model model-id-<?php echo $solo['id'] ?>">
-                    <div class="add-model-to-list" onclick="addUnitToArmy(soloModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                    <div class="add-model-to-list" onclick="addUnitToArmy(this, soloModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                         <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                         <span class="mo-notice hidden">Add to List</span>
                     </div>
@@ -131,7 +131,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     </div>
                     <div class="model-image">
                         <?php // need to make thumbnail images here a future priority for page load speed ?>
-                        <?php echo $allUnits->getUnitImageName($solo['name']) ?>
+                        <?php echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
                     </div>
                     <label for="<?php echo $solo['name'] ?>" class="unit-label">
                         <span class="unit-name"><?php echo $solo['name'] ?></span><br />
@@ -162,7 +162,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     <?php $_unit = $allUnits->getUnitByName($battleEngine['name']); ?>
                     <script>battleEngineModelObject[<?php echo $i ?>] = <?php echo json_encode($battleEngine) ?>;</script>
                     <div class="unit battle-engine-model model-id-<?php echo $battleEngine['id'] ?>">
-                        <div class="add-model-to-list" onclick="addUnitToArmy(battleEngineModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, battleEngineModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                             <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                             <span class="mo-notice hidden">Add to List</span>
                         </div>
@@ -176,7 +176,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                         </div>
                         <div class="model-image">
                             <?php // need to make thumbnail images here a future priority for page load speed ?>
-                            <?php echo $allUnits->getUnitImageName($battleEngine['name']) ?>
+                            <?php echo $allUnits->getUnitImageThumbnail($battleEngine['name']) ?>
                         </div>
                         <label for="<?php echo $battleEngine['name'] ?>" class="unit-label">
                             <span class="unit-name"><?php echo $battleEngine['name'] ?></span><br />
@@ -276,6 +276,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
         $('#go-back').on('touchstart click', function(){
             backToCreateArmyStepOne()
         });
+
     });
 
     var casterTierListObj = [];

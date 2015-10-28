@@ -1023,6 +1023,22 @@ class AllUnits
 		}
 		return $nameFixed;
 	}
+
+	function getUnitImageThumbnail($name){
+		$nameFixed = str_replace(' ','',$name);
+		$nameFixed = str_replace(',','',$nameFixed);
+		$nameFixed = str_replace('.','',$nameFixed);
+		$nameFixed = str_replace('(','',$nameFixed);
+		$nameFixed = str_replace(')','',$nameFixed);
+		$filePath = "/home/rhoehn24/public_html/res/unit_images/thumbs/".$nameFixed.".jpg";
+		if (file_exists($filePath)){
+			$nameFixed = '<img src="/res/unit_images/thumbs/'.$nameFixed.'.jpg" alt="'.$name.'" class="unit-image unit-thumbnail" />';
+		}
+		else {
+			$nameFixed = '<img src="/res/unit_images/thumbs/no-image.jpg" alt="'.$name.'" class="unit-image unit-thumbnail" />';
+		}
+		return $nameFixed;
+	}
 	
 	function createCompanionArray($companionList){
 		$units = explode("|", $companionList);

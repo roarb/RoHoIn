@@ -67,7 +67,7 @@
                     </div>
                 <?php endif; ?>
                 <?php $i++; ?>
-                <input type="radio" name="faction" value="<?php echo $faction['name'] ?>" class="hidden" id="<?php echo str_replace(' ','',$faction['name']) ?>">
+                <input type="radio" name="faction" value="<?php echo $faction['name'] ?>" class="hidden faction-select" id="<?php echo str_replace(' ','',$faction['name']) ?>">
             <?php endforeach; ?>
             </div>
             <div id="army-points">
@@ -127,7 +127,9 @@
         </div>
         <paper-toast id="faction-error" text="Please Choose a Faction"></paper-toast>
         <paper-toast id="points-error" text="Please Choose a Points Value"></paper-toast>
-        <paper-toast id="single-caster-error" text="I'm sorry, we're still in beta phase and can only create armies with a single battlegroup. Please check back again in the future"></paper-toast>
+        <paper-toast id="faction-mercs" text="We're sorry, we're still in beta phase and cannot create Mercenary armies yet."></paper-toast>
+        <paper-toast id="faction-minions" text="We're sorry, we're still in beta phase and cannot create Minion armies yet."></paper-toast>
+        <paper-toast id="single-caster-error" text="We're sorry, we're still in beta phase and can only create armies with a single battlegroup. Please check back again in the future"></paper-toast>
     </paper-header-panel>
 </paper-drawer-panel>
 
@@ -158,6 +160,7 @@
     tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
 
     $('#start-army-list-builder').on('touchstart click', function(){
+
         // first run validation on army selected and points selected
         var faction = $('#army-faction input:checked');
         var points = $('#army-points input:checked');
@@ -173,6 +176,7 @@
             document.querySelector('#single-caster-error').show();
             return false;
         }
+
         startArmyListBuilder();
     });
     $(document).ready(function(){
