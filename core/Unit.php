@@ -710,6 +710,13 @@ class AllUnits
         $core = new AllCore();
         $conn = $core->connect();
 
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($_SESSION['user_id']){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
         $units = "SELECT * FROM core WHERE id = ".$id." ORDER BY name";
         $unitsResult = $conn->query($units);
         $unitsBuild = '';
@@ -719,6 +726,15 @@ class AllUnits
             while($row = $unitsResult->fetch_assoc()) {
                 $unitsBuild[$i] = $row;
 				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
                 $i++;
             }
         } else {

@@ -6,12 +6,19 @@
     include '../core/ArmyBuilder.php';
     include '../core/Unit.php';
     include '../core/Barracks.php';
+    include '../core/Faction.php';
     $armyBuilder = new ArmyBuilder();
     $core = new AllCore();
+    if ($core->getLoggedIn()){
+        $loggedIn = true;
+        $creatorName = $_SESSION['user_name'];
+    }
     $allUnits = new AllUnits();
     $listId = $_GET['id'];
     $armyList = $armyBuilder->getListById($listId);
     $createdBy = $core->getUserNameById($armyList['created_by']); ?>
+    <script src="army-builder.js"></script>
+    <script src="tier-rules.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>
         <?php if ($armyList['name'] != '' ): echo $armyList['name']; ?>
@@ -44,23 +51,15 @@
                     <img src="/skin/images/roho-logo.png" alt="Reactive Online Hobby Organizational . Interface" /></a>
             </div>
         </paper-toolbar>
-        <div class="info-block">
+        <div class="info-block" style="overflow:auto;">
             <?php if (isset($_GET['id'])): ?>
                 <paper-material elevation="1" class="cushion army-list-wrapper" id="armylist-view">
                     <h2 class="center"><?php echo $armyList['name'] ?>, a <?php echo $armyList['points'] ?> point <?php echo $armyList['faction'] ?> List - created by <?php echo $createdBy ?></h2>
                     <?php $i = 1 ?>
                     <?php while ($i < 5): ?>
                         <?php if ($armyList['warcaster_'.$i] != ''): ?>
-                            <paper-material elevation="1" class="battle-group-built">
-                                <div class="units-title army-entry-select-title">Battle Group <?php echo $i ?></div>
-
-                                <?php /* hide original warcaster block
-                                <paper-material elevation="1" class="leader">
-                                    <?php $leaderObject = $allUnits->getUnitByName($armyList['warcaster_'.$i]) ?>
-                                    <span class="unit-name">
-                                        <a href="/playtest/single-unit.php?name=<?php echo $leaderObject['name'] ?>"><?php echo $leaderObject['name'] ?></a>
-                                    </span> - <?php echo $leaderObject['title'] ?>
-                                </paper-material> */ ?>
+                            <paper-material elevation="1" class="battle-group-built" style="padding:10px;">
+                                <div class="units-title army-entry-select-title">Battle Group <?php //echo $i ?></div>
 
                                 <?php // start build from the battlegroup-build in the army builder section ?>
                                 <div class="warcaster">
@@ -70,7 +69,7 @@
                                         <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?></div>
                                         <label for="<?php echo $warcaster['name'] ?>" class="warcaster<?php echo $i ?>">
                                             <span class="unit-name"><?php echo $warcaster['name'] ?></span><br />
-                                            <span class="unit-title"><?php echo $warcaster['title'] ?></span><div class="bg-points">BG+<?php echo $warcaster['bg_points']?></div><br />
+                                            <span class="unit-title"><?php echo $warcaster['title'] ?></span><br />
                                             <?php if ($loggedIn): ?>
                                                 <div class="barracks-qty-wrapper">
                                                     <span class="owned-qty">Owned: <?php if (isset($warcaster['owned_models'])){echo $warcaster['owned_models'];} else {echo '0';} ?></span> -
@@ -88,6 +87,7 @@
                                             <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
                                             <span class="mo-notice hidden">View Stats</span>
                                         </div>
+                                        <div class="bg-points">BG+<?php echo $warcaster['bg_points']?></div>
                                         <div class="clearer"></div>
                                         <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                                         <div class="additional-model-info" style="display:none;">
@@ -96,24 +96,55 @@
                                     </div>
                                 </div>
                                 <?php // end build from the battlegroup-build in the army builder section ?>
-
+                                <div class="battlegroup battlegroup-1">
                                 <?php $armyItems = explode('[', $armyList['battle_group_'.$i]); ?>
                                 <?php $modelObject = ''; ?>
                                 <?php foreach ($armyItems as $model):
-                                    if ($model != ''):
+                                    if ($model != ''):    /// create the single unit model - returns $_unit
                                         $model = str_replace(']', '', $model);
                                         $model = str_replace(' ', '', $model);
                                         $singleModel = explode(',', $model);
                                         $modelObject = $allUnits->getUnitById($singleModel[0]);
-                                        $modelObject = $modelObject[0]; ?>
-                                        <?php //$modelObject ?>
+                                        $_unit = $modelObject[0]; ?>
+
+                                        <?php /* old code ?>
                                         <paper-material elevation="1" class="child-model">
                                             <span class="unit-name">
                                                 <a href="/playtest/single-unit.php?name=<?php echo $modelObject['name']; ?>"><?php echo $modelObject['name']; ?></a>
                                             </span> - <?php echo $modelObject['title'] ?> | <span class="points"><?php echo $modelObject['cost'] ?> pts.</span>
                                         </paper-material>
+                                        */ ?>
+                                        <?php // new code ?>
+                                        <div class="unit battle-group-unit model-id-<?php echo $_unit['id'] ?>">
+                                            <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                                                <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                                                <span class="mo-notice hidden">View Stats</span>
+                                            </div>
+                                            <div class="model-image">
+                                                <?php  ?>
+                                                <?php echo $_unit['thumb_img'] ?>
+                                            </div>
+                                            <label for="<?php echo $_unit['name'] ?>" class="unit-label">
+                                                <span class="unit-name"><?php echo $_unit['name'] ?></span><br />
+                                                <span class="unit-title"><?php echo $_unit['title'] ?></span><br />
+                                                <?php if ($loggedIn): ?>
+                                                    <div class="barracks-qty-wrapper">
+                                                        <span class="owned-qty">Owned: <?php if (isset($_unit['owned_models'])){echo $_unit['owned_models'];} else {echo '0';} ?></span> -
+                                                        <span class="painted-qty">Painted: <?php if (isset($_unit['painted_models'])){echo $_unit['painted_models'];} else {echo '0';} ?></span>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </label>
+                                            <div class="unit-cost"><span class="cost"><?php echo $_unit['cost']?></span> pts</div>
+                                            <div class="clearer"></div>
+                                            <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                                            <div class="additional-model-info" style="display:none;">
+                                                <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
+                                            </div>
+                                        </div>
+
                                     <?php endif; ?>
                                 <?php endforeach; ?>
+                                </div>
                             </paper-material>
                         <?php endif; ?>
                         <?php $i++ ?>

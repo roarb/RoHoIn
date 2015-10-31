@@ -369,12 +369,15 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #armylist-view .unit.active.full {color:#f3ffe2; background:#eb7f00;}
 #armylist-view .all-units-panel, #armylist-view .added-to-list-panel {margin:0 5px;}
 #armylist-view .focus-circle {color:#333; float:left; overflow:hidden; height:66px; width:66px; background:#fff; border-radius:60px; position:relative; top:-13px; left:0; border:1px solid #d1d1d1; line-height:66px; text-align:center; margin-right:0;}
-#armylist-view .battlegroup .single-caster .focus-circle {color:#333; float:left; overflow:hidden; height:90px; width:90px; background:#fff; border-radius:60px; position:relative; top:-23px; left:-24px; border:1px solid #333; line-height:60px; text-align:center; margin-right:-15px;}
+#armylist-view .single-caster .focus-circle {color:#333; float:left; overflow:hidden; height:90px; width:90px; background:#fff; border-radius:60px; position:relative; top:-25px; left:-5px; border:1px solid #333; line-height:60px; text-align:center; margin-right:-15px;}
 #armylist-view .focus-circle.warcaster-portrait img {width:100px; margin-top:-5px; margin-left:-5px; border-radius:60px;}
-#armylist-view .battlegroup .focus-circle, #armylist-view .units .focus-circle, #armylist-view .solos .focus-circle, #armylist-view .battle-engines .focus-circle {float:right;}
+#armylist-view .warcaster .single-caster {padding:10px 10px 20px;}
+#armylist-view .warcaster .single-caster .bg-points {margin-top:10px; margin-right:14px;}
+#armylist-view .battlegroup .unit {margin-left:110px;}
+#armylist-view .focus-circle, #armylist-view .units .focus-circle, #armylist-view .solos .focus-circle, #armylist-view .battle-engines .focus-circle {float:right;}
 #armylist-view .add-model-to-list {float:right; position:relative;}
 #armylist-view .unit.active.full .add-model-to-list {opacity:0;}
-#armylist-view .additional-model-info {overflow:hidden; opacity:0; padding-bottom:10px; background:#fff; color:#222;}
+#armylist-view .additional-model-info {overflow:hidden; opacity:0; padding-bottom:10px; color:#222;}
 #armylist-view .model-added-basics {float:left;}
 #armylist-view label {float:left; margin-left:20px;}
 #armylist-view .unit-name {font-weight:bold; font-size:14px;}
@@ -390,7 +393,6 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #armylist-view .tier-options iron-icon, #armylist-view .show-additional iron-icon {color:#888;}
 #armylist-view .tier-options:hover iron-icon, #armylist-view .show-additional:hover iron-icon {color:#000;}
 #armylist-view .tier-options iron-icon.selected {color:#fff; padding:5px; width:28px; height:28px; border-radius:30px; top:-10px;}
-#armylist-view .battle-group-built {padding:10px;}
 #armylist-view .units-built, #armylist-view .solos-built, #armylist-view .battle-engines-built {padding:10px 10px 10px 25px;}
 #armylist-view .leader {height:40px; padding:13px 1.5%; width:97%; margin:6px 0; position:relative; background:#fff;}
 #armylist-view .child-model {height:40px; padding:13px 1.5%; width:87%; margin:22px 0 10px 10%; position:relative; background:#fff;}
@@ -400,9 +402,9 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #armylist-view .unit-attachment {background:#fff; padding:8px 20px; margin:-10px 10% 5px 30%;}
 #armylist-view .barracks-active {opacity:.5;}
 #armylist-view .barracks-active.in-barracks {opacity:1;}
-#armylist-view .model-image {float:left; position:relative; display:block; top:-19px; left:-22px; height:80px; width:80px; overflow:hidden; margin-right:-28px; border-radius:40px; -webkit-border-radius:40px; border:1px solid #333; background:#fff;}
+#armylist-view .model-image {float:left; position:relative; display:block; top:-19px; left:-27px; height:80px; width:80px; overflow:hidden; margin-right:-28px; border-radius:40px; -webkit-border-radius:40px; border:1px solid #333; background:#fff;}
 #armylist-view .model-image.model-in-list {margin-right:-16px; top:-20px; left:-26px;}
-#armylist-view .model-image img {min-width:90px; min-height:90px; position:relative; top:-5px; left:-5px; max-width:100px;}
+#armylist-view .model-image img {min-width:90px; min-height:90px; position:relative; top:-5px; left:-5px; max-width:90px;}
 .army-list-wrapper {}
 
 /*start responsive */
