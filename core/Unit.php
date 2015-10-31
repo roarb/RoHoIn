@@ -273,6 +273,39 @@ class AllUnits
         }
         return $unitsBuild;
     }
+
+    function getWarcasterFullObjectByName($name){
+        $core = new AllCore();
+        $conn = $core->connect();
+
+        $barracks = new Barracks();
+        $loggedIn = false; $userId = 0;
+        if ($_SESSION['user_id']){
+            $loggedIn = true;
+            $userId = $_SESSION['user_id'];
+        }
+        $name = '"'.$name.'"';
+        $warcaster = array();
+        $query = "SELECT * FROM core WHERE name = ".$name;
+        $result = $conn->query($query);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $warcaster = $row;
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$warcaster['owned_models'] = $modelItem['owned_qty'];
+							$warcaster['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
+            }
+        }
+
+        return $warcaster;
+    }
 	
 	function getColossalUnits(){
 		$core = new AllCore();

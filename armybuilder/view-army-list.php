@@ -5,6 +5,7 @@
     include '../core/Core.php';
     include '../core/ArmyBuilder.php';
     include '../core/Unit.php';
+    include '../core/Barracks.php';
     $armyBuilder = new ArmyBuilder();
     $core = new AllCore();
     $allUnits = new AllUnits();
@@ -45,19 +46,57 @@
         </paper-toolbar>
         <div class="info-block">
             <?php if (isset($_GET['id'])): ?>
-                <paper-material elevation="1" class="cushion army-list-wrapper" id="armylist">
+                <paper-material elevation="1" class="cushion army-list-wrapper" id="armylist-view">
                     <h2 class="center"><?php echo $armyList['name'] ?>, a <?php echo $armyList['points'] ?> point <?php echo $armyList['faction'] ?> List - created by <?php echo $createdBy ?></h2>
                     <?php $i = 1 ?>
                     <?php while ($i < 5): ?>
                         <?php if ($armyList['warcaster_'.$i] != ''): ?>
                             <paper-material elevation="1" class="battle-group-built">
                                 <div class="units-title army-entry-select-title">Battle Group <?php echo $i ?></div>
+
+                                <?php /* hide original warcaster block
                                 <paper-material elevation="1" class="leader">
                                     <?php $leaderObject = $allUnits->getUnitByName($armyList['warcaster_'.$i]) ?>
                                     <span class="unit-name">
                                         <a href="/playtest/single-unit.php?name=<?php echo $leaderObject['name'] ?>"><?php echo $leaderObject['name'] ?></a>
                                     </span> - <?php echo $leaderObject['title'] ?>
-                                </paper-material>
+                                </paper-material> */ ?>
+
+                                <?php // start build from the battlegroup-build in the army builder section ?>
+                                <div class="warcaster">
+                                    <?php $warcaster = $allUnits->getWarcasterFullObjectByName($armyList['warcaster_'.$i]) ?>
+
+                                    <div class="single-caster unit <?php echo $warcaster['id'].'-'.$i ?> model-id-<?php echo $warcaster['id'] ?>">
+                                        <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?></div>
+                                        <label for="<?php echo $warcaster['name'] ?>" class="warcaster<?php echo $i ?>">
+                                            <span class="unit-name"><?php echo $warcaster['name'] ?></span><br />
+                                            <span class="unit-title"><?php echo $warcaster['title'] ?></span><div class="bg-points">BG+<?php echo $warcaster['bg_points']?></div><br />
+                                            <?php if ($loggedIn): ?>
+                                                <div class="barracks-qty-wrapper">
+                                                    <span class="owned-qty">Owned: <?php if (isset($warcaster['owned_models'])){echo $warcaster['owned_models'];} else {echo '0';} ?></span> -
+                                                    <span class="painted-qty">Painted: <?php if (isset($warcaster['painted_models'])){echo $warcaster['painted_models'];} else {echo '0';} ?></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        </label>
+                                        <?php if (is_array($warcaster['tiers'])): ?>
+                                            <div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                                                <paper-icon-button icon="class" class="view-tiers"></paper-icon-button>
+                                                <span class="mo-notice hidden">View Tier Lists</span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                                            <span class="mo-notice hidden">View Stats</span>
+                                        </div>
+                                        <div class="clearer"></div>
+                                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                                        <div class="additional-model-info" style="display:none;">
+                                            <?php echo $allUnits->displayArmyBuilderStatsLine($warcaster) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php // end build from the battlegroup-build in the army builder section ?>
+
                                 <?php $armyItems = explode('[', $armyList['battle_group_'.$i]); ?>
                                 <?php $modelObject = ''; ?>
                                 <?php foreach ($armyItems as $model):
