@@ -2,6 +2,7 @@
 
 include '../core/Core.php';
 include '../core/Unit.php';
+include '../core/Barracks.php';
 
 $allUnits = new AllUnits;
 

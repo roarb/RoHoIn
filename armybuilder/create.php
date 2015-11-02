@@ -7,6 +7,7 @@
     include '../core/ArmyBuilder.php';
     include '../core/Faction.php';
     include '../core/Core.php';
+    include '../core/Barracks.php';
     $allFactions = new AllFactions();
     $factions = $allFactions->getAllFactions();
     $core = new AllCore();
@@ -51,7 +52,7 @@
             <div id="army-name">
                 <paper-input-container style="width:80%; margin:0 10%;">
                     <label>Give Your Army A Name</label>
-                    <input required id="army-list-name" name="army-list-name" is="iron-input" value="<?php if ($loggedIn == true){echo $creatorName.'\'s Army';} ?>" />
+                    <input required id="army-list-name" name="army-list-name" is="iron-input" value="<?php if ($loggedIn == true){echo ucfirst($creatorName).'\'s Army';} ?>" />
                 </paper-input-container>
             </div>
             <div id="army-faction">

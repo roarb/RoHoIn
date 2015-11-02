@@ -254,7 +254,7 @@ function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, o
     object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
     if (canThisModelBeAddedToBattleGroup(object) == true) {
         addUnitPointsToToolbar(object['cost']);
-        addUnitToBattleGroup(count, object);
+        addUnitToBattleGroup(count, object, false);
         updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
         //armyListBuilderShortSave();
     }

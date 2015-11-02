@@ -8,6 +8,7 @@
 include '../core/Unit.php';
 include '../core/Core.php';
 $allUnits = new AllUnits();
+include '../core/Barracks.php';
 
 $_unit = $allUnits->getUnitById($_GET['id']);
 

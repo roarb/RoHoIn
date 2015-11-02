@@ -107,14 +107,6 @@
                                         $modelObject = $allUnits->getUnitById($singleModel[0]);
                                         $_unit = $modelObject[0]; ?>
 
-                                        <?php /* old code ?>
-                                        <paper-material elevation="1" class="child-model">
-                                            <span class="unit-name">
-                                                <a href="/playtest/single-unit.php?name=<?php echo $modelObject['name']; ?>"><?php echo $modelObject['name']; ?></a>
-                                            </span> - <?php echo $modelObject['title'] ?> | <span class="points"><?php echo $modelObject['cost'] ?> pts.</span>
-                                        </paper-material>
-                                        */ ?>
-                                        <?php // new code ?>
                                         <div class="unit battle-group-unit model-id-<?php echo $_unit['id'] ?>">
                                             <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
                                                 <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
@@ -150,7 +142,7 @@
                         <?php $i++ ?>
                     <?php endwhile; ?>
                     <?php if ($armyList['units'] != ''): ?>
-                        <paper-material elevation="1" class="units-built">
+                        <paper-material elevation="1" class="units-built units">
                             <div class="units-title army-entry-select-title">Units</div>
                             <?php $armyItems = explode('[', $armyList['units']); ?>
                             <?php $modelObject = ''; ?>
@@ -160,20 +152,41 @@
                                     $model = str_replace(' ', '', $model);
                                     $singleModel = explode(',', $model);
                                     $modelObject = $allUnits->getUnitById($singleModel[0]);
-                                    $modelObject = $modelObject[0]; ?>
-                                    <?php //$modelObject ?>
-                                    <paper-material elevation="1" class="unit-model">
-                                        <span class="unit-name"><?php echo $modelObject['name']; ?></span> - <?php echo $modelObject['title'] ?> | <span class="points"><?php echo $modelObject['cost'] ?> pts.</span>
-                                        <?php if ($singleModel[1] > 1): ?>
-                                            <span class="unit-model-qty"><?php echo $singleModel[1] ?> Grunts</span>
-                                        <?php endif; ?>
-                                    </paper-material>
+                                    $_unit = $modelObject[0]; ?>
+
+                                    <div class="unit model-id-<?php echo $_unit['id'] ?>">
+                                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                                            <span class="mo-notice hidden">View Stats</span>
+                                        </div>
+                                        <div class="model-image">
+                                            <?php  ?>
+                                            <?php echo $_unit['thumb_img'] ?>
+                                        </div>
+                                        <label for="<?php echo $_unit['name'] ?>" class="unit-label">
+                                            <span class="unit-name"><?php echo $_unit['name'] ?></span><br />
+                                            <span class="unit-title"><?php echo $_unit['title'] ?></span><br />
+                                            <?php if ($loggedIn): ?>
+                                                <div class="barracks-qty-wrapper">
+                                                    <span class="owned-qty">Owned: <?php if (isset($_unit['owned_models'])){echo $_unit['owned_models'];} else {echo '0';} ?></span> -
+                                                    <span class="painted-qty">Painted: <?php if (isset($_unit['painted_models'])){echo $_unit['painted_models'];} else {echo '0';} ?></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        </label>
+                                        <div class="unit-cost"> | <?php echo $singleModel[2] ?> pts</div>
+                                        <div class="unit-model-count"><?php echo $singleModel[1] ?> Models</div>
+                                        <div class="clearer"></div>
+                                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                                        <div class="additional-model-info" style="display:none;">
+                                            <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </paper-material>
                     <?php endif; ?>
                     <?php if ($armyList['solos'] != ''):?>
-                        <paper-material elevation="1" class="solos-built">
+                        <paper-material elevation="1" class="solos-built solos">
                             <div class="units-title army-entry-select-title">Solos</div>
                             <?php $armyItems = explode('[', $armyList['solos']); ?>
                             <?php $modelObject = ''; ?>
@@ -183,20 +196,40 @@
                                     $model = str_replace(' ', '', $model);
                                     $singleModel = explode(',', $model);
                                     $modelObject = $allUnits->getUnitById($singleModel[0]);
-                                    $modelObject = $modelObject[0]; ?>
-                                    <?php //$modelObject ?>
-                                    <paper-material elevation="1" class="unit-model">
-                                        <span class="unit-name"><?php echo $modelObject['name']; ?></span> - <?php echo $modelObject['title'] ?> | <span class="points"><?php echo $modelObject['cost'] ?> pts.</span>
-                                        <?php if ($singleModel[1] > 1): ?>
-                                            <span class="unit-model-qty"><?php echo $singleModel[1] ?> Models</span>
-                                        <?php endif; ?>
-                                    </paper-material>
+                                    $_unit = $modelObject[0]; ?>
+
+                                    <div class="unit model-id-<?php echo $_unit['id'] ?>">
+                                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                                            <span class="mo-notice hidden">View Stats</span>
+                                        </div>
+                                        <div class="model-image">
+                                            <?php  ?>
+                                            <?php echo $_unit['thumb_img'] ?>
+                                        </div>
+                                        <label for="<?php echo $_unit['name'] ?>" class="unit-label">
+                                            <span class="unit-name"><?php echo $_unit['name'] ?></span><br />
+                                            <span class="unit-title"><?php echo $_unit['title'] ?></span><br />
+                                            <?php if ($loggedIn): ?>
+                                                <div class="barracks-qty-wrapper">
+                                                    <span class="owned-qty">Owned: <?php if (isset($_unit['owned_models'])){echo $_unit['owned_models'];} else {echo '0';} ?></span> -
+                                                    <span class="painted-qty">Painted: <?php if (isset($_unit['painted_models'])){echo $_unit['painted_models'];} else {echo '0';} ?></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        </label>
+                                        <div class="unit-cost"><span class="cost"><?php echo $_unit['cost']?></span> pts</div>
+                                        <div class="clearer"></div>
+                                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                                        <div class="additional-model-info" style="display:none;">
+                                            <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </paper-material>
                     <?php endif; ?>
                     <?php if ($armyList['battle_engines'] != ''): ?>
-                        <paper-material elevation="1" class="battle-engines-built">
+                        <paper-material elevation="1" class="battle-engines-built battle-engines">
                             <div class="units-title army-entry-select-title">Battle Engines</div>
                             <?php $armyItems = explode('[', $armyList['battle_engines']); ?>
                             <?php $modelObject = ''; ?>
@@ -206,14 +239,34 @@
                                     $model = str_replace(' ', '', $model);
                                     $singleModel = explode(',', $model);
                                     $modelObject = $allUnits->getUnitById($singleModel[0]);
-                                    $modelObject = $modelObject[0]; ?>
-                                    <?php //$modelObject ?>
-                                    <paper-material elevation="1" clas="unit-model">
-                                        <span class="unit-name"><?php echo $modelObject['name']; ?></span> - <?php echo $modelObject['title'] ?> | <span class="points"><?php echo $modelObject['cost'] ?> pts.</span>
-                                        <?php if ($singleModel[1] > 1): ?>
-                                            <span class="unit-model-qty"><?php echo $singleModel[1] ?> Models</span>
-                                        <?php endif; ?>
-                                    </paper-material>
+                                    $_unit = $modelObject[0]; ?>
+
+                                    <div class="unit model-id-<?php echo $_unit['id'] ?>">
+                                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                                            <span class="mo-notice hidden">View Stats</span>
+                                        </div>
+                                        <div class="model-image">
+                                            <?php  ?>
+                                            <?php echo $_unit['thumb_img'] ?>
+                                        </div>
+                                        <label for="<?php echo $_unit['name'] ?>" class="unit-label">
+                                            <span class="unit-name"><?php echo $_unit['name'] ?></span><br />
+                                            <span class="unit-title"><?php echo $_unit['title'] ?></span><br />
+                                            <?php if ($loggedIn): ?>
+                                                <div class="barracks-qty-wrapper">
+                                                    <span class="owned-qty">Owned: <?php if (isset($_unit['owned_models'])){echo $_unit['owned_models'];} else {echo '0';} ?></span> -
+                                                    <span class="painted-qty">Painted: <?php if (isset($_unit['painted_models'])){echo $_unit['painted_models'];} else {echo '0';} ?></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        </label>
+                                        <div class="unit-cost"><span class="cost"><?php echo $_unit['cost']?></span> pts</div>
+                                        <div class="clearer"></div>
+                                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                                        <div class="additional-model-info" style="display:none;">
+                                            <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </paper-material>

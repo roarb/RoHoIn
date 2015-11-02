@@ -373,6 +373,7 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #armylist-view .focus-circle.warcaster-portrait img {width:100px; margin-top:-5px; margin-left:-5px; border-radius:60px;}
 #armylist-view .warcaster .single-caster {padding:10px 10px 20px;}
 #armylist-view .warcaster .single-caster .bg-points {margin-top:10px; margin-right:14px;}
+#armylist-view .unit-model-count {float:right; margin-top:10px; margin-right:8px;}
 #armylist-view .battlegroup .unit {margin-left:110px;}
 #armylist-view .focus-circle, #armylist-view .units .focus-circle, #armylist-view .solos .focus-circle, #armylist-view .battle-engines .focus-circle {float:right;}
 #armylist-view .add-model-to-list {float:right; position:relative;}
