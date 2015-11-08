@@ -237,8 +237,11 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     <textarea rows="4" id="notes" name="notes" placeholder="Army Notes:"></textarea>
                 </paper-input-container>
                 <div class="center cushion">
-                    <paper-button raised class="button" id="submit">Submit</paper-button>
-                    <paper-button raised class="button" id="go-back">Back</paper-button>
+                    Currently Saving Lists is in-active. This section is still under construction.
+                    <?php if ($Core->getAdmin()): ?>
+                        <paper-button raised class="button" id="submit">Submit</paper-button>
+                        <paper-button raised class="button" id="go-back">Back</paper-button>
+                    <?php endif; ?>
                 </div>
             </paper-material>
         </form>
@@ -280,4 +283,5 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
     });
 
     var casterTierListObj = [];
+
 </script>

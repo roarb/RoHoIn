@@ -108,4 +108,13 @@ class AllCore
 	{
 		return $_SESSION['user_id'];
 	}
+
+	public function getAdmin()
+	{
+		if ($_SESSION['user_name'] == 'roarb'){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

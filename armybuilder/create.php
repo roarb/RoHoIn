@@ -142,6 +142,9 @@
     tempList['bg2Models'] = [];
     tempList['bg3Models'] = [];
     tempList['bg4Models'] = [];
+    tempList['unitModels'] = [];
+    tempList['soloModels'] = [];
+    tempList['battleEngineModels'] = [];
     tempList['merArmyModels'] = [];
     tempList['mercbg1Models'] = [];
     tempList['points_used'] = 0;
@@ -156,6 +159,8 @@
     tempList['tierList3Req'] = [];
     tempList['tierList4Req'] = [];
     tempList['publicList'] = 1;
+    tempList['journeyman'] = [];
+    tempList['journeyman']['active'] = 0;
     tempList['barracksModels'] = 0;
     tempList['paintedBarracksModels'] = 0;
     tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
@@ -214,7 +219,7 @@
         $('#army-points-200').on('touchstart click', function(){
             setActivePoints(200,'.army-points-200');
         });
-    })
+    });
 </script>
 </body>
 </html>

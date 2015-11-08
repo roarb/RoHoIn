@@ -133,6 +133,12 @@ function toggleBarracksFaction(faction){
         $('#choice-loader').remove();
     }
 
+function removeNotice(){
+    $('#notice-shadow').remove();
+    $('#notice-loader').remove();
+    $('#choice-loader').remove();
+}
+
 // menu object movement scripts //
 function toggleLoggedInMoreMenu(){
     var menu = $('#login-more-menu');

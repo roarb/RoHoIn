@@ -107,9 +107,15 @@ function hideArmyListCreationStartScreen(faction, points, armyName){
     $('#start-building').hide();
     // then load in the army name, points and faction into the toolbar.
     $('.army-builder-toolbar').removeClass('hidden');
-    $('#display-army-name').html(armyName);
+    $('#display-army-name').html('<input type="text" id="army-name" value="'+armyName+'" onblur="updateArmyName(this)" />');
     $('#display-faction').html(faction);
     $('#display-army-points').html(points);
+}
+
+function updateArmyName(el){
+    var name = $(el).val();
+    $('#input-army-name').val(name);
+    tempList.name = name;
 }
 
 // add a leader to its battlegroup
@@ -246,10 +252,30 @@ function removeUnitPointsFromToolbar(points){
 }
 
 // add a model to a warcaster's battlegroup - called from battlegroup-build
-function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, object = model object
+function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, object = all battlegroup object, pos = pos in battlegroup object
     if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
+    }
+    // check to see if there is a journeyman warcaster in the list
+    var journeymanAddOption = false;
+    if (tempList['journeyman']['active'] == 1){
+        // check for specialization restrictions
+        if (tempList['journeyman']['restricted_models'] != null){
+            // check if the current model being added is in the restricted list
+            $(tempList['journeyman']['restricted_models']).each(function(key,val){
+                if (val.indexOf(object[pos]['name']) > -1){
+                    journeymanAddOption = true;
+                }
+            })
+        } else {
+            journeymanAddOption = true;
+        }
+    }
+    if (journeymanAddOption == true){
+        // add popup script for journeyman caster here
+        var choice = '<p>Warcaster</p><p>Journeyman</p>';
+        //displayNotice(choice);
     }
     object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
     if (canThisModelBeAddedToBattleGroup(object) == true) {
@@ -395,12 +421,29 @@ function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4,
 }
 
 // adds units / solos / battle engines to the army
-function addUnitToArmy(e, object,pos){
+function addUnitToArmy(e, object, pos){
+
     if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
     }
     object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
+    // check if the solo is a journeyman castor or a lesser warlock - affects how battlegroup models will be added with a prompt on add to join to which caster
+    var modelAbilities = getModelAbilities(object);
+    $(modelAbilities).each(function(key,val){
+        if (val == 'Lesser Warlock' || val == 'Journeyman Warcaster') {
+            console.log(tempList); console.log(val); console.log(object);
+            tempList['journeyman']['active'] = 1;
+            tempList['journeyman']['id'] = object.id;
+        }
+        // still need to create a rule for Specialization [warbeasts with Flight] - not sure which journeyman caster this one is on
+        if (val != null && val.indexOf('Specialization') > -1){
+            var raw = val.substring(val.indexOf('[')+1, val.length -1);
+            var modelNames= raw.split(' and ');
+            tempList['journeyman']['restricted_models'] = modelNames;
+        }
+    });
+
     if (canThisModelBeAddedToArmy(object) == true) {
         // check for min - max unit possibilities - if it has then, launch pop up to ask min or max then on selection finish add to army with addMinMaxUnitToArmy()
         if (parseInt(object['purchased_low']) < parseInt(object['purchased_high'])) {
@@ -848,4 +891,21 @@ function useOnlyBarracksModels(bool, obj){
         $('.all-units-panel .single-caster').removeClass('barracks-active').removeClass('in-barracks');
     }
     console.log(tempList);
+}
+
+function getModelAbilities(object) { // object = unitModel Object
+    var abilities = [
+        object.special_ability_1,
+        object.special_ability_2,
+        object.special_ability_3,
+        object.special_ability_4,
+        object.special_ability_5,
+        object.special_ability_6,
+        object.special_ability_7,
+        object.special_ability_8,
+        object.special_ability_9,
+        object.special_ability_10
+    ];
+
+    return abilities;
 }
