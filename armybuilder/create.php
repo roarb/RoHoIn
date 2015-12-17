@@ -164,6 +164,7 @@
     tempList['barracksModels'] = 0;
     tempList['paintedBarracksModels'] = 0;
     tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
+    tempList['journeyman_temp'] = [];
 
     $('#start-army-list-builder').on('touchstart click', function(){
 

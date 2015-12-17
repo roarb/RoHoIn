@@ -527,7 +527,9 @@ function runTierRequirements(shortSave){ // process all tier requirement on shor
     // apply forward facing text to the #tier-list-req-notice div
 
     var tierNotice = $('#tier-list-req-notice');
-    $(tierNotice).addClass('active');
+    if (!shortSave){
+        $(tierNotice).addClass('active');
+    }
     if (tempList['tierListLevelSet'] > 0){
         $(tierNotice).find('.tier-1-notice').html('<strong>Tier 1 Requirements:</strong> '+tempList["tierObject"]["tier1_req_front"]+' <span class="count-left"></span>');
     }

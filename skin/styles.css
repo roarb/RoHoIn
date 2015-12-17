@@ -297,7 +297,7 @@ paper-toolbar.front-toolbar img {position:relative; /*top:-5px; left:-12px;*/}
 #ajax-armybuilder .battlegroup .focus-circle, #ajax-armybuilder .units .focus-circle, #ajax-armybuilder .solos .focus-circle, #ajax-armybuilder .battle-engines .focus-circle {float:right;}
 #ajax-armybuilder .add-model-to-list {float:right; position:relative;}
 #ajax-armybuilder .unit.active.full .add-model-to-list {opacity:0;}
-#ajax-armybuilder .additional-model-info {overflow:hidden; opacity:0; padding-bottom:10px; background:#fff; color:#222;}
+#ajax-armybuilder .additional-model-info {overflow:hidden; opacity:0; padding-bottom:10px; background:#fff; color:#222; clear:both;}
 #ajax-armybuilder .model-added-basics {float:left;}
 #ajax-armybuilder label {float:left; margin-left:20px;}
 #ajax-armybuilder .unit-name {font-weight:bold; font-size:14px;}

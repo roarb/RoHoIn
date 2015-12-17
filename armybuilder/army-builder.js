@@ -251,20 +251,36 @@ function removeUnitPointsFromToolbar(points){
 
 }
 
-// add a model to a warcaster's battlegroup - called from battlegroup-build
-function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, object = all battlegroup object, pos = pos in battlegroup object
+/** add a model to a warcaster's battlegroup - called from battlegroup-build
+ *
+ * e = element called from / also false
+ * count = battle group 1-4
+ * object = all battlegroup object
+ * pos = pos in battlegroup object
+ * skip = bool skip the journeyman check
+ *
+ * */
+function addToBattleGroup(e, count, object, pos, skip){
     if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
         document.querySelector('#not-in-barracks').show();
         return false;
     }
+    if (pos){
+        object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
+    }
+    if (object === false){ // if this function is called from a journeyman pop up the variable journeymanAddObject will have been set
+        object = tempList['journeyman_temp'];
+        $('#notice-shadow').remove();
+    }
+
     // check to see if there is a journeyman warcaster in the list
     var journeymanAddOption = false;
-    if (tempList['journeyman']['active'] == 1){
+    if (tempList['journeyman']['active'] == 1 && skip != true){
         // check for specialization restrictions
         if (tempList['journeyman']['restricted_models'] != null){
             // check if the current model being added is in the restricted list
             $(tempList['journeyman']['restricted_models']).each(function(key,val){
-                if (val.indexOf(object[pos]['name']) > -1){
+                if (val.indexOf(object['name']) > -1){
                     journeymanAddOption = true;
                 }
             })
@@ -273,17 +289,82 @@ function addToBattleGroup(e, count, object, pos){ // count = battle group 1-4, o
         }
     }
     if (journeymanAddOption == true){
-        // add popup script for journeyman caster here
-        var choice = '<p>Warcaster</p><p>Journeyman</p>';
-        //displayNotice(choice);
+        // add popup script for journeyman caster here - currently not working to re-add this function to the popup
+        // save object to new public variable
+        tempList['journeyman_temp'] = object;
+
+        var choice = '<paper-button raised class="notice-option-button" id="journeyman-choice-warcaster" onclick="addToBattleGroup(false, '+count+', false, false, true)">Add to '+tempList.leader1name+'\'s Battlegroup</paper-button><br />' +
+            '<paper-button raised class="notice-option-button" id="journeyman-choice-journeyman" onclick="addToJourneymanCaster()">Add to '+tempList.journeyman['name']+'\'s Battlegroup</paper-button>';
+        displayNotice(choice);
+        return false;
     }
-    object = cleanUnitEntry(object[pos]); // currently updating the field_allowance to a numerical value
     if (canThisModelBeAddedToBattleGroup(object) == true) {
         addUnitPointsToToolbar(object['cost']);
         addUnitToBattleGroup(count, object, false);
         updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
         //armyListBuilderShortSave();
     }
+}
+
+/**
+ * called from 'addToBAttleGroup()' if there is a Journeyman caster available to attach to.
+ *
+ *  add the model with the object found in tempList['journeyman_temp']
+ */
+function addToJourneymanCaster()
+{
+    $('#notice-shadow').remove();
+    var object = tempList['journeyman_temp'];
+    updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
+    addUnitPointsToToolbar(object['cost']);
+
+    showAjaxLoading();
+    $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
+
+        var modelIdDisplay = 'model-id-'+object["id"];
+        var uaOptions = false;
+        if ($('.'+modelIdDisplay).length > 1){
+            modelIdDisplay = modelIdDisplay+'-'+$('.'+modelIdDisplay).length;
+        } else {
+            modelIdDisplay = modelIdDisplay+'-1';
+        }
+        if (data){
+            uaOptions = true;
+            tempList['ua-'+object["id"]] = data;
+            var uaScriptWrite = 'onclick="displayUnitAttachmentChoice(\'ua-'+object["id"]+'\', \''+modelIdDisplay+'\')"';
+        }
+
+        var bgBlock = $('#solos-built');
+        var i = modelCountInArmy();
+
+        var innerHtml = '<span class="wrapper">';
+        innerHtml += '<paper-material elevation="1" class="child-model';
+        innerHtml += ' model-id-'+object["id"]+'" id="'+modelIdDisplay+'">';
+        innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
+        innerHtml += '<div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+        innerHtml += object["title"] + '</span> | <span class="points">';
+        innerHtml += object["cost"];
+        innerHtml += '</span> pts</div>';
+        innerHtml += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
+        innerHtml += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
+        innerHtml += '<span class="mo-notice hidden">View Stats</span></div>';
+        innerHtml += '<div class="remove-unit remove-unit-from-army remove-' + object["id"] + '"onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+        innerHtml += '<paper-icon-button icon="backspace" class="remove"></paper-icon-button><span class="mo-notice hidden">Remove</span></div>';
+        if (uaOptions == true){
+            innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+            innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
+        }
+        $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+            innerHtml += data;
+            innerHtml += '<input name="solos-' + i + '" value="' + object["name"] + '|1" class="hidden ' + object["id"] + '" /></paper-material>';
+            // need to add another part to this script to remove the model from the tempList
+            innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
+            innerHtml += '</span>';
+            $('#model-id-'+tempList['journeyman']['id']+'-1').after(innerHtml);
+            armyListBuilderShortSave(object["id"]);
+            hideAjaxLoading();
+        });
+    });
 }
 
 // creates the visual block for the new leader model in it's battlegroup , called from leaderSelected()
@@ -300,12 +381,16 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     // update tempList with leader(x) = modelId
     if (count == 1){
         tempList['leader1id'] = object['id'];
+        tempList['leader1name'] = object['name'];
     } if (count == 2){
         tempList['leader2id'] = object['id'];
+        tempList['leader2name'] = object['name'];
     } if (count == 3){
         tempList['leader3id'] = object['id'];
+        tempList['leader3name'] = object['name'];
     } if (count == 4){
         tempList['leader4id'] = object['id'];
+        tempList['leader4name'] = object['name'];
     }
 
     var bgBlock = $('#battlegroup-'+count+'-built');
@@ -348,7 +433,9 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     });
 }
 
-// creates a model entry under the warcaster in its battlegroup - called from addToBattleGroup()
+/**
+ * creates a model entry under the warcaster in its battlegroup - called from addToBattleGroup()
+  */
 function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4, object = model object, free = bool
 
     showAjaxLoading();
@@ -432,9 +519,9 @@ function addUnitToArmy(e, object, pos){
     var modelAbilities = getModelAbilities(object);
     $(modelAbilities).each(function(key,val){
         if (val == 'Lesser Warlock' || val == 'Journeyman Warcaster') {
-            console.log(tempList); console.log(val); console.log(object);
             tempList['journeyman']['active'] = 1;
             tempList['journeyman']['id'] = object.id;
+            tempList['journeyman']['name'] = object.name;
         }
         // still need to create a rule for Specialization [warbeasts with Flight] - not sure which journeyman caster this one is on
         if (val != null && val.indexOf('Specialization') > -1){
@@ -447,7 +534,6 @@ function addUnitToArmy(e, object, pos){
     if (canThisModelBeAddedToArmy(object) == true) {
         // check for min - max unit possibilities - if it has then, launch pop up to ask min or max then on selection finish add to army with addMinMaxUnitToArmy()
         if (parseInt(object['purchased_low']) < parseInt(object['purchased_high'])) {
-            console.log(object);
             displayMinMaxChoice(object['purchased_low'], object['purchased_high'], object['cost'], object);
         } else { // if there is no min / max option, add the unit to the army
             showAjaxLoading();
@@ -467,7 +553,8 @@ function addUnitToArmy(e, object, pos){
                 }
                 var unitBlock = '';
                 var unitType = '';
-                if (object['type'] == 'Solo') {
+                console.log(object['type']);
+                if (object['type'] == 'Solo' || object['type'] == 'Character Solo') {
                     unitBlock = $('#solos-built');
                     unitType = 'solo';
                 } else if (object['type'] == 'Battle Engine') {
