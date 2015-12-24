@@ -2,18 +2,24 @@
 <html>
 <head>
     <title>My first VR site</title>
-    <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
+    <script src="/vr/aframe.js"></script>
     <style>
         /*body {background:#333;}
         a-cube {background:#f00;}*/
     </style>
 </head>
 <body>
+
 <a-scene>
     <!--<a-camera cursor-visible="false" position="6 1.8 23"></a-camera>-->
-    <a-camera wasd-controls-enabled="true" cursor-visible="false" position="6 1.8 23"></a-camera>
-    <a-cube rotation="0 45 0" width="8" depth="8" height="1" color="gray" opacity="1" metalness="0.4">
+    <a-camera wasd-controls-enabled="true" cursor-visible="false" position="6 1.8 13"></a-camera>
+    <a-cube rotation="0 45 0" width="8" depth="8" height="1" color="gray" opacity="0.5" metalness="0.4" position="0 3 2">
+        <a-model scale="1 1 1" src="https://aframe.io/aframe/examples/_models/tree1/tree1.dae"></a-model>
     </a-cube>
+    <a-image src="/res/unit_images/AdeptisRahn.jpg" height="22" width="10"></a-image>
+    <sky src="https://goo.gl/photos/Nf53e52wLU8oFEiUA"></sky>
+
 </a-scene>
+
 </body>
 </html>
