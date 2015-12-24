@@ -25,7 +25,7 @@
       <file leaf-file-name="create.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-108.53846">
               <caret line="166" column="37" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
               <folding />
             </state>
@@ -160,27 +160,9 @@
       <file leaf-file-name="single-unit.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="10.462788">
-              <caret line="529" column="0" selection-start-line="529" selection-start-column="0" selection-end-line="529" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#paper-toolbar#1;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#2;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#3;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#4;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#5;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#6;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#7;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#8;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#9;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#strong#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#strong#1;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#strong#2;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#strong#3;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#strong#0;n#paper-material#6;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.33239436">
+              <caret line="286" column="98" selection-start-line="286" selection-start-column="96" selection-end-line="286" selection-end-column="98" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -458,10 +440,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16130953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16130953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286026" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -873,7 +855,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="-108.53846">
           <caret line="166" column="37" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
           <folding />
         </state>
@@ -913,14 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vr/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/Core.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.716981">
@@ -932,29 +906,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vr/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.462788">
-          <caret line="529" column="0" selection-start-line="529" selection-start-column="0" selection-end-line="529" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#paper-toolbar#1;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#2;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#3;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#4;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#5;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#6;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#7;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#8;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#9;n#table#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#strong#0;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#strong#1;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#strong#2;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#strong#3;n#paper-material#1;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#strong#0;n#paper-material#6;n#div#0;n#div#0;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#paper-header-panel#1;n#paper-drawer-panel#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.33239436">
+          <caret line="286" column="98" selection-start-line="286" selection-start-column="96" selection-end-line="286" selection-end-column="98" />
+          <folding />
         </state>
       </provider>
     </entry>
