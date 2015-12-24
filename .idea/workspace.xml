@@ -25,7 +25,7 @@
       <file leaf-file-name="create.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.576923">
+            <state vertical-scroll-proportion="0.0">
               <caret line="166" column="37" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
               <folding />
             </state>
@@ -35,7 +35,7 @@
       <file leaf-file-name="army-builder.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-153.65384">
+            <state vertical-scroll-proportion="0.0">
               <caret line="240" column="47" selection-start-line="240" selection-start-column="47" selection-end-line="240" selection-end-column="47" />
               <folding>
                 <element signature="e#6#86#0#PHP" expanded="false" />
@@ -44,13 +44,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Core.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Core.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/Core.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.23077">
-              <caret line="116" column="25" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.80898875">
+              <caret line="126" column="21" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
               <folding>
-                <marker date="1446943997901" expanded="true" signature="1635:1679" placeholder="SELECT user_..users..." />
+                <marker date="1450932478555" expanded="true" signature="1607:1651" placeholder="SELECT user_..users..." />
+                <marker date="1450932478555" expanded="true" signature="2185:2228" placeholder="SELECT user_..users..." />
               </folding>
             </state>
           </provider>
@@ -59,7 +60,7 @@
       <file leaf-file-name="Unit.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/Unit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.65384614">
+            <state vertical-scroll-proportion="0.0">
               <caret line="736" column="17" selection-start-line="736" selection-start-column="17" selection-end-line="736" selection-end-column="17" />
               <folding>
                 <marker date="1446943067998" expanded="true" signature="531:549" placeholder="SELECT * FRO..core..." />
@@ -109,7 +110,7 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skin/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.6415094">
+            <state vertical-scroll-proportion="0.0">
               <caret line="299" column="131" selection-start-line="299" selection-start-column="131" selection-end-line="299" selection-end-column="131" />
               <folding />
             </state>
@@ -119,7 +120,7 @@
       <file leaf-file-name="army-builder.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.137931">
+            <state vertical-scroll-proportion="0.0">
               <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
                 <marker date="1450154583428" expanded="true" signature="8100:8113" placeholder="..." />
@@ -134,10 +135,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tier-rules.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5192308">
+            <state vertical-scroll-proportion="0.0">
               <caret line="532" column="0" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
               <folding>
                 <marker date="1450154897611" expanded="true" signature="3352:3367" placeholder="..." />
@@ -146,11 +147,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/skin/scripts.js">
+      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vr/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="single-unit.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.0">
+              <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -159,7 +170,7 @@
       <file leaf-file-name="battlegroup-build.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ajax/battlegroup-build.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.807693">
+            <state vertical-scroll-proportion="0.0">
               <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="false" />
@@ -218,7 +229,6 @@
         <option value="$PROJECT_DIR$/footer/index.php" />
         <option value="$PROJECT_DIR$/nav/main-nav.php" />
         <option value="$PROJECT_DIR$/bower_components/iron-icons/iron-icons.html" />
-        <option value="$PROJECT_DIR$/playtest/single-unit.php" />
         <option value="$PROJECT_DIR$/admin/builder/tiered.php" />
         <option value="$PROJECT_DIR$/login/views/logged_in.php" />
         <option value="$PROJECT_DIR$/core/Barracks.php" />
@@ -236,12 +246,13 @@
         <option value="$PROJECT_DIR$/ajax/unit-model-stats.php" />
         <option value="$PROJECT_DIR$/ajax/get-unit-attachments.php" />
         <option value="$PROJECT_DIR$/ajax/army-builder.php" />
-        <option value="$PROJECT_DIR$/core/Core.php" />
         <option value="$PROJECT_DIR$/skin/scripts.js" />
         <option value="$PROJECT_DIR$/armybuilder/create.php" />
         <option value="$PROJECT_DIR$/armybuilder/army-builder.js" />
         <option value="$PROJECT_DIR$/skin/styles.css" />
         <option value="$PROJECT_DIR$/armybuilder/tier-rules.js" />
+        <option value="$PROJECT_DIR$/core/Core.php" />
+        <option value="$PROJECT_DIR$/playtest/single-unit.php" />
       </list>
     </option>
   </component>
@@ -255,9 +266,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1692" />
-    <option name="height" value="1017" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1696" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -284,7 +296,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -313,7 +324,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="skin" />
+              <option name="myItemId" value="vr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -327,7 +338,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="armybuilder" />
+              <option name="myItemId" value="playtest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -341,13 +352,14 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ajax" />
+              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -428,14 +440,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1692" height="1017" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16169451" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16130953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286026" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13450937" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32606325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13427947" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -448,7 +461,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32606325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39891452" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -483,13 +495,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/builder/special-abilities-save.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3173759">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/builder/special-abilities-edit.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3173759">
@@ -613,13 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7439252">
           <caret line="196" column="122" selection-start-line="196" selection-start-column="122" selection-end-line="196" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9119241">
-          <caret line="447" column="0" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -789,7 +787,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/battlegroup-build.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.807693">
+        <state vertical-scroll-proportion="0.0">
           <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="false" />
@@ -799,7 +797,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/army-builder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-153.65384">
+        <state vertical-scroll-proportion="0.0">
           <caret line="240" column="47" selection-start-line="240" selection-start-column="47" selection-end-line="240" selection-end-column="47" />
           <folding>
             <element signature="e#6#86#0#PHP" expanded="false" />
@@ -807,19 +805,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/Core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.23077">
-          <caret line="116" column="25" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
-          <folding>
-            <marker date="1446943997901" expanded="true" signature="1635:1679" placeholder="SELECT user_..users..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/Unit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.65384614">
+        <state vertical-scroll-proportion="0.0">
           <caret line="736" column="17" selection-start-line="736" selection-start-column="17" selection-end-line="736" selection-end-column="17" />
           <folding>
             <marker date="1446943067998" expanded="true" signature="531:549" placeholder="SELECT * FRO..core..." />
@@ -867,7 +855,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.576923">
+        <state vertical-scroll-proportion="0.0">
           <caret line="166" column="37" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
           <folding />
         </state>
@@ -875,7 +863,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/skin/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6415094">
+        <state vertical-scroll-proportion="0.0">
           <caret line="299" column="131" selection-start-line="299" selection-start-column="131" selection-end-line="299" selection-end-column="131" />
           <folding />
         </state>
@@ -883,7 +871,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.137931">
+        <state vertical-scroll-proportion="0.0">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <marker date="1450154583428" expanded="true" signature="8100:8113" placeholder="..." />
@@ -899,10 +887,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/tier-rules.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5192308">
+        <state vertical-scroll-proportion="0.0">
           <caret line="532" column="0" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
           <folding>
             <marker date="1450154897611" expanded="true" signature="3352:3367" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vr/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0">
+          <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/Core.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.80898875">
+          <caret line="126" column="21" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
+          <folding>
+            <marker date="1450932478555" expanded="true" signature="1607:1651" placeholder="SELECT user_..users..." />
+            <marker date="1450932478555" expanded="true" signature="2185:2228" placeholder="SELECT user_..users..." />
           </folding>
         </state>
       </provider>

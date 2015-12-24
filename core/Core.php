@@ -85,9 +85,8 @@ class AllCore
 
 	public function getUserNameById($id)
 	{
-		$conn = $this->connect();
 		$sql = "SELECT user_name FROM users WHERE user_id = " . $id;
-		$result = $conn->query($sql);
+		$result = $this->connect()->query($sql);
 		$user = '';
 		foreach ($result as $row) {
 			$user = $row['user_name'];
@@ -116,5 +115,15 @@ class AllCore
 		} else {
 			return false;
 		}
+	}
+
+	public function getUserSub($id){
+		$result = $this->connect()->query("SELECT user_sub FROM users WHERE user_id = " . $id);
+		foreach ($result as $row){
+			if ($row['user_sub'] == 1){
+				return true;
+			}
+		}
+		return false;
 	}
 }
