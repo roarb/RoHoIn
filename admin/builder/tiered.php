@@ -3,14 +3,13 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/Unit.php';
-    include '../../core/Faction.php';  ?>
+    $core = new AllCore();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Tiered List Additions - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

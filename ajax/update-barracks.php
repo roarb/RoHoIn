@@ -1,6 +1,6 @@
 <?php
+
 include '../core/Core.php';
-include '../core/Barracks.php';
 $core = new AllCore();
 $barracks = new Barracks();
 $userId = $_GET['user'];

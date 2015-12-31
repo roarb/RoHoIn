@@ -3,19 +3,18 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/SpecialAbilities.php';
-    include '../../core/SpellsKnown.php';
+    $core = new AllCore();
     $allSpells = new AllSpellsKnown();
     $spell = $allSpells->getSpellByName($_GET['name']);
     $spell = $spell[0]; // set returned array to a single object
-    $allAbilities = new AllSpecialAbilities;
+    $allAbilities = new AllSpecialAbilities();
     $abilitiesList = $allAbilities->getAllSpecialAbilities();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Update a Spell - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

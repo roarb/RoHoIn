@@ -1,22 +1,16 @@
-<?php include('login/index-start.php'); ?>
+<?php include('../login/index-start.php'); ?>
 <html lang="en">
     <head>
         <?php
         include '../admin/header.php';
         include '../core/Core.php';
-        include '../core/SpecialAbilities.php';
-        include '../core/Unit.php';
-        include '../core/Faction.php';
-        include '../core/AnimusKnown.php';
-        include '../core/SpellsKnown.php';
-        include '../core/Weapons.php';
+        $core = new AllCore;
         $allAbilities = new AllSpecialAbilities;
         $allUnits = new AllUnits;
         $allAnimus = new AllAnimusKnown;
         $allSpells = new AllSpellsKnown;
         $allWeapons = new AllWeapons;
         $allFactions = new AllFactions;
-        $core = new AllCore;
 
         $factionList = $allFactions->getAllFactions();
         $unitsList = $allUnits->getAllUnits(); ?>
@@ -82,9 +76,11 @@
                                 <?php $min = $core->removeFromArray($units['all-dmg'], 0) ?>
                                 <?php $percent = $core->getSlidePos(min($min),max($units['all-dmg']),$units['avg-dmg']); ?>
                                 DMG BOXES: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
-                                <?php $min = $core->removeFromArray($units['bg_points'], 0) ?>
-                                <?php $percent = $core->getSlidePos(min($min),max($units['all-bgpoints']),$units['avg-bgpoints']); ?>
-                                BG Points: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                <?php if (isset($units['bg_points'])): ?>
+                                    <?php $min = $core->removeFromArray($units['bg_points'], 0) ?>
+                                    <?php $percent = $core->getSlidePos(min($min),max($units['all-bgpoints']),$units['avg-bgpoints']); ?>
+                                    BG Points: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                <?php endif; ?>
                                 <?php $percent = $core->getSlidePos(min($min),max($units['all-focusfury']),$units['avg-focusfury']); ?>
                                 Focus/Fury: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
                                 <?php $percent = $core->getSlidePos(min($min),max($units['all-spells']),$units['avg-spells']); ?>
@@ -134,9 +130,11 @@
                                     <?php $min = $core->removeFromArray($units['all-dmg'], 0) ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-dmg']),$units['avg-dmg']); ?>
                                     DMG BOXES: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
-                                    <?php $min = $core->removeFromArray($units['cost'], 0) ?>
-                                    <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
-                                    COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php if (isset($units['cost'])): ?>
+                                        <?php $min = $core->removeFromArray($units['cost'], 0) ?>
+                                        <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
+                                        COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php endif; ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-abilities']),$units['avg-abilities']); ?>
                                     Abilities Count: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
                                 </td>
@@ -182,9 +180,11 @@
                                     <?php $min = $core->removeFromArray($units['all-dmg'], 0) ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-dmg']),$units['avg-dmg']); ?>
                                     DMG BOXES: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
-                                    <?php $min = $core->removeFromArray($units['cost'], 0) ?>
-                                    <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
-                                    COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php if (isset($units['cost'])): ?>
+                                        <?php $min = $core->removeFromArray($units['cost'], 0) ?>
+                                        <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
+                                        COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php endif; ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-abilities']),$units['avg-abilities']); ?>
                                     Abilities Count: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
                                 </td>
@@ -227,9 +227,11 @@
                                     <?php $min = $core->removeFromArray($units['all-arm'], 0) ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-arm']),$units['avg-arm']); ?>
                                     ARM: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
-                                    <?php $min = $core->removeFromArray($units['cost'], 0) ?>
-                                    <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
-                                    COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php if (isset($units['cost'])): ?>
+                                        <?php $min = $core->removeFromArray($units['cost'], 0) ?>
+                                        <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
+                                        COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php endif; ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-abilities']),$units['avg-abilities']); ?>
                                     Abilities Count: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
                                 </td>
@@ -272,9 +274,11 @@
                                     <?php $min = $core->removeFromArray($units['all-arm'], 0) ?>
                                     <?php $percent = $core->getSlidePos(min($min),max($units['all-arm']),$units['avg-arm']); ?>
                                     ARM: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
-                                    <?php $min = $core->removeFromArray($units['cost'], 0) ?>
-                                    <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
-                                    COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php if (isset($units['cost'])): ?>
+                                        <?php $min = $core->removeFromArray($units['cost'], 0) ?>
+                                        <?php $percent = $core->getSlidePos(min($min),max($units['all-cost']),$units['avg-cost']); ?>
+                                        COST: <div class="slider"><div class="slider-pos <?php echo $core->getSliderColor($percent); ?>" style="width:<?php echo round($percent) ?>%;"></div></div><br />
+                                    <?php endif; ?>
                                 </td>
                             <?php endforeach; ?>
                         </tr>

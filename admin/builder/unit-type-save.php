@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include '../../admin/header.php';
-    include '../../core/UnitType.php';
+    $core = new AllCore();
     include '../../core/Core.php';
     $newType = $_POST['new-unit-type']; ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,7 +10,7 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

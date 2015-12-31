@@ -6,9 +6,8 @@
  * Time: 4:38 PM
  */
 
-include "../core/Unit.php";
 include "../core/Core.php";
-include "../core/Barracks.php";
+$core = new AllCore;
 $userId = $_GET['user'];
 $modelId = $_GET['model'];
 $allUnits = new AllUnits();
@@ -17,8 +16,6 @@ $unit = $allUnits->getUnitById($modelId);
 $unit = $unit[0];
 
 ?>
-
-<?php //var_dump($unit) ?>
 
 <span class="barracks-sub-head">Add this model to your <a href="/account/barracks.php" title="Your Barracks">Barracks</a></span><br />
 <label>You currently own</label>

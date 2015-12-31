@@ -1,10 +1,12 @@
 <?php
 
-class AllUnitTypes
+class AllUnitTypes extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	function getAllUnitTypes(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$unitTypes = "SELECT * FROM unit_type ORDER BY name";
 		$unitTypesResult = $conn->query($unitTypes);
@@ -16,27 +18,23 @@ class AllUnitTypes
 				$unitTypesBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $unitTypesBuild;
 	}
-	
+
+	/**
+	 * @param $data
+	 */
 	function saveUnitType($data){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$sql = "INSERT INTO unit_type (name)
 		VALUES ('".$data."')";
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
 		$conn->close();
 	}
 }
 
-?>

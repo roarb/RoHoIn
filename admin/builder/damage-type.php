@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include '../../core/Core.php';
-    include '../../core/DamageImmunity.php';
+    $core = new AllCore();
     include '../../admin/header.php';
     $allTypes = new AllDamageImmunityTypes;
     $typesList = $allTypes->getAllDamageImmunityTypes();  ?>
@@ -11,7 +11,7 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

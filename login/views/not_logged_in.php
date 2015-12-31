@@ -1,7 +1,7 @@
 
 <paper-material class="cushion">
     <div class="center" style="margin-bottom:8px; border-bottom:1px solid #d1d1d1;"><?php include('_header.php'); ?></div>
-    <form method="post" action="http://roho.in" name="loginform" id="login-form" style="margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #d1d1d1;">
+    <form method="post" action="<?php $_SERVER['DOCUMENT_ROOT'] ?>" name="loginform" id="login-form" style="margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #d1d1d1;">
         <paper-input-container>
             <label for="user_name">User Name</label>
             <input is="iron-input" id="user_name" type="text" name="user_name" required />

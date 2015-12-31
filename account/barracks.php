@@ -3,11 +3,9 @@
 <head>
     <?php include '../admin/header.php';
     include '../core/Core.php';
-    include '../core/Faction.php';
-    include '../core/Barracks.php';
-    include '../core/Unit.php';
-    $barracks = new Barracks;
-    $allFactions = new AllFactions; ?>
+    $core = new AllCore();
+    $barracks = new Barracks();
+    $allFactions = new AllFactions(); ?>
     <script src="/skin/jsgrid/src/jsgrid.core.js"></script>
     <script src="/skin/jsgrid/src/jsgrid.load-indicator.js"></script>
     <script src="/skin/jsgrid/src/jsgrid.load-strategies.js"></script>

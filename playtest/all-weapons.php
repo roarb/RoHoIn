@@ -1,11 +1,10 @@
-<?php include('login/index-start.php'); ?>
+<?php include('../login/index-start.php'); ?>
 <html lang="en">
 <head>
 <?php
     include '../admin/header.php';
     include '../core/Core.php';
-    include '../core/Unit.php';
-    include '../core/Weapons.php';
+    $core = new AllCore;
     $allWeapons = new AllWeapons;
     $weaponsList = $allWeapons->getAllWeapons();
     $unitsList = '';

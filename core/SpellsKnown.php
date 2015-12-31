@@ -1,10 +1,12 @@
 <?php
 
-class AllSpellsKnown
-{	
+class AllSpellsKnown extends AllCore
+{
+	/**
+	 * @return string
+	 */
 	function getAllSpells(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$spells = "SELECT * FROM spells_known ORDER BY name";
 		$spellsResult = $conn->query($spells);
@@ -16,15 +18,15 @@ class AllSpellsKnown
 				$spellsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $spellsBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getAllSpellsName(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$spells = "SELECT name FROM spells_known ORDER BY name";
 		$spellsResult = $conn->query($spells);
@@ -36,17 +38,18 @@ class AllSpellsKnown
 				$spellsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $spellsBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @return string
+	 */
 	function getSpellByName($name){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$name = "'".$name."'";
-		$spell = "SELECT * FROM spells_known WHERE name = ".$name."";
+		$spell = "SELECT * FROM spells_known WHERE name = ".$name;
 		$spellResult = $conn->query($spell);
 		$spellBuild = '';
 		if ($spellResult->num_rows > 0) {
@@ -59,10 +62,28 @@ class AllSpellsKnown
 		} 
 		return $spellBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $description
+	 * @param $cost
+	 * @param $range
+	 * @param $aoe
+	 * @param $pow
+	 * @param $upkeep
+	 * @param $offensive
+	 * @param $specialAbility1
+	 * @param $specialAbility2
+	 * @param $offSpdMod
+	 * @param $offStrMod
+	 * @param $offMatMod
+	 * @param $offRatMod
+	 * @param $offDefMod
+	 * @param $offArmMod
+	 * @param $duration
+	 */
 	function saveSpells($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -90,16 +111,32 @@ class AllSpellsKnown
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 		$conn->close();		
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $description
+	 * @param $cost
+	 * @param $range
+	 * @param $aoe
+	 * @param $pow
+	 * @param $upkeep
+	 * @param $offensive
+	 * @param $specialAbility1
+	 * @param $specialAbility2
+	 * @param $offSpdMod
+	 * @param $offStrMod
+	 * @param $offMatMod
+	 * @param $offRatMod
+	 * @param $offDefMod
+	 * @param $offArmMod
+	 * @param $duration
+	 */
 	function updateSpell($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -128,11 +165,7 @@ class AllSpellsKnown
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		$conn->close();		
 	}
 }
-
-?>

@@ -3,7 +3,7 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/Weapons.php';
+    $core = new AllCore();
 
     $name = $_POST['name'];
     $ranged = $_POST['ranged'];
@@ -30,7 +30,7 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

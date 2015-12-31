@@ -1,16 +1,21 @@
 <?php
 
-class Barracks
+class Barracks extends AllCore
 {
-	
+	/**
+	 * @param $userId
+	 * @param $unitName
+	 * @param $count
+	 * @param $type
+	 * @return string
+	 */
 	function updateUnitForUser($userId, $unitName, $count, $type){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		// check if the user already has the unit counted 
 		$exists = $this->userModelCountCheck($userId, $unitName, 'count');
 		// check again for counted painted models
 		if ($exists == ''){
-			$exists = $this->userModelCountCheck($userId, $unitName, 'painted');
+				$exists = $this->userModelCountCheck($userId, $unitName, 'painted');
 			}
 		if ($exists == ''){
 			// add the new value
@@ -36,17 +41,20 @@ class Barracks
 			if ($conn->query($sqlUpdate) === TRUE) {
 				return 'This unit has been updated to '.$count.' '.$typeMessage.'.';
 			} 
-			else {
-				echo "Error: <br>" . $conn->error;
-			}
-			
+
 			$conn->close();	
 			}			
 	}
-	
+
+	/**
+	 * @param $userId
+	 * @param $unitName
+	 * @param $count
+	 * @param $type
+	 * @return bool
+	 */
 	function addUnitForUser($userId, $unitName, $count, $type){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$userId = "'".$userId."'";
 		$unitName = "'".$unitName."'";
 		// install a check to only update the owned or painted and not reset the other to 0
@@ -62,16 +70,22 @@ class Barracks
 		$sqlAdd = "INSERT INTO barracks (user_id, unit_name, owned_qty, painted_qty) VALUES (".$userId.", ".$unitName.", ".$ownedQty.", ".$paintedQty.")";
 		
 		if ($conn->query($sqlAdd) === TRUE) {
+			$conn->close();
 			return true;
-		} else { 
+		} else {
+			$conn->close();
 			return false;
 		}
-		$conn->close();
 	}
-	
+
+	/**
+	 * @param $userId
+	 * @param $unit
+	 * @param $type
+	 * @return bool|string
+	 */
 	function userModelCountCheck($userId,$unit,$type){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$unit = "'".$unit."'";
 		if ($type == 'count'){
 			$sqlCount = "SELECT * FROM barracks WHERE user_id = ".$userId." AND unit_name = ".$unit." ORDER BY unit_name";
@@ -92,20 +106,21 @@ class Barracks
 		}	
 		else {return false;}
 	}
-	
+
+	/**
+	 * // get all users models painted and unpainted
+	 * @param $userId
+	 * @return string
+	 */
 	function getAllUserModels($userId){
-		// get all users models painted and unpainted
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		// add in unit class for getting the faction of the units
-		//include 'Unit.php';
 		$unit = new AllUnits;
-        //include 'Faction.php';
         $allFactions = new AllFactions;
 		
 		$sql = "SELECT * FROM barracks WHERE user_id = ".$userId." AND owned_qty > 0 ORDER BY id";
 		$modelsResult = $conn->query($sql);
-		$finalResuts = ''; $i = 0;
+		$finalResuts = []; $i = 0;
 		
 		foreach($modelsResult as $row){
 			$finalResults[$i] = $row;
@@ -124,7 +139,11 @@ class Barracks
 			return $finalResults;	
 		}
 	}
-	
+
+	/**
+	 * @param $models
+	 * @return int
+	 */
 	function getTotalOwnedByUser($models){
 		$count = 0;
 		foreach ($models as $model){
@@ -132,7 +151,11 @@ class Barracks
 		}
 		return $count;
 	}
-	
+
+	/**
+	 * @param $models
+	 * @return int
+	 */
 	function getTotalPaintedByUser($models){
 		$count = 0;
 		foreach ($models as $model){
@@ -140,7 +163,11 @@ class Barracks
 		}
 		return $count;
 	}
-	
+
+	/**
+	 * @param $models
+	 * @return string
+	 */
 	function getAllActiveFactions($models){
 		// AllFactions is included in the  barracks.php where this function is called from
 		$factions = new AllFactions;
@@ -160,4 +187,3 @@ class Barracks
 	}
 }
 
-?>

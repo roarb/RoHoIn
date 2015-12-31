@@ -1,10 +1,12 @@
 <?php
 
-class AllBaseSizes
+class AllBaseSizes extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	function getAllBaseSizes(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$baseSizes = "SELECT base_size FROM base_size ORDER BY base_size";
 		$baseSizesResult = $conn->query($baseSizes);
@@ -16,27 +18,23 @@ class AllBaseSizes
 				$baseSizesBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $baseSizesBuild;
 	}
-	
+
+	/**
+	 * @param $data
+	 */
 	function saveBaseSize($data){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$sql = "INSERT INTO base_size (base_size)
 		VALUES ('".$data."')";
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 		$conn->close();
 	}
 }
-
-?>

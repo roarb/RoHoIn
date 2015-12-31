@@ -1,8 +1,10 @@
 <?php include('../login/index-start.php'); ?>
 <html lang="en">
 <head>
-    <?php include '../admin/header.php';
-    $user = $_SESSION; ?>
+    <?php include '../admin/header.php'; ?>
+    <?php include '../core/Core.php'; ?>
+    <?php $core = new AllCore() ?>
+    <?php $user = $_SESSION; ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Your RoHo.in Account Center</title>
 </head>
@@ -26,7 +28,7 @@
             </div>
         </paper-toolbar>
         <div class="info-block cushion">
-            <?php if (isset($_SESSION['user_name'])): ?>
+            <?php if ($core->getLoggedIn()): ?>
                 <paper-material elevation="1" class="cushion">
                     <p>Welcome <?php echo $user['user_name'] ?>, this will be your account dashboard.</p>
                     <p>From here we'll be adding:</p>
@@ -36,7 +38,7 @@
                         <li>And all your personal stats vs the website stats</li></ul>
                 </paper-material>
             <?php else: ?>
-                <paper-material elevation="1">
+                <paper-material elevation="1" class="cushion">
                     <p>It doesn't look like you have an account, please <a href="http://roho.in/login/register.php" title="Register a New Account">register for one</a>.</p>
                 </paper-material>
             <?php endif; ?>

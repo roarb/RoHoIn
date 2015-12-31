@@ -1,11 +1,10 @@
-<?php include('login/index-start.php'); ?>
+<?php include('../login/index-start.php'); ?>
 <html lang="en">
 <head>
     <?php
     include '../admin/header.php';
     include '../core/Core.php';
-    include '../core/Unit.php';
-    include '../core/SpellsKnown.php';
+    $core = new AllCore;
     $allSpells = new AllSpellsKnown;
     $spellsList = $allSpells->getAllSpells();
     $unitsList = '';

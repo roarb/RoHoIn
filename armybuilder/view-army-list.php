@@ -77,11 +77,13 @@
                                                 </div>
                                             <?php endif; ?>
                                         </label>
-                                        <?php if (is_array($warcaster['tiers'])): ?>
-                                            <div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
-                                                <paper-icon-button icon="class" class="view-tiers"></paper-icon-button>
-                                                <span class="mo-notice hidden">View Tier Lists</span>
-                                            </div>
+                                        <?php if (isset($warcaster['tiers'])): ?>
+                                            <?php if (is_array($warcaster['tiers'])): ?>
+                                                <div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                                                    <paper-icon-button icon="class" class="view-tiers"></paper-icon-button>
+                                                    <span class="mo-notice hidden">View Tier Lists</span>
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                         <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
                                             <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>

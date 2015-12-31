@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <?php include '../../core/Core.php';
-    include '../../core/UnitType.php';
+    $core = new AllCore();
     include '../../admin/header.php';  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Unit Type Additions - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

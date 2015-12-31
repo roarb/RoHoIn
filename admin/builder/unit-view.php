@@ -3,9 +3,7 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/Faction.php';
-    include '../../core/Unit.php';
-    include '../../core/UnitType.php';
+    $core = new AllCore();
     $allUnits = new AllUnits;
     $unitsList = $allUnits->getAllUnitsName();
     $allUnitTypes = new AllUnitTypes;
@@ -17,7 +15,7 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

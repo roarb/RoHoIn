@@ -3,22 +3,20 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/Weapons.php';
-    include '../../core/DamageImmunity.php';
-    include '../../core/SpecialAbilities.php';
+    $core = new AllCore();
     $weapons = new AllWeapons();
     $weapon = $weapons->getWeaponByName($_GET['name']);
     $weapon = $weapon[0]; // set returned array to a single object
-    $allTypes = new AllDamageImmunityTypes;
+    $allTypes = new AllDamageImmunityTypes();
     $typesList = $allTypes->getAllDamageImmunityTypes();
-    $allSpecialAbilities = new AllSpecialAbilities;
+    $allSpecialAbilities = new AllSpecialAbilities();
     $abilitiesList = $allSpecialAbilities->getAllSpecialAbilities();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Update a Weapon - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

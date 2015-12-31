@@ -3,7 +3,7 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/AnimusKnown.php';
+    $core = new AllCore();
 
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -27,7 +27,7 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

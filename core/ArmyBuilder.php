@@ -6,11 +6,37 @@
  * Time: 2:21 PM
  */
 
-class ArmyBuilder {
-
+class ArmyBuilder extends AllCore
+{
+    /**
+     * @param $armyName
+     * @param $armyFaction
+     * @param $points
+     * @param $actualPoints
+     * @param $warcaster1
+     * @param $tier1
+     * @param $battlegroup1Sql
+     * @param $warcaster2
+     * @param $tier2
+     * @param $battlegroup2Sql
+     * @param $warcaster3
+     * @param $tier3
+     * @param $battlegroup3Sql
+     * @param $warcaster4
+     * @param $tier4
+     * @param $battlegroup4Sql
+     * @param $unitsSql
+     * @param $solosSql
+     * @param $battleEnginesSql
+     * @param $mercSolo
+     * @param $mercUnits
+     * @param $user
+     * @param $public
+     * @param $notes
+     * @return string
+     */
     public function createNewArmyList($armyName, $armyFaction, $points, $actualPoints, $warcaster1, $tier1, $battlegroup1Sql, $warcaster2, $tier2, $battlegroup2Sql, $warcaster3, $tier3, $battlegroup3Sql, $warcaster4, $tier4, $battlegroup4Sql, $unitsSql, $solosSql, $battleEnginesSql, $mercSolo, $mercUnits, $user, $public, $notes){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
         $armyName = "'".$armyName."'";
         $armyFaction = "'".$armyFaction."'";
@@ -48,9 +74,12 @@ class ArmyBuilder {
         return $id;
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function getListIdByName($name){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
         $sql = "SELECT id FROM army_list WHERE name = ".$name;
         $result = $conn->query($sql);
         $id = '';
@@ -59,14 +88,21 @@ class ArmyBuilder {
         return $id;
     }
 
+    /**
+     * // $cleanObj[0] => unit name $cleanObj[1] => qty
+     * @param $obj
+     * @return array
+     */
     public function splitNameQtyForUnit($obj){
-        $cleanObj = explode('|',$obj); // $cleanObj[0] => unit name $cleanObj[1] => qty
+        $cleanObj = explode('|',$obj);
         return $cleanObj;
     }
 
+    /**
+     * @return string
+     */
     public function getAllPublicArmyLists(){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
         $sql = "SELECT * FROM army_list WHERE public = 1 ORDER BY points";
         $result = $conn->query($sql);
         $i = 0;
@@ -79,9 +115,12 @@ class ArmyBuilder {
         return $publicList;
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function getAllOwnedArmyLists($id){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
         $sql = "SELECT * FROM army_list WHERE created_by = ".$id." ORDER BY points";
         $result = $conn->query($sql);
         $i = 0;
@@ -94,9 +133,12 @@ class ArmyBuilder {
         return $ownedList;
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function getListById($id){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
         $sql = "SELECT * FROM army_list WHERE id = ".$id." ORDER BY points";
         $result = $conn->query($sql);
         $list = '';

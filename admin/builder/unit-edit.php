@@ -3,38 +3,30 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/AnimusKnown.php';
-    include '../../core/BaseSize.php';
-    include '../../core/DamageImmunity.php';
-    include '../../core/Faction.php';
-    include '../../core/SpecialAbilities.php';
-    include '../../core/SpellsKnown.php';
-    include '../../core/Unit.php';
-    include '../../core/UnitType.php';
-    include '../../core/Weapons.php';
-    $allUnits = new AllUnits;
+    $core = new AllCore();
+    $allUnits = new AllUnits();
     $unitsList = $allUnits->getAllUnitsName();
     $unit = $allUnits->getUnitByName($_GET['name']);
-    $allAbilities = new AllSpecialAbilities;
+    $allAbilities = new AllSpecialAbilities();
     $abilitiesList = $allAbilities->getAllSpecialAbilitiesName();
-    $allWeapons = new AllWeapons;
+    $allWeapons = new AllWeapons();
     $weaponsList = $allWeapons->getAllWeaponsName();
-    $allUnitTypes = new AllUnitTypes;
+    $allUnitTypes = new AllUnitTypes();
     $unitTypesList = $allUnitTypes->getAllUnitTypes();
-    $allFactions = new AllFactions;
+    $allFactions = new AllFactions();
     $factionsList = $allFactions->getAllFactions();
-    $allAnimus = new AllAnimusKnown;
+    $allAnimus = new AllAnimusKnown();
     $animusList = $allAnimus->getAllAnimusName();
-    $allSizes = new AllBaseSizes;
+    $allSizes = new AllBaseSizes();
     $baseSizesList = $allSizes->getAllBaseSizes();
-    $allSpells = new AllSpellsKnown;
+    $allSpells = new AllSpellsKnown();
     $spellsKnownList = $allSpells->getAllSpellsName();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Edit Unit / Models - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

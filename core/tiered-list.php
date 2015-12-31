@@ -1,10 +1,12 @@
 <?php
 
-class AllTieredLists
+class AllTieredLists extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	function getAllTieredLists(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 
 		$lists = "SELECT * FROM tiered_list ORDER BY name";
 		$listsResult = $conn->query($lists);
@@ -16,15 +18,16 @@ class AllTieredLists
 				$listsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $listsBuild;
 	}
 
+	/**
+	 * @param $tierId
+	 * @return array|bool|string
+	 */
 	function getTieredListById($tierId){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 
 		$lists = "SELECT * FROM tiered_list WHERE id = '".$tierId."' ORDER BY name";
 		$listsResult = $conn->query($lists);
@@ -33,16 +36,42 @@ class AllTieredLists
 			while($row = $listsResult->fetch_assoc()) {
 				$listsBuild = $row;
 			}
-		} else {
-			return false;
 		}
 		return $listsBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $faction
+	 * @param $caster
+	 * @param $description
+	 * @param $reqBattlegroupFront
+	 * @param $reqBattlegroupRules
+	 * @param $reqUnitsFront
+	 * @param $reqUnitsRules
+	 * @param $reqSolosFront
+	 * @param $reqSolosRules
+	 * @param $reqBattleengineFront
+	 * @param $reqBattleengineRules
+	 * @param $tier1BonusFront
+	 * @param $tier1Bonus
+	 * @param $tier1ReqFront
+	 * @param $tier1Req
+	 * @param $tier2BonusFront
+	 * @param $tier2Bonus
+	 * @param $tier2ReqFront
+	 * @param $tier2Req
+	 * @param $tier3BonusFront
+	 * @param $tier3Bonus
+	 * @param $tier3ReqFront
+	 * @param $tier3Req
+	 * @param $tier4BonusFront
+	 * @param $tier4Bonus
+	 * @param $tier4ReqFront
+	 * @param $tier4Req
+	 */
 	function saveTieredLists($name, $faction, $caster, $description, $reqBattlegroupFront, $reqBattlegroupRules, $reqUnitsFront, $reqUnitsRules, $reqSolosFront, $reqSolosRules, $reqBattleengineFront, $reqBattleengineRules, $tier1BonusFront, $tier1Bonus, $tier1ReqFront, $tier1Req, $tier2BonusFront, $tier2Bonus, $tier2ReqFront,$tier2Req, $tier3BonusFront, $tier3Bonus, $tier3ReqFront,$tier3Req, $tier4BonusFront, $tier4Bonus, $tier4ReqFront, $tier4Req){
-		$core = new AllCore();
-		$conn = $core->connect();
-		
+		$conn = $this->connect();
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
 		$caster = "'".$caster."'";
@@ -160,9 +189,12 @@ class AllTieredLists
 		$conn->close();
 	}
 
+	/**
+	 * @param $id
+	 * @return string
+	 */
 	function getTierByCasterId($id){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 
 		$list = "SELECT * FROM tiered_list WHERE caster = ".$id." ORDER BY name";
 		$listsResult = $conn->query($list);
@@ -178,5 +210,3 @@ class AllTieredLists
 		return $listsBuild;
 	}
 }
-
-?>

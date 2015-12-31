@@ -3,15 +3,7 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/AnimusKnown.php';
-    include '../../core/BaseSize.php';
-    include '../../core/DamageImmunity.php';
-    include '../../core/Faction.php';
-    include '../../core/SpecialAbilities.php';
-    include '../../core/SpellsKnown.php';
-    include '../../core/Unit.php';
-    include '../../core/UnitType.php';
-    include '../../core/Weapons.php';
+    $core = new AllCore;
     $allUnits = new AllUnits;
     $unitsList = $allUnits->getAllUnitsName();
     $allAbilities = new AllSpecialAbilities;
@@ -33,13 +25,13 @@
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
             </paper-toolbar>
-            <?php include '../../nav/main-nav.php'; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'].'/nav/main-nav.php'; ?>
         </paper-header-panel>
 
         <paper-header-panel main>

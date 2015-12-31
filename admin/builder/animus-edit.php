@@ -3,19 +3,18 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/SpecialAbilities.php';
-    include '../../core/AnimusKnown.php';
+    $core = new AllCore();
     $allAnimus = new AllAnimusKnown();
     $animus = $allAnimus->getAnimusByName($_GET['name']);
     $animus = $animus[0]; // set returned array to a single object
-    $allAbilities = new AllSpecialAbilities;
+    $allAbilities = new AllSpecialAbilities();
     $abilitiesList = $allAbilities->getAllSpecialAbilities();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Update an Animus - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

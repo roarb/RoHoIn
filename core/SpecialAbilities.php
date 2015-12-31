@@ -1,10 +1,9 @@
 <?php
 
-class AllSpecialAbilities
+class AllSpecialAbilities extends AllCore
 {	
 	function getAllSpecialAbilities(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$specialAbilities = "SELECT * FROM special_abilities ORDER BY name";
 		$specialAbilitiesResult = $conn->query($specialAbilities);
@@ -16,15 +15,15 @@ class AllSpecialAbilities
 				$specialAbilitiesBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $specialAbilitiesBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getAllSpecialAbilitiesName(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$specialAbilities = "SELECT name FROM special_abilities ORDER BY name";
 		$specialAbilitiesResult = $conn->query($specialAbilities);
@@ -36,17 +35,18 @@ class AllSpecialAbilities
 				$specialAbilitiesBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $specialAbilitiesBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @return string
+	 */
 	function getAbilityByName($name){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$name = "'".$name."'";
-		$ability = "SELECT * FROM special_abilities WHERE name = ".$name."";
+		$ability = "SELECT * FROM special_abilities WHERE name = ".$name;
 		$abilityResult = $conn->query($ability);
 		$abilityBuild = '';
 		if ($abilityResult->num_rows > 0) {
@@ -59,10 +59,23 @@ class AllSpecialAbilities
 		} 
 		return $abilityBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $description
+	 * @param $immunity
+	 * @param $damageType
+	 * @param $continuousEffect
+	 * @param $offSpdMod
+	 * @param $offStrMod
+	 * @param $offMatMod
+	 * @param $offRatMod
+	 * @param $offDefMod
+	 * @param $offArmMod
+	 * @param $weaponRangeMod
+	 */
 	function saveSpecialAbilities($name, $description, $immunity, $damageType, $continuousEffect, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $weaponRangeMod){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		if ($description == ''){$description = 'NULL';} else {
@@ -85,16 +98,27 @@ class AllSpecialAbilities
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 		$conn->close();		
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $description
+	 * @param $immunity
+	 * @param $damageType
+	 * @param $continuousEffect
+	 * @param $offSpdMod
+	 * @param $offStrMod
+	 * @param $offMatMod
+	 * @param $offRatMod
+	 * @param $offDefMod
+	 * @param $offArmMod
+	 * @param $weaponRangeMod
+	 */
 	function updateSpecialAbility($name, $description, $immunity, $damageType, $continuousEffect, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $weaponRangeMod){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		if ($description == ''){$description = 'NULL';} else {
@@ -119,12 +143,8 @@ class AllSpecialAbilities
 		WHERE name=".$name."";
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 		$conn->close();		
 	}
 }
-
-?>

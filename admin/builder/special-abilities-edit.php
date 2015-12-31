@@ -3,19 +3,18 @@
 <head>
     <?php include '../../admin/header.php';
     include '../../core/Core.php';
-    include '../../core/DamageImmunity.php';
-    include '../../core/SpecialAbilities.php';
-    $allSpecialAbilities = new AllSpecialAbilities;
+    $core = new AllCore();
+    $allSpecialAbilities = new AllSpecialAbilities();
     $ability = $allSpecialAbilities->getAbilityByName($_GET['name']);
     $ability = $ability[0]; // set returned array to a single object
-    $allTypes = new AllDamageImmunityTypes;
+    $allTypes = new AllDamageImmunityTypes();
     $typesList = $allTypes->getAllDamageImmunityTypes();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Update a Ability / Action - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

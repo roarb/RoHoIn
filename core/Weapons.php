@@ -1,10 +1,12 @@
 <?php
 
-class AllWeapons
+class AllWeapons extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	function getAllWeapons(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$weapons = "SELECT * FROM weapon ORDER BY name";
 		$weaponsResult = $conn->query($weapons);
@@ -16,15 +18,15 @@ class AllWeapons
 				$weaponsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $weaponsBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getAllWeaponsName(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$weapons = "SELECT name FROM weapon ORDER BY name";
 		$weaponsResult = $conn->query($weapons);
@@ -36,15 +38,16 @@ class AllWeapons
 				$weaponsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $weaponsBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @return string
+	 */
 	function getWeaponByName($name){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$name = "'".$name."'";
 		$weapon = "SELECT * FROM weapon WHERE name = ".$name."";
 		$weaponResult = $conn->query($weapon);
@@ -59,10 +62,31 @@ class AllWeapons
 		} 
 		return $weaponBuild;
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $ranged
+	 * @param $range
+	 * @param $rof
+	 * @param $aoe
+	 * @param $pow
+	 * @param $reach
+	 * @param $damageType
+	 * @param $criticalEffect
+	 * @param $continuousEffect
+	 * @param $openFist
+	 * @param $magical
+	 * @param $specialAction1
+	 * @param $specialAction2
+	 * @param $specialAction3
+	 * @param $specialAction4
+	 * @param $weaponsMaster
+	 * @param $thrown
+	 * @param $buckler
+	 * @param $shield
+	 */
 	function saveWeapon($name, $ranged, $range, $rof, $aoe, $pow, $reach, $damageType, $criticalEffect, $continuousEffect, $openFist, $magical, $specialAction1, $specialAction2, $specialAction3, $specialAction4, $weaponsMaster, $thrown, $buckler, $shield){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$ranged = "'".$ranged."'";
@@ -95,10 +119,31 @@ class AllWeapons
 		}
 		$conn->close();
 	}
-	
+
+	/**
+	 * @param $name
+	 * @param $ranged
+	 * @param $range
+	 * @param $rof
+	 * @param $aoe
+	 * @param $pow
+	 * @param $reach
+	 * @param $damageType
+	 * @param $criticalEffect
+	 * @param $continuousEffect
+	 * @param $openFist
+	 * @param $magical
+	 * @param $specialAction1
+	 * @param $specialAction2
+	 * @param $specialAction3
+	 * @param $specialAction4
+	 * @param $weaponsMaster
+	 * @param $thrown
+	 * @param $buckler
+	 * @param $shield
+	 */
 	function updateWeapon($name, $ranged, $range, $rof, $aoe, $pow, $reach, $damageType, $criticalEffect, $continuousEffect, $openFist, $magical, $specialAction1, $specialAction2, $specialAction3, $specialAction4, $weaponsMaster, $thrown, $buckler, $shield){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$ranged = "'".$ranged."'";
@@ -134,5 +179,3 @@ class AllWeapons
 	}
 	
 }
-
-?>

@@ -1,11 +1,18 @@
 <?php
 
 include '../core/Core.php';
-include '../core/Unit.php';
-include '../core/UnitType.php';
+$core = new AllCore;
 $allUnits = new AllUnits;
-$faction = $_GET['type'];
-$modelType = $_GET['model'];
+if (isset($_GET['type'])){
+    $faction = $_GET['type'];
+} else {
+    $faction = '';
+}
+if (isset($_GET['model'])){
+    $modelType = $_GET['model'];
+} else {
+    $modelType = '';
+}
 $units = $allUnits->getFactionUnitList($faction);
 $allUnitTypes = new AllUnitTypes;
 $unitTypesList = $allUnitTypes->getAllUnitTypes();

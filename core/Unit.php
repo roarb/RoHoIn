@@ -1,28 +1,14 @@
 <?php
-include 'tiered-list.php';
 
-class AllUnits
+class AllUnits extends AllCore
 {
-	function connect(){
-		$servername = "localhost";
-		$username = "root";
-		$password = "kachow";
-		$database = "roho_warmahordes";
-		
-		// Create connection
-		$conn = new mysqli($servername, $username, $password, $database);
-		
-		// Check connection
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		} 
-		return $conn;
-	}
-	
-	// get all units of course
+
+	/**
+	 * get all units of course
+	 * @return string
+	 */
 	function getAllUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core";
 		$unitsResult = $conn->query($units);
@@ -39,11 +25,14 @@ class AllUnits
 		}
 		return $unitsBuild;
 	}
-	
-	// get Name Faction Type Companion units by Faction
+
+	/**
+	 *  get Name Faction Type Companion units by Faction
+	 * @param $faction
+	 * @return string
+	 */
 	function getFactionUnitList($faction){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT DISTINCT name, faction, type, companion FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -55,15 +44,17 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+
 		return $unitsBuild;
 	}
-		
+
+	/**
+	 * @param $faction
+	 * @return string
+	 */
 	function getFactionUnitListAbilities($faction){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT DISTINCT special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -79,11 +70,14 @@ class AllUnits
 			//echo "0 results";
 		}
 		return $unitsBuild;
-	}	
-	
+	}
+
+	/**
+	 * @param $faction
+	 * @return string
+	 */
 	function getFactionUnitListWeapons($faction){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT DISTINCT weapon1, weapon2, weapon3, weapon4, weapon5 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -100,10 +94,13 @@ class AllUnits
 		}
 		return $unitsBuild;
 	}
-	
+
+	/**
+	 * @param $faction
+	 * @return string
+	 */
 	function getFactionUnitListSpells($faction){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT DISTINCT spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -120,11 +117,14 @@ class AllUnits
 		}
 		return $unitsBuild;
 	}
-	
+
+	/**
+	 * @param $unitName
+	 * @return string
+	 */
 	public function getFactionByUnitName($unitName)
     {
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
         $unitName = "'" . $unitName . "'";
 
@@ -137,10 +137,12 @@ class AllUnits
         return $faction;
     }
 
-	// get only the name for all units
+	/**
+	 * // get only the name for all units
+	 * @return string
+	 */
 	function getAllUnitsName(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT name FROM core ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -152,16 +154,17 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
-	
-	// get only the name for all units of $faction
+
+	/**
+	 * // get only the name for all units of $faction
+	 * @param $faction
+	 * @return bool|mysqli_result
+	 */
 	function getAllUnitsNameFaction($faction){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT name FROM core WHERE faction = '".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -173,15 +176,17 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsResult;
 	}
-	
+
+	/**
+	 * @param $faction
+	 * @param $type
+	 * @return string
+	 */
 	function getAllUnitsNameFactionType($faction, $type){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT name FROM core WHERE faction = '".$faction."' AND type = '".$type."' ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -198,10 +203,12 @@ class AllUnits
 		}
 		return $unitsBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getWarcasterWarlockUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Warlock' OR type = 'Warlock Unit' OR type = 'Warcaster' OR type = 'Warcaster Unit' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -219,9 +226,12 @@ class AllUnits
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getWarcasterWarlockUnitsByFaction($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -240,7 +250,7 @@ class AllUnits
             OR  type =  'Warcaster'
             OR  type =  'Warcaster Unit'
         )
-        ORDER BY  name" ;
+        ORDER BY name" ;
         $unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
@@ -260,8 +270,6 @@ class AllUnits
 				}
                 $i++;
             }
-        } else {
-            //echo "0 results";
         }
         // add in 'possible_ua' for each model in the array
 		// add in 'tiered options for each model in the array
@@ -274,9 +282,12 @@ class AllUnits
         return $unitsBuild;
     }
 
+	/**
+	 * @param $name
+	 * @return array
+	 */
     function getWarcasterFullObjectByName($name){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
         $barracks = new Barracks();
         $loggedIn = false; $userId = 0;
@@ -306,10 +317,12 @@ class AllUnits
 
         return $warcaster;
     }
-	
+
+	/**
+	 * @return string
+	 */
 	function getColossalUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Colossal' OR type = 'Colossal Vector' OR type = 'Gargantuan' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -321,15 +334,15 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getHeavyUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Heavy Myrmidon' OR type = 'Heavy Vector' OR type = 'Heavy Warbeast' OR type = 'Heavy Warjack' OR type = 'Helljack' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -341,15 +354,15 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getLightUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Light Myrmidon' OR type = 'Light Vector' OR type = 'Light Warbeast' OR type = 'Light Warjack' OR type = 'Bone Jack' OR type = 'Lesser Warbeast' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -361,19 +374,20 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getBattleGroupUnitsByFaction($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -418,15 +432,15 @@ class AllUnits
 				}
                 $i++;
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
-	
+
+	/**
+	 * @return string
+	 */
 	function getUnitUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Unit' OR type = 'Character Unit' OR type = 'Warbeast Pack' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -438,15 +452,16 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getBuilderUnitsByFaction($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -479,15 +494,15 @@ class AllUnits
                     $i++;
                 }
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
-	
+
+	/**
+	 * @return string
+	 */
 	function getSoloUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Solo' OR type = 'Character Solo' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -499,15 +514,16 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getBuilderSolosByFaction($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -540,15 +556,15 @@ class AllUnits
                     $i++;
                 }
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
-	
+
+	/**
+	 * @return string
+	 */
 	function getBattleEngineUnits(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$units = "SELECT * FROM core WHERE type = 'Battle Engine' ORDER BY faction";
 		$unitsResult = $conn->query($units);
@@ -560,15 +576,16 @@ class AllUnits
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getBattleEngineUnitsByFaction($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -598,12 +615,14 @@ class AllUnits
 				}
                 $i++;
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
-	
+
+	/**
+	 * @param $list
+	 * @return mixed
+	 */
 	public function getAveragesWarcasterWarlock($list){
 		$count = 0;
 		$i = 0;		
@@ -659,9 +678,12 @@ class AllUnits
 		return $unitsReadout;
 	}
 
+	/**
+	 * @param $id
+	 * @return array|string
+	 */
 	function getUnitNameById($id){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $thi->connect();
 		$units = "SELECT name FROM core WHERE id = ".$id." ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -673,9 +695,12 @@ class AllUnits
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $name
+	 * @return array|string
+	 */
 	function getUnitByName($name){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$name = "'".$name."'";
 		$units = "SELECT * FROM core WHERE name = ".$name." ORDER BY name";
 		$unitsResult = $conn->query($units);
@@ -685,17 +710,18 @@ class AllUnits
 			while($row = $unitsResult->fetch_assoc()) {
 				$unitsBuild = $row;
 			}
-		} else {
-			//echo "0 results";
 		}
         // check for possible Unit Attachments:
         $unitsBuild['possible_ua'] = $this->getUnitOptionalAttachments($unitsBuild['id']);
 		return $unitsBuild;
 	}
 
+	/**
+	 * @param $name
+	 * @return string
+	 */
     function getUnitIdByName($name){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
         $name = "'".$name."'";
         $units = "SELECT id FROM core WHERE name = ".$name;
         $unitsResult = $conn->query($units);
@@ -706,13 +732,15 @@ class AllUnits
         return $unitsBuild;
     }
 
+	/**
+	 * @param $id
+	 * @return string
+	 */
     function getUnitById($id){
-        $core = new AllCore();
-        $conn = $core->connect();
-
+        $conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -737,12 +765,14 @@ class AllUnits
 				}
                 $i++;
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
 
+	/**
+	 * @param $id
+	 * @return string
+	 */
     public function getUnitOptionalAttachments($id){ // $id = origin model id
         // find all faction models that could be attached to the model requested.
         $unit = $this->getUnitById($id);
@@ -792,6 +822,10 @@ class AllUnits
         return $outputModels;
     }
 
+	/**
+	 * @param $id
+	 * @return string
+	 */
 	function getWarcasterTierObject($id){ // $id = warcaster model id
 		$tiers =  new AllTieredLists();
 		$tierObj = $tiers->getTierByCasterId($id);
@@ -799,9 +833,12 @@ class AllUnits
 		return $tierObj;
 	}
 
+	/**
+	 * @param $faction
+	 * @return string
+	 */
     function getUnitFactionAttachedToField($faction){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
         $units = "SELECT attached_to, id, name, cost, field_allowance, title FROM core WHERE faction = '".$faction."' AND attached_to IS NOT NULL ORDER BY name";
         $unitsResult = $conn->query($units);
@@ -813,12 +850,16 @@ class AllUnits
                 $unitsBuild[$i] = $row;
                 $i++;
             }
-        } else {
-            //echo "0 results";
         }
         return $unitsBuild;
     }
-	
+
+	/**
+	 * @param $list
+	 * @param $faction
+	 * @param $type
+	 * @return mixed
+	 */
 	public function getCountFactionType($list, $faction, $type){
 		$count = 0;
 		$i = 0;		
@@ -842,18 +883,18 @@ class AllUnits
 					}
 					if ($item['faction'] == $faction){
 						if ($item['type'] == $t){
-							$tSpd = $tSpd + $item['spd'];
-							$tStr = $tStr + $item['str'];
-							$tMat = $tMat + $item['mat'];
-							$tRat = $tRat + $item['rat'];
-							$tDef = $tDef + $item['def'];
-							$tArm = $tArm + $item['arm'];
-							$tDmg = $tDmg + $item['damage_boxes'];
-							$tCost = $tCost + $item['cost'];
-							$tBGpoints = $tBGpoints + $item['bg_points'];
-							$tFocusFury = $tFocusFury + $item['focus'] + $item['fury'];
-							$tSpells = $tSpells + $this->getCountSpells($item);
-							$tAbilities = $tAbilities + $this->getCountAbilities($item);
+							$tSpd = $item['spd'];
+							$tStr = $item['str'];
+							$tMat = $item['mat'];
+							$tRat = $item['rat'];
+							$tDef = $item['def'];
+							$tArm = $item['arm'];
+							$tDmg = $item['damage_boxes'];
+							$tCost = $item['cost'];
+							$tBGpoints = $item['bg_points'];
+							$tFocusFury = $item['focus'] + $item['fury'];
+							$tSpells = $this->getCountSpells($item);
+							$tAbilities = $this->getCountAbilities($item);
 							$count++;
 						}
 					}
@@ -887,29 +928,95 @@ class AllUnits
 		$unitsReadout['all-abilities'] = $aAbilities;
 		return $unitsReadout;
 	}
-	
+
+	/**
+	 * @param $item
+	 * @return int
+	 */
 	public function getCountSpells($item){
 		$x = 0; $i = 0; 
 		while ($i < 10){
-			if ($item['spell_'.$i] != ''){$x++;};
+			if (isset($item['spell_'.$i])){$x++;};
 			$i++;
 		}
 		return $x;
 	}
-	
+
+	/**
+	 * @param $item
+	 * @return int
+	 */
 	public function getCountAbilities($item){
 		$x = 0; $i = 0; 
 		while ($i < 10){
-			if ($item['special_ability_'.$i] != ''){$x++;};
+			if (isset($item['special_ability_'.$i])){$x++;};
 			$i++;
 		}
 		return $x;
 	}
 	
-	// update - edit units
+	/**
+	 * update - edit units
+	 * @param $name
+	 * @param $faction
+	 * @param $relatedFaction
+	 * @param $unitType
+	 * @param $title
+	 * @param $cost
+	 * @param $bgPoints
+	 * @param $fieldAllowance
+	 * @param $purchaseLow
+	 * @param $purchaseHigh
+	 * @param $focus
+	 * @param $fury
+	 * @param $threshold
+	 * @param $spd
+	 * @param $str
+	 * @param $mat
+	 * @param $rat
+	 * @param $def
+	 * @param $arm
+	 * @param $cmd
+	 * @param $damageBoxes
+	 * @param $damageGrid
+	 * @param $damageSpiral
+	 * @param $animusKnown
+	 * @param $mount
+	 * @param $mountAbility
+	 * @param $mountAbility2
+	 * @param $baseSize
+	 * @param $weapon1
+	 * @param $weapon2
+	 * @param $weapon3
+	 * @param $weapon4
+	 * @param $weapon5
+	 * @param $specialAbility1
+	 * @param $specialAbility2
+	 * @param $specialAbility3
+	 * @param $specialAbility4
+	 * @param $specialAbility5
+	 * @param $specialAbility6
+	 * @param $specialAbility7
+	 * @param $specialAbility8
+	 * @param $specialAbility9
+	 * @param $specialAbility10
+	 * @param $spell1
+	 * @param $spell2
+	 * @param $spell3
+	 * @param $spell4
+	 * @param $spell5
+	 * @param $spell6
+	 * @param $spell7
+	 * @param $spell8
+	 * @param $spell9
+	 * @param $spell10
+	 * @param $feat
+	 * @param $attachedTo
+	 * @param $companion
+	 * @param $leader
+	 */
 	function updateUnits($name, $faction, $relatedFaction, $unitType, $title, $cost, $bgPoints, $fieldAllowance, $purchaseLow, $purchaseHigh, $focus, $fury, $threshold, $spd, $str, $mat, $rat, $def, $arm, $cmd, $damageBoxes, $damageGrid, $damageSpiral, $animusKnown, $mount, $mountAbility, $mountAbility2, $baseSize, $weapon1, $weapon2, $weapon3, $weapon4, $weapon5, $specialAbility1, $specialAbility2, $specialAbility3, $specialAbility4, $specialAbility5, $specialAbility6, $specialAbility7, $specialAbility8, $specialAbility9, $specialAbility10, $spell1, $spell2, $spell3, $spell4, $spell5, $spell6, $spell7, $spell8, $spell9, $spell10, $feat, $attachedTo, $companion, $leader){
-		$db = new AllCore();
-		$conn = $db->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
@@ -984,11 +1091,69 @@ class AllUnits
 		
 		$conn->close();		
 	}
-	
-	// save units
+
+	/**
+	 * // save units
+	 * @param $name
+	 * @param $faction
+	 * @param $relatedFaction
+	 * @param $unitType
+	 * @param $title
+	 * @param $cost
+	 * @param $bgPoints
+	 * @param $fieldAllowance
+	 * @param $purchaseLow
+	 * @param $purchaseHigh
+	 * @param $focus
+	 * @param $fury
+	 * @param $threshold
+	 * @param $spd
+	 * @param $str
+	 * @param $mat
+	 * @param $rat
+	 * @param $def
+	 * @param $arm
+	 * @param $cmd
+	 * @param $damageBoxes
+	 * @param $damageGrid
+	 * @param $damageSpiral
+	 * @param $animusKnown
+	 * @param $mount
+	 * @param $mountAbility
+	 * @param $mountAbility2
+	 * @param $baseSize
+	 * @param $weapon1
+	 * @param $weapon2
+	 * @param $weapon3
+	 * @param $weapon4
+	 * @param $weapon5
+	 * @param $specialAbility1
+	 * @param $specialAbility2
+	 * @param $specialAbility3
+	 * @param $specialAbility4
+	 * @param $specialAbility5
+	 * @param $specialAbility6
+	 * @param $specialAbility7
+	 * @param $specialAbility8
+	 * @param $specialAbility9
+	 * @param $specialAbility10
+	 * @param $spell1
+	 * @param $spell2
+	 * @param $spell3
+	 * @param $spell4
+	 * @param $spell5
+	 * @param $spell6
+	 * @param $spell7
+	 * @param $spell8
+	 * @param $spell9
+	 * @param $spell10
+	 * @param $feat
+	 * @param $attachedTo
+	 * @param $companion
+	 * @param $leader
+	 */
 	function saveUnits($name, $faction, $relatedFaction, $unitType, $title, $cost, $bgPoints, $fieldAllowance, $purchaseLow, $purchaseHigh, $focus, $fury, $threshold, $spd, $str, $mat, $rat, $def, $arm, $cmd, $damageBoxes, $damageGrid, $damageSpiral, $animusKnown, $mount, $mountAbility, $mountAbility2, $baseSize, $weapon1, $weapon2, $weapon3, $weapon4, $weapon5, $specialAbility1, $specialAbility2, $specialAbility3, $specialAbility4, $specialAbility5, $specialAbility6, $specialAbility7, $specialAbility8, $specialAbility9, $specialAbility10, $spell1, $spell2, $spell3, $spell4, $spell5, $spell6, $spell7, $spell8, $spell9, $spell10, $feat, $attachedTo, $companion, $leader){
-		$db = new AllCore();
-		$conn = $db->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
@@ -1063,6 +1228,10 @@ class AllUnits
 		$conn->close();		
 	}
 
+	/**
+	 * @param $name
+	 * @return mixed|string
+	 */
 	function getUnitImageName($name){
 		$nameFixed = str_replace(' ','',$name);
 		$nameFixed = str_replace(',','',$nameFixed);
@@ -1079,6 +1248,10 @@ class AllUnits
 		return $nameFixed;
 	}
 
+	/**
+	 * @param $name
+	 * @return mixed|string
+	 */
 	function getUnitImageThumbnail($name){
 		$nameFixed = str_replace(' ','',$name);
 		$nameFixed = str_replace(',','',$nameFixed);
@@ -1094,12 +1267,20 @@ class AllUnits
 		}
 		return $nameFixed;
 	}
-	
+
+	/**
+	 * @param $companionList
+	 * @return array
+	 */
 	function createCompanionArray($companionList){
 		$units = explode("|", $companionList);
 		return $units;
 	}
-	
+
+	/**
+	 * @param $input
+	 * @return string
+	 */
 	function getSpiralDisplay($input){
 		$i = explode("]", $input);
 		// set each of the 3 branches to their total number entered
@@ -1134,7 +1315,11 @@ class AllUnits
 		
 		return $spiralBuild;
 	}
-	
+
+	/**
+	 * @param $input
+	 * @return string
+	 */
 	function getGridDisplay($input){
 		if (strpos($input,'Left') !== false){
 			// colassal damge grids 1 left 1 right
@@ -1154,7 +1339,11 @@ class AllUnits
 			return $output;
 		}
 	}
-	
+
+	/**
+	 * @param $grid
+	 * @return string
+	 */
 	function gridDisplayBuild($grid){
 		$lines = explode("]", $grid);
 		$i = 0;
@@ -1203,7 +1392,11 @@ class AllUnits
 		} 
 		return $print;
 	}
-	
+
+	/**
+	 * @param $cost
+	 * @return array
+	 */
 	function getCleanCost($cost){
 		if (strpos($cost,',') !== false) {
 			$cost = explode(', ',$cost);
@@ -1214,6 +1407,12 @@ class AllUnits
 		}
 	}
 
+	/**
+	 * @param $fa
+	 * @param $minUnit
+	 * @param $maxUnit
+	 * @return int
+	 */
     function getTotalAllowedBarracksModelCount($fa,$minUnit,$maxUnit){
         if ($maxUnit == ''){$maxUnit = 1;} // set empty $maxUnit to 1
         if ($fa == 'C'){ // for character model/units
@@ -1230,8 +1429,11 @@ class AllUnits
         return $maxCount;
     }
 
+	/**
+	 * @param $unit
+	 * @return string
+	 */
 	function displayArmyBuilderStatsLine($unit){
-		$core = new AllCore();
 		$unitsList = '';
         if($unit['type'] == 'Warlock' || $unit['type'] == 'Warcaster'):
 			$unitsList = $this->getWarcasterWarlockUnits();
@@ -1254,33 +1456,34 @@ class AllUnits
 		$outputHtml .= '<div class="cushion">';
 		$outputHtml .= '<table class="stats-bars left">';
 		$outputHtml .= '<tr><th>SPD</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-spd']),max($averages['all-spd']),$unit['spd']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-spd']),max($averages['all-spd']),$unit['spd']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>STR</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-str']),max($averages['all-str']),$unit['str']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-str']),max($averages['all-str']),$unit['str']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>MAT</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-mat']),max($averages['all-mat']),$unit['mat']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-mat']),max($averages['all-mat']),$unit['mat']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>RAT</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-rat']),max($averages['all-rat']),$unit['rat']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-rat']),max($averages['all-rat']),$unit['rat']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>DEF</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-def']),max($averages['all-def']),$unit['def']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-def']),max($averages['all-def']),$unit['def']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>ARM</th><td>';
-		$percent = $core->getSlidePos(min($averages['all-arm']),max($averages['all-arm']),$unit['arm']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-arm']),max($averages['all-arm']),$unit['arm']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		$outputHtml .= '<tr><th>Damage Boxes</th><td>';
 		rsort($averages['all-dmg']);
-		$percent = $core->getSlidePos(min($averages['all-dmg']),$averages['all-dmg'][1],$unit['damage_boxes']);
-		$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+		$percent = $this->getSlidePos(min($averages['all-dmg']),$averages['all-dmg'][1],$unit['damage_boxes']);
+		$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		if ($unit['type'] == 'Warlock' || $unit['type'] == 'Warcaster'):
 			$outputHtml .= '<tr><th>BG Points</th><td>';
-			$percent = $core->getSlidePos(min($averages['all-bgpoints']),max($averages['all-bgpoints']),$unit['bg_points']);
-			$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+			$percent = $this->getSlidePos(min($averages['all-bgpoints']),max($averages['all-bgpoints']),$unit['bg_points']);
+			$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		endif;
 		if ($unit['focus'] != '' || $unit['fury'] != ''):
+			$focusfury = '';
  			if ($unit['focus'] != ''):
 				$outputHtml .= '<tr><th>Focus</th><td>';
  					$focusfury = $unit['focus'];
@@ -1288,8 +1491,8 @@ class AllUnits
  				$outputHtml .= '<tr><th>Focus</th><td>';
  				$focusfury = $unit['fury'];
  			endif;
-			$percent = $core->getSlidePos(min($averages['all-focusfury']),max($averages['all-focusfury']),$focusfury);
-			$outputHtml .= '<div class="slider"><div class="slider-pos '.$core->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
+			$percent = $this->getSlidePos(min($averages['all-focusfury']),max($averages['all-focusfury']),$focusfury);
+			$outputHtml .= '<div class="slider"><div class="slider-pos '.$this->getSliderColor($percent).'" style="width:'.round($percent).'%;"></div></div></td></tr>';
 		endif;
 	if ($unit['feat'] != ''):
 		$outputHtml .= '<tr><td colspan="2"><paper-material elevation="1" class="cushion">';

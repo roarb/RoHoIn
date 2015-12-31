@@ -2,22 +2,20 @@
 <html lang="en">
 <head>
     <?php include '../../core/Core.php';
-    include '../../core/Weapons.php';
-    include '../../core/DamageImmunity.php';
-    include '../../core/SpecialAbilities.php';
+    $core = new AllCore();
     include '../../admin/header.php';
-    $allWeapons = new AllWeapons;
+    $allWeapons = new AllWeapons();
     $weaponsList = $allWeapons->getAllWeapons();
-    $allTypes = new AllDamageImmunityTypes;
+    $allTypes = new AllDamageImmunityTypes();
     $typesList = $allTypes->getAllDamageImmunityTypes();
-    $allSpecialAbilities = new AllSpecialAbilities;
+    $allSpecialAbilities = new AllSpecialAbilities();
     $abilitiesList = $allSpecialAbilities->getAllSpecialAbilities();  ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Add a New Weapon - RoHo.in Admin Panel</title>
 </head>
 
 <body class="default">
-<?php if($_SESSION['user_name'] ==  'roarb'): ?>
+<?php if($core->getAdmin()): ?>
     <paper-drawer-panel>
         <paper-header-panel drawer>
             <paper-toolbar class="primary">

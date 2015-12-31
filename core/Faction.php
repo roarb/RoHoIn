@@ -1,10 +1,12 @@
 <?php
 
-class AllFactions
+class AllFactions extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	public function getAllFactions(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$factions = "SELECT * FROM faction ORDER BY name";
 		$factionsResult = $conn->query($factions);
@@ -16,15 +18,16 @@ class AllFactions
 				$factionsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $factionsBuild;
 	}
 
+	/**
+	 * @param $name
+	 * @return array|string
+	 */
     public function getFactionIdByName($name){
-        $core = new AllCore();
-        $conn = $core->connect();
+        $conn = $this->connect();
 
         $query = "SELECT id FROM faction WHERE name = '".$name."'";
         $return = $conn->query($query);
@@ -36,22 +39,20 @@ class AllFactions
         }
         return $returnId;
     }
-	
+
+	/**
+	 * @param $data
+	 */
 	function saveFaction($data){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$sql = "INSERT INTO faction (name)
 		VALUES ('".$data."')";
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 		$conn->close();
 	}
 }
-
-?>

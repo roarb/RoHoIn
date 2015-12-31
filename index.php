@@ -1,9 +1,12 @@
-<?php include('login/index-start.php'); ?>
+<?php include 'login/index-start.php'; ?>
 <html lang="en">
 <head>
-<?php include 'admin/header.php'; ?>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>RoHo.in Experiments in Futility</title>
+    <?php include 'admin/header.php'; ?>
+    <?php include 'core/Core.php'; ?>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RoHo.in Experiments in Futility</title>
+    <?php $core = new AllCore(); ?>
+    <?php $admin = $core->getAdmin(); ?>
 </head>
 
 <body class="default">
@@ -60,12 +63,12 @@
                 <paper-button raised class="full-button link-playtest-single-unit">
                     Browse Individual Models
                 </paper-button>
-                <?php if ($_SESSION['user_name'] == 'roarb' || $_SESSION['user_name'] == 'rohoin'): ?>
+                <?php if ($admin): ?>
                     <paper-button raised class="full-button link-admin-home">
                         Admin Panel
                     </paper-button>
                 <?php endif; ?>
-                <?php if ($_SESSION['user_id'] != ''): ?>
+                <?php if ($core->getLoggedIn()): ?>
                     <paper-button raised class="full-button link-account-barracks">
                         View Your Barracks
                     </paper-button>

@@ -1,10 +1,12 @@
 <?php
 
-class AllDamageImmunityTypes
+class AllDamageImmunityTypes extends AllCore
 {
+	/**
+	 * @return string
+	 */
 	function getAllDamageImmunityTypes(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$types = "SELECT * FROM damage_immunity_types ORDER BY name";
 		$typesResult = $conn->query($types);
@@ -16,27 +18,22 @@ class AllDamageImmunityTypes
 				$typesBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			echo "0 results";
 		}
 		return $typesBuild;
 	}
-	
+
+	/**
+	 * @param $data
+	 */
 	function saveDamageImmunityType($data){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$sql = "INSERT INTO damage_immunity_types (name)
 		VALUES ('".$data."')";
 		
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
 		$conn->close();
 	}
 }
-
-?>
