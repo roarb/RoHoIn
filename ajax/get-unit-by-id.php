@@ -1,8 +1,7 @@
 <?php
 
 include '../core/Core.php';
-include '../core/Unit.php';
-include '../core/Barracks.php';
+$core = new AllCore();
 
 $allUnits = new AllUnits;
 

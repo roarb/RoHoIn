@@ -7,11 +7,8 @@
  */
 session_start();
 include '../core/Core.php';
-include '../core/Unit.php';
-include '../core/Barracks.php';
-include '../core/Faction.php';
-$allUnits = new AllUnits();
 $core = new AllCore();
+$allUnits = new AllUnits();
 $loggedIn = $core->getLoggedIn();
 $faction = $_GET['faction'];
 $count = $_GET['count'];

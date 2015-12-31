@@ -6,8 +6,8 @@
  * Time: 10:28 PM
  */
 
-include "../core/Unit.php";
 include "../core/Core.php";
+$core = new AllCore();
 $allUnits = new AllUnits();
 
 $warcasters = $allUnits->getWarcasterWarlockUnitsByFaction($_GET['faction']);

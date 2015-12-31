@@ -4,13 +4,11 @@
 <head>
     <?php
     include '../admin/header.php';
-    include '../core/ArmyBuilder.php';
-    include '../core/Faction.php';
     include '../core/Core.php';
-    include '../core/Barracks.php';
+    $core = new AllCore();
     $allFactions = new AllFactions();
     $factions = $allFactions->getAllFactions();
-    $core = new AllCore();
+    $loggedIn = false;
     if ($core->getLoggedIn()){
         $loggedIn = true;
         $creatorName = $_SESSION['user_name'];
@@ -163,7 +161,7 @@
     tempList['journeyman']['active'] = 0;
     tempList['barracksModels'] = 0;
     tempList['paintedBarracksModels'] = 0;
-    tempList['creator_id'] = [<?php echo $_SESSION['user_id'] ?>];
+    tempList['creator_id'] = [<?php if ($loggedIn){echo $_SESSION['user_id'];} ?>];
     tempList['journeyman_temp'] = [];
 
     $('#start-army-list-builder').on('touchstart click', function(){

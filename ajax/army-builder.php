@@ -7,11 +7,8 @@
  */
 session_start();
 include '../core/Core.php';
-include '../core/Unit.php';
-include '../core/Barracks.php';
-include '../core/Faction.php';
-$allUnits = new AllUnits();
 $Core = new AllCore();
+$allUnits = new AllUnits();
 $Barracks = new Barracks();
 $loggedIn = $Core->getLoggedIn();
 $faction = $_GET['faction'];
@@ -95,7 +92,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                         <?php endif; ?>
                     </label>
                     <div class="unit-cost"><?php $pts = explode(',', $unit['cost']); echo $pts[0]; ?>pts
-                    <?php if ($pts[1] != ''): echo ' | ' . $pts[1]; ?>pts<?php endif; ?></div>
+                    <?php if (isset($pts[1])): echo ' | ' . $pts[1]; ?>pts<?php endif; ?></div>
                     <div class="clearer"></div>
                     <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                     <div class="additional-model-info" style="display:none;">

@@ -1,9 +1,9 @@
-<?php include('../login/index-start.php'); ?>
+<?php include '../login/index-start.php'; ?>
 <html lang="en">
 <head>
     <?php include '../admin/header.php'; ?>
     <?php include '../core/Core.php'; ?>
-    <?php include '../core/ArmyBuilder.php'; ?>
+    <?php $core = new AllCore(); ?>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Army List Dashboard - RoHo.In</title>
 </head>
@@ -33,7 +33,7 @@
                 </paper-button>
             </div>
             <div class="flex-2">
-                <?php if ($_SESSION['user_id'] != ''): ?>
+                <?php if ($core->getLoggedIn()): ?>
                     <paper-button raised class="full-button link-armybuilder-mylists" onclick="location.href='/armybuilder/view-owned.php'">
                         View My Army Lists
                     </paper-button>

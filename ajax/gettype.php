@@ -1,8 +1,8 @@
 <?php
 
 include '../core/Core.php';
-$core = new AllCore;
-$allUnits = new AllUnits;
+$core = new AllCore();
+$allUnits = new AllUnits();
 if (isset($_GET['type'])){
     $faction = $_GET['type'];
 } else {

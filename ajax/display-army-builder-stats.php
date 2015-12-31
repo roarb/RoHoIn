@@ -5,11 +5,10 @@
  * Date: 8/11/2015
  * Time: 4:59 PM
  */
-include '../core/Unit.php';
-include '../core/Core.php';
-$allUnits = new AllUnits();
-include '../core/Barracks.php';
 
+include '../core/Core.php';
+$core = new AllCore();
+$allUnits = new AllUnits();
 $_unit = $allUnits->getUnitById($_GET['id']);
 
 ?>

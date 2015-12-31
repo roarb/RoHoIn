@@ -235,7 +235,7 @@ class AllUnits extends AllCore
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -291,7 +291,7 @@ class AllUnits extends AllCore
 
         $barracks = new Barracks();
         $loggedIn = false; $userId = 0;
-        if ($_SESSION['user_id']){
+        if ($this->getLoggedIn()){
             $loggedIn = true;
             $userId = $_SESSION['user_id'];
         }
@@ -465,7 +465,7 @@ class AllUnits extends AllCore
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -527,7 +527,7 @@ class AllUnits extends AllCore
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -589,7 +589,7 @@ class AllUnits extends AllCore
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
-		if ($_SESSION['user_id']){
+		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
@@ -1238,7 +1238,7 @@ class AllUnits extends AllCore
 		$nameFixed = str_replace('.','',$nameFixed);
 		$nameFixed = str_replace('(','',$nameFixed);
 		$nameFixed = str_replace(')','',$nameFixed);
-		$filePath = "/home/rhoehn24/public_html/res/unit_images/".$nameFixed.".jpg";
+		$filePath = $_SERVER['DOCUMENT_ROOT']."/res/unit_images/".$nameFixed.".jpg";
 		if (file_exists($filePath)){
 			$nameFixed = '<img src="/res/unit_images/'.$nameFixed.'.jpg" alt="'.$name.'" class="unit-image" />';
 		}
@@ -1258,7 +1258,7 @@ class AllUnits extends AllCore
 		$nameFixed = str_replace('.','',$nameFixed);
 		$nameFixed = str_replace('(','',$nameFixed);
 		$nameFixed = str_replace(')','',$nameFixed);
-		$filePath = "/home/rhoehn24/public_html/res/unit_images/thumbs/".$nameFixed.".jpg";
+		$filePath = $_SERVER['DOCUMENT_ROOT']."/res/unit_images/thumbs/".$nameFixed.".jpg";
 		if (file_exists($filePath)){
 			$nameFixed = '<img src="/res/unit_images/thumbs/'.$nameFixed.'.jpg" alt="'.$name.'" class="unit-image unit-thumbnail" />';
 		}

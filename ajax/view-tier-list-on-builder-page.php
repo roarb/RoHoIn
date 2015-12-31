@@ -1,9 +1,7 @@
 <?php
 include '../core/Core.php';
-include '../core/tiered-list.php';
-
+$core = new AllCore();
 $tiers = new AllTieredLists();
-
 $tierList = $tiers->getTieredListById($_GET['id']);
 ?>
 

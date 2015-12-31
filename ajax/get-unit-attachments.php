@@ -1,10 +1,8 @@
 <?php
 
 include '../core/Core.php';
-include '../core/Unit.php';
-include '../core/Barracks.php';
-
-$allUnits = new AllUnits;
+$core = new AllCore();
+$allUnits = new AllUnits();
 
 $unit = $allUnits->getUnitOptionalAttachments($_GET['id']);
 
