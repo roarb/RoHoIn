@@ -19,6 +19,7 @@ class AllFactions extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $factionsBuild;
 	}
 
@@ -37,6 +38,7 @@ class AllFactions extends AllCore
                 $returnId = $row;
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $returnId;
     }
 
@@ -52,7 +54,7 @@ class AllFactions extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		
-		$conn->close();
+
+		mysqli_close($conn); //$conn->close();
 	}
 }

@@ -19,6 +19,7 @@ class AllWeapons extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $weaponsBuild;
 	}
 
@@ -39,6 +40,7 @@ class AllWeapons extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $weaponsBuild;
 	}
 
@@ -59,7 +61,8 @@ class AllWeapons extends AllCore
 				$weaponBuild[$i] = $row;
 				$i++;
 			}
-		} 
+		}
+		mysqli_close($conn); //$conn->close();
 		return $weaponBuild;
 	}
 
@@ -117,7 +120,7 @@ class AllWeapons extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		$conn->close();
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -175,7 +178,7 @@ class AllWeapons extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		$conn->close();	
+		mysqli_close($conn); //$conn->close();
 	}
 	
 }

@@ -3,27 +3,28 @@
 <head>
     <?php include '../admin/header.php';
     include '../core/Core.php';
-    include '../core/ArmyBuilder.php';
-    include '../core/Unit.php';
-    include '../core/Barracks.php';
-    include '../core/Faction.php';
-    $armyBuilder = new ArmyBuilder();
     $core = new AllCore();
+    $armyBuilder = new ArmyBuilder();
     if ($core->getLoggedIn()){
         $loggedIn = true;
         $creatorName = $_SESSION['user_name'];
     }
     $allUnits = new AllUnits();
     $listId = $_GET['id'];
-    $armyList = $armyBuilder->getListById($listId);
-    $createdBy = $core->getUserNameById($armyList['created_by']); ?>
+    $armyList = $armyBuilder->getListByGuid($listId);
+    if ($armyList){$createdBy = $core->getUserNameById($armyList['created_by']);} ?>
     <script src="army-builder.js"></script>
     <script src="tier-rules.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>
-        <?php if ($armyList['name'] != '' ): echo $armyList['name']; ?>
-            <?php if (isset($createdBy)){ echo ' - Created by '.$createdBy;} ?>
-        <?php else:  ?>Army List Viewer
+        <?php if ($armyList): ?>
+            <?php if ($armyList['name'] != '' ): echo $armyList['name']; ?>
+                <?php if (isset($createdBy)){ echo ' - Created by '.$createdBy;} ?>
+            <?php else:  ?>
+                    Army List Viewer
+            <?php endif; ?>
+        <?php else: ?>
+            Sorry, no matching army list found.
         <?php endif; ?>
     </title>
 </head>
@@ -42,17 +43,22 @@
         <paper-toolbar class="primary">
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
             <h1 class="full-page-title">
-                <?php if ($armyList['name'] != '' ): echo $armyList['name']; ?>
-                    <?php if (isset($createdBy)){ echo ' - Created by '.$createdBy;} ?>
-                <?php else:  ?>Army List Viewer
+                <?php if ($armyList): ?>
+                    <?php if ($armyList['name'] != '' ): ?>
+                        <?php echo $armyList['name']; ?>
+                    <?php else: ?>
+                            Army List Viewer
+                    <?php endif; ?>
+                <?php else: ?>
+                    Sorry, no matching army list found.
                 <?php endif; ?>
             </h1>
             <div class="roho-logo"><a href="http://roho.in" title="Reactive Online Hobby Organizational . Interface">
-                    <img src="/skin/images/roho-logo.png" alt="Reactive Online Hobby Organizational . Interface" /></a>
+                <img src="/skin/images/roho-logo.png" alt="Reactive Online Hobby Organizational . Interface" /></a>
             </div>
         </paper-toolbar>
         <div class="info-block" style="overflow:auto;">
-            <?php if (isset($_GET['id'])): ?>
+            <?php if ($armyList): ?>
                 <paper-material elevation="1" class="cushion army-list-wrapper" id="armylist-view">
                     <h2 class="center"><?php echo $armyList['name'] ?>, a <?php echo $armyList['points'] ?> point <?php echo $armyList['faction'] ?> List - created by <?php echo $createdBy ?></h2>
                     <?php $i = 1 ?>
@@ -219,7 +225,12 @@
                                                 </div>
                                             <?php endif; ?>
                                         </label>
-                                        <div class="unit-cost"><span class="cost"><?php echo $_unit['cost']?></span> pts</div>
+                                        <div class="unit-cost"><span class="cost">| <?php echo $_unit['cost']?></span> pts</div>
+                                        <?php if ($_unit['purchased_low']): ?>
+                                            <div class="unit-model-count"><?php echo $_unit['purchased_low'] ?> Models</div>
+                                        <?php else: ?>
+                                            <div class="unit-model-count">1 Model</div>
+                                        <?php endif; ?>
                                         <div class="clearer"></div>
                                         <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                                         <div class="additional-model-info" style="display:none;">

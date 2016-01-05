@@ -145,9 +145,11 @@
     tempList['battleEngineModels'] = [];
     tempList['merArmyModels'] = [];
     tempList['mercbg1Models'] = [];
+    tempList['orig_points'] = 0;
     tempList['points_used'] = 0;
     tempList['uaModel'] = [];
     tempList['companionModel'] = [];
+    tempList['tierListLevel'] = 0;
     tempList['tierList1Ben'] = [];
     tempList['tierList2Ben'] = [];
     tempList['tierList3Ben'] = [];
@@ -159,6 +161,10 @@
     tempList['publicList'] = 1;
     tempList['journeyman'] = [];
     tempList['journeyman']['active'] = 0;
+    tempList['journeyman_bg'] = [];
+    tempList['jackmarshal'] = [];
+    tempList['jackmarshal']['active'] = 0;
+    tempList['jackmarshal_battlegroup'] = [];
     tempList['barracksModels'] = 0;
     tempList['paintedBarracksModels'] = 0;
     tempList['creator_id'] = [<?php if ($loggedIn){echo $_SESSION['user_id'];} ?>];

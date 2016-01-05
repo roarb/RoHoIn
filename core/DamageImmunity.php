@@ -19,6 +19,7 @@ class AllDamageImmunityTypes extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $typesBuild;
 	}
 
@@ -34,6 +35,6 @@ class AllDamageImmunityTypes extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		$conn->close();
+		mysqli_close($conn); //$conn->close();
 	}
 }

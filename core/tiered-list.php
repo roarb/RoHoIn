@@ -19,6 +19,7 @@ class AllTieredLists extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $listsBuild;
 	}
 
@@ -37,6 +38,7 @@ class AllTieredLists extends AllCore
 				$listsBuild = $row;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $listsBuild;
 	}
 
@@ -185,8 +187,8 @@ class AllTieredLists extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
-		$conn->close();
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -207,6 +209,6 @@ class AllTieredLists extends AllCore
 				$i++;
 			}
 		}
-		return $listsBuild;
+		mysqli_close($conn); //$conn->close();
 	}
 }

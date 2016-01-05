@@ -16,6 +16,7 @@ class AllSpecialAbilities extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $specialAbilitiesBuild;
 	}
 
@@ -36,6 +37,7 @@ class AllSpecialAbilities extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $specialAbilitiesBuild;
 	}
 
@@ -56,7 +58,8 @@ class AllSpecialAbilities extends AllCore
 				$abilityBuild[$i] = $row;
 				$i++;
 			}
-		} 
+		}
+		mysqli_close($conn); //$conn->close();
 		return $abilityBuild;
 	}
 
@@ -99,8 +102,8 @@ class AllSpecialAbilities extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -144,7 +147,7 @@ class AllSpecialAbilities extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully<br>";
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 }

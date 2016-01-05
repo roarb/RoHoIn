@@ -19,6 +19,7 @@ class AllUnitTypes extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitTypesBuild;
 	}
 
@@ -34,7 +35,7 @@ class AllUnitTypes extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		$conn->close();
+		mysqli_close($conn); //$conn->close();
 	}
 }
 

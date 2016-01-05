@@ -90,7 +90,6 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                 <span class="field-allowance"><?php if ($_unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $_unit['field_allowance']; ?><?php endif; ?></span>
             </div>
             <div class="model-image">
-                <?php // need to make thumbnail images here a future priority for page load speed ?>
                 <?php echo $allUnits->getUnitImageThumbnail($bgUnit['name']) ?>
             </div>
             <label for="<?php echo $_unit['name'] ?>" class="unit-label">

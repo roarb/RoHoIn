@@ -23,6 +23,7 @@ class AllUnits extends AllCore
 		} else {
 			echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -33,7 +34,6 @@ class AllUnits extends AllCore
 	 */
 	function getFactionUnitList($faction){
 		$conn = $this->connect();
-		
 		$units = "SELECT DISTINCT name, faction, type, companion FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -45,7 +45,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -55,7 +55,6 @@ class AllUnits extends AllCore
 	 */
 	function getFactionUnitListAbilities($faction){
 		$conn = $this->connect();
-		
 		$units = "SELECT DISTINCT special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -66,9 +65,8 @@ class AllUnits extends AllCore
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -78,7 +76,6 @@ class AllUnits extends AllCore
 	 */
 	function getFactionUnitListWeapons($faction){
 		$conn = $this->connect();
-		
 		$units = "SELECT DISTINCT weapon1, weapon2, weapon3, weapon4, weapon5 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -89,9 +86,8 @@ class AllUnits extends AllCore
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -101,7 +97,6 @@ class AllUnits extends AllCore
 	 */
 	function getFactionUnitListSpells($faction){
 		$conn = $this->connect();
-		
 		$units = "SELECT DISTINCT spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10 FROM core WHERE faction='".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -112,9 +107,8 @@ class AllUnits extends AllCore
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -122,18 +116,16 @@ class AllUnits extends AllCore
 	 * @param $unitName
 	 * @return string
 	 */
-	public function getFactionByUnitName($unitName)
-    {
+	public function getFactionByUnitName($unitName){
         $conn = $this->connect();
-
         $unitName = "'" . $unitName . "'";
-
         $factionSql = "SELECT faction FROM core WHERE name=" . $unitName . " ORDER BY faction";
         $factionResult = $conn->query($factionSql);
         $faction = '';
         foreach ($factionResult as $result) {
             $faction = $result['faction'];
         }
+		mysqli_close($conn); //$conn->close();
         return $faction;
     }
 
@@ -143,7 +135,6 @@ class AllUnits extends AllCore
 	 */
 	function getAllUnitsName(){
 		$conn = $this->connect();
-		
 		$units = "SELECT name FROM core ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -155,6 +146,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -165,7 +157,6 @@ class AllUnits extends AllCore
 	 */
 	function getAllUnitsNameFaction($faction){
 		$conn = $this->connect();
-		
 		$units = "SELECT name FROM core WHERE faction = '".$faction."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -177,6 +168,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsResult;
 	}
 
@@ -187,7 +179,6 @@ class AllUnits extends AllCore
 	 */
 	function getAllUnitsNameFactionType($faction, $type){
 		$conn = $this->connect();
-		
 		$units = "SELECT name FROM core WHERE faction = '".$faction."' AND type = '".$type."' ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -198,9 +189,8 @@ class AllUnits extends AllCore
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -209,7 +199,6 @@ class AllUnits extends AllCore
 	 */
 	function getWarcasterWarlockUnits(){
 		$conn = $this->connect();
-		
 		$units = "SELECT * FROM core WHERE type = 'Warlock' OR type = 'Warlock Unit' OR type = 'Warcaster' OR type = 'Warcaster Unit' ORDER BY faction";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -220,9 +209,8 @@ class AllUnits extends AllCore
 				$unitsBuild[$i] = $row;
 				$i++;
 			}
-		} else {
-			//echo "0 results";
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -232,7 +220,6 @@ class AllUnits extends AllCore
 	 */
     function getWarcasterWarlockUnitsByFaction($faction){
         $conn = $this->connect();
-
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -279,6 +266,7 @@ class AllUnits extends AllCore
 			$unitsBuild[$i]['tiers'] = $this->getWarcasterTierObject($unitsBuild[$i]['id']);
             $i++;
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -288,7 +276,6 @@ class AllUnits extends AllCore
 	 */
     function getWarcasterFullObjectByName($name){
         $conn = $this->connect();
-
         $barracks = new Barracks();
         $loggedIn = false; $userId = 0;
         if ($this->getLoggedIn()){
@@ -314,7 +301,7 @@ class AllUnits extends AllCore
 				}
             }
         }
-
+		mysqli_close($conn); //$conn->close();
         return $warcaster;
     }
 
@@ -323,7 +310,6 @@ class AllUnits extends AllCore
 	 */
 	function getColossalUnits(){
 		$conn = $this->connect();
-		
 		$units = "SELECT * FROM core WHERE type = 'Colossal' OR type = 'Colossal Vector' OR type = 'Gargantuan' ORDER BY faction";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -335,6 +321,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -343,7 +330,6 @@ class AllUnits extends AllCore
 	 */
 	function getHeavyUnits(){
 		$conn = $this->connect();
-		
 		$units = "SELECT * FROM core WHERE type = 'Heavy Myrmidon' OR type = 'Heavy Vector' OR type = 'Heavy Warbeast' OR type = 'Heavy Warjack' OR type = 'Helljack' ORDER BY faction";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -355,6 +341,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -363,7 +350,6 @@ class AllUnits extends AllCore
 	 */
 	function getLightUnits(){
 		$conn = $this->connect();
-		
 		$units = "SELECT * FROM core WHERE type = 'Light Myrmidon' OR type = 'Light Vector' OR type = 'Light Warbeast' OR type = 'Light Warjack' OR type = 'Bone Jack' OR type = 'Lesser Warbeast' ORDER BY faction";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -375,6 +361,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -384,7 +371,6 @@ class AllUnits extends AllCore
 	 */
     function getBattleGroupUnitsByFaction($faction){
         $conn = $this->connect();
-
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -433,6 +419,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -441,7 +428,6 @@ class AllUnits extends AllCore
 	 */
 	function getUnitUnits(){
 		$conn = $this->connect();
-		
 		$units = "SELECT * FROM core WHERE type = 'Unit' OR type = 'Character Unit' OR type = 'Warbeast Pack' ORDER BY faction";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -453,6 +439,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -462,7 +449,6 @@ class AllUnits extends AllCore
 	 */
     function getBuilderUnitsByFaction($faction){
         $conn = $this->connect();
-
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -495,6 +481,7 @@ class AllUnits extends AllCore
                 }
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -515,6 +502,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -557,6 +545,7 @@ class AllUnits extends AllCore
                 }
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -577,6 +566,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -616,6 +606,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -683,7 +674,7 @@ class AllUnits extends AllCore
 	 * @return array|string
 	 */
 	function getUnitNameById($id){
-		$conn = $thi->connect();
+		$conn = $this->connect();
 		$units = "SELECT name FROM core WHERE id = ".$id." ORDER BY name";
 		$unitsResult = $conn->query($units);
 		$unitsBuild = '';
@@ -692,6 +683,7 @@ class AllUnits extends AllCore
 				$unitsBuild = $row;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -713,6 +705,7 @@ class AllUnits extends AllCore
 		}
         // check for possible Unit Attachments:
         $unitsBuild['possible_ua'] = $this->getUnitOptionalAttachments($unitsBuild['id']);
+		mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -729,6 +722,7 @@ class AllUnits extends AllCore
         foreach ($unitsResult as $result){
             $unitsBuild = $result['id'];
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -766,6 +760,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -851,6 +846,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
+		mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -1088,8 +1084,8 @@ class AllUnits extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -1224,8 +1220,8 @@ class AllUnits extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**

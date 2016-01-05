@@ -19,6 +19,7 @@ class AllSpellsKnown extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $spellsBuild;
 	}
 
@@ -39,6 +40,7 @@ class AllSpellsKnown extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $spellsBuild;
 	}
 
@@ -59,7 +61,8 @@ class AllSpellsKnown extends AllCore
 				$spellBuild[$i] = $row;
 				$i++;
 			}
-		} 
+		}
+		mysqli_close($conn); //$conn->close();
 		return $spellBuild;
 	}
 
@@ -112,8 +115,8 @@ class AllSpellsKnown extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -166,6 +169,6 @@ class AllSpellsKnown extends AllCore
 		if ($conn->query($sql) === TRUE) {
 			echo "Record updated successfully<br>";
 		}
-		$conn->close();		
+		mysqli_close($conn); //$conn->close();
 	}
 }

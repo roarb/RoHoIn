@@ -78,7 +78,6 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                         <span class="field-allowance"><?php if ($unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $unit['field_allowance']; ?><?php endif; ?></span>
                     </div>
                     <div class="model-image">
-                        <?php // need to make thumbnail images here a future priority for page load speed ?>
                         <?php echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
                     </div>
                     <label for="<?php echo $unit['name'] ?>" class="unit-label">
@@ -127,7 +126,6 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                         </span>
                     </div>
                     <div class="model-image">
-                        <?php // need to make thumbnail images here a future priority for page load speed ?>
                         <?php echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
                     </div>
                     <label for="<?php echo $solo['name'] ?>" class="unit-label">
@@ -172,7 +170,6 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                             <span class="field-allowance"><?php if ($battleEngine['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $battleEngine['field_allowance']; ?><?php endif; ?></span>
                         </div>
                         <div class="model-image">
-                            <?php // need to make thumbnail images here a future priority for page load speed ?>
                             <?php echo $allUnits->getUnitImageThumbnail($battleEngine['name']) ?>
                         </div>
                         <label for="<?php echo $battleEngine['name'] ?>" class="unit-label">
@@ -220,11 +217,11 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                 <input type="text" name="actual_points" id="input-army-points" />
             </div>
             <paper-material elevation="1" class="army-list-actions m-cushion">
-                <paper-switch-container>
-                    <label style="margin-right:10px;">Save as Public Army List</label><paper-toggle-button id="public-list-toggle" checked></paper-toggle-button>
-                    <input id="public-input" name="public" value="1" class="hidden" />
-                </paper-switch-container>
                 <?php if ($Core->getLoggedIn()): ?>
+                    <paper-switch-container>
+                        <label style="margin-right:10px;">Save as Public Army List</label><paper-toggle-button id="public-list-toggle" checked></paper-toggle-button>
+                        <input id="public-input" name="public" value="1" class="hidden" />
+                    </paper-switch-container>
                     <paper-switch-container>
                         <label style="margin-right:10px;">Use only models from your Barracks</label><paper-toggle-button id="barracks-models-toggle"></paper-toggle-button>
                         <input id="barracks-models-input" name="barracks-models" value="0" class="hidden" />
@@ -234,16 +231,15 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                     <textarea rows="4" id="notes" name="notes" placeholder="Army Notes:"></textarea>
                 </paper-input-container>
                 <div class="center cushion">
-                    Currently Saving Lists is in-active. This section is still under construction.
-                    <?php if ($Core->getAdmin()): ?>
-                        <paper-button raised class="button" id="submit">Submit</paper-button>
-                        <paper-button raised class="button" id="go-back">Back</paper-button>
-                    <?php endif; ?>
+                    <paper-button raised class="button" id="submit">Submit</paper-button>
+                    <paper-button raised class="button" id="go-back">Back</paper-button>
                 </div>
             </paper-material>
         </form>
     </div>
 </div>
+<paper-toast style="z-index:1;" id="battlegroup-needed" text="Please add a model to the battle group before saving."></paper-toast>
+
 <div class="tiered-army-list-options" style="display:none;"></div>
 <div class="shadow" id="notice-shadow" style="display:none;"></div>
 
@@ -251,27 +247,115 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
     $(document).ready(function(){
         $('#public-list-toggle').on('touchstart click', function(){
             toggleCheckbox('#public-input');
-            if (tempList['publicList'] == 1){
-                tempList['publicList'] = 0;
+            if (tempList.publicList == 1){
+                tempList.publicList = 0;
             } else {
-                tempList['publicList'] = 1;
+                tempList.publicList = 1;
             }
         });
         <?php if ($Core->getLoggedIn()): ?>
             $('#barracks-models-toggle').on('touchstart click', function(){
                 toggleCheckbox('#barracks-models-input');
                 var barracksModels = <?php echo json_encode($Barracks->getAllUserModels($Core->getUserId())) ?>;
-                if (tempList['barracksModels'] == 1){
+                if (tempList.barracksModels == 1){
                     useOnlyBarracksModels(false, '');
-                    tempList['barracksModels'] = 0;
+                    tempList.barracksModels = 0;
                 } else {
                     useOnlyBarracksModels(true, barracksModels);
-                    tempList['barracksModels'] = 1;
+                    tempList.barracksModels = 1;
                 }
             });
         <?php endif; ?>
-        $('#submit').on('touchstart click', function(){
-            submitForm('#create-army-list');
+
+        $('#submit').on('touchstart click', function(e){
+            e.preventDefault();
+            //submitForm('#create-army-list');
+            console.log(tempList);
+
+            var battleGroupSql1 = '';
+            $(tempList.bg1Models).each(function(key, val){
+                battleGroupSql1 += '['+val+',1]';
+            });
+            if (tempList.bg1Models.length < 1){
+                battleGroupSql1 = null;
+            }
+
+            var solosSql = '';
+            $(tempList.soloModels).each(function(key, val){
+               solosSql += '['+val['id']+','+val['count']+']';
+            });
+            if (tempList.soloModels.length < 1){
+                solosSql = null;
+            }
+
+            var unitsSql = '';
+            $(tempList.unitModels).each(function(key,val){
+               unitsSql +=  '['+val['id']+','+val['count']+','+val['cost']+']';
+            });
+            if (tempList.unitModels.length < 1){
+                unitsSql = null;
+            }
+
+            var battleEngineSql = '';
+            $(tempList.battleEngineModels).each(function(key,val){
+                battleEngineSql +=  '['+val['id']+','+val['count']+']';
+            });
+            if (tempList.battleEngineModels.length < 1){
+                battleEngineSql = null;
+            }
+
+            var journeymanBgSql = '';
+            $(tempList.journeyman_bg).each(function(key, val){
+                journeymanBgSql += '['+val+',1]';
+            });
+            if (tempList.journeyman_bg.length < 1){
+                journeymanBgSql = null;
+            }
+
+            var user = null;
+            if (tempList.creator_id[0] != null){
+                user = tempList.creator_id[0];
+            }
+
+            var query = 'name='+tempList.name;
+            query += '&faction='+tempList.faction;
+            query += '&points='+tempList.orig_points;
+            query += '&points_used='+tempList.points_used;
+            query += '&warcaster1='+tempList.leader1name;
+            query += '&tier1='+tempList.tierListLevel;
+            if (battleGroupSql1 != null){query += '&bg1='+battleGroupSql1;}
+            if (solosSql != null){query += '&solos='+solosSql;}
+            if (unitsSql != null){query += '&units='+unitsSql;}
+            if (battleEngineSql != null){query += '&battle_engines='+battleEngineSql;}
+            if (tempList.journeyman['active'] == 1){query += '&journeyman_caster='+tempList.journeyman['id'];}
+            if (journeymanBgSql != null){query += '&journeyman_battlegroup='+journeymanBgSql;}
+            // need jackmarshal here
+            // need jackmarshal battle group here
+            query += '&created_by='+user;
+            query += '&public='+tempList.publicList;
+            if ($('#notes').val().length > 0){
+                query += '&notes='+$('#notes').val();
+            }
+
+            //console.log(query);
+            // run JS validation checks before submitting
+            var commitSave = true;
+
+            if (tempList.bg1Models.length == 0){
+                commitSave = false;
+
+                document.querySelector('#battlegroup-needed').show();
+            }
+
+            if (commitSave){
+                $.post("/ajax/save-army-list.php?"+query, function(guid) {
+                    var msg = '<h3>Great news, your army list was saved!</h3>';
+                    msg += '<p>You can view it at <a href="/armybuilder/view-army-list.php?id='+guid.slice(1, -1)+'" title="'+tempList.name+'">'+tempList.name+'</a></p>';
+                    msg += '<paper-button class="cushion" raised>Create a New Army List</paper-button>';
+                    displayNotice(msg, true)
+                });
+            }
+
         });
         $('#go-back').on('touchstart click', function(){
             backToCreateArmyStepOne()

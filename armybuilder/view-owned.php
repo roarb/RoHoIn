@@ -130,15 +130,6 @@
                 </script>
 
 
-                <?php/* foreach ($allLists as $list): ?>
-                    <div class="flex-2">
-                        <paper-button raised class="full-width-button link-out" data-src="/armybuilder/view-army-list.php?id=<?php echo $list["id"] ?>">
-                            <span class="list-faction"><?php echo $list['faction'] ?></span>
-                            <span class="list-name"><?php echo $list['name'] ?></span> | <span class="list-points"><?php echo $list['points'] ?> pts.</span>
-                        </paper-button>
-                    </div>
-                <?php endforeach; */?>
-
                 <?php // start not logged in section ?>
             <?php else: ?>You Must Log In To View This Page
             <?php endif; ?>

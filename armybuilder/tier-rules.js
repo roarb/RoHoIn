@@ -83,21 +83,25 @@ function selectTierList(tierObject, level){
         // 2.2 remove tier 2+ previously chosen tier rules
         resetTierRulesToBase();  // this action will need to reset the army list - need to populate warning yes/no
         applyTierRules(tierObject, 1);
+        tempList['tierListLevel'] = 1;
     }
 
     // 4 if level > 1 apply the tier 2 rules
     if (level > 1){
         applyTierRules(tierObject, 2);
+        tempList['tierListLevel'] = 2;
     }
 
     // 5 if level > 2 apply the tier 3 rules
     if (level > 2){
         applyTierRules(tierObject, 3);
+        tempList['tierListLevel'] = 3;
     }
 
     // 6 if level > 3 apply the tier 4 rules
     if (level > 3){
         applyTierRules(tierObject, 4);
+        tempList['tierListLevel'] = 4;
     }
 
     // last change the popup (.tiered-army-list-choice) and the #notice-shadow displays to none.
@@ -137,6 +141,7 @@ function resetTierRulesToBase (){
     // reset the #tier-list-req-notice level 2 3 4 blocks
     $('#tier-list-req-notice').html('<div class="tier-1-notice"></div><div class="tier-2-notice"></div><div class="tier-3-notice"></div><div class="tier-4-notice"></div>');
     // reset tempList object requirements to contain only tier 1 to start run
+    tempList['tierListLevel'] = 0;
     tempList['tierList2Req'] = [];
     tempList['tierList3Req'] = [];
     tempList['tierList4Req'] = [];

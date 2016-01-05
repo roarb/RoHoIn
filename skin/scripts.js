@@ -78,7 +78,7 @@ function showModels(str){
 }
 
 function loadSingleModel(name) {
-	window.location.assign("http://roho.in/playtest/single-unit.php?name="+name);
+	window.location.assign("/playtest/single-unit.php?name="+name);
 }
 
 function updateUnitCount(val,type,userId,unitName, unitId){
@@ -133,12 +133,6 @@ function toggleBarracksFaction(faction){
         $('#choice-loader').remove();
     }
 
-function removeNotice(){
-    $('#notice-shadow').remove();
-    $('#notice-loader').remove();
-    $('#choice-loader').remove();
-}
-
 // menu object movement scripts //
 function toggleLoggedInMoreMenu(){
     var menu = $('#login-more-menu');
@@ -159,14 +153,14 @@ $(document).ready(function(){
 		slideAway('#start-login-button');
     });
     // links built for touchstart / click //
-    $('.link-roho-home').on('touchstart click', function(){ window.location = 'http://roho.in';});
+    $('.link-roho-home').on('touchstart click', function(){ window.location = '/index.php';});
     $('.link-account-home').on('touchstart click', function(){ window.location = '/account/index.php';});
     $('.link-account-barracks').on('touchstart click', function(){ window.location = '/account/barracks.php';});
     $('.link-admin-home').on('touchstart click', function(){ window.location = '/admin/index.php';});
     $('.link-armybuilder-home').on('touchstart click', function(){ window.location = '/armybuilder/index.php';});
     $('.link-login-register').on('touchstart click', function(){ window.location = '/login/register.php';});
     $('.link-login-password-reset').on('touchstart click', function(){ window.location = '/login/password_reset.php';});
-    $('.link-logout').on('touchstart click', function(){ window.location = 'http://roho.in/index.php?logout';});
+    $('.link-logout').on('touchstart click', function(){ window.location = '/index.php?logout';});
     $('.link-login-edit').on('touchstart click', function(){ window.location = '/login/edit.php';});
     $('.link-playtest-home').on('touchstart click', function(){ window.location = '/playtest/index.php';});
     $('.link-playtest-all-abilities').on('touchstart click', function(){ window.location = '/playtest/all-abilities.php';});

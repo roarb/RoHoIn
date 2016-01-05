@@ -139,12 +139,14 @@ class AllCore
 	 */
 	public function getUserNameById($id)
 	{
+		$conn = $this->connect();
 		$sql = "SELECT user_name FROM users WHERE user_id = " . $id;
-		$result = $this->connect()->query($sql);
+		$result = $conn->query($sql);
 		$user = '';
 		foreach ($result as $row) {
 			$user = $row['user_name'];
 		}
+		mysqli_close($conn); //$conn->close();
 		return $user;
 	}
 
@@ -174,12 +176,15 @@ class AllCore
 	public function getAdmin()
 	{
 		if (isset($_SESSION['user_id'])){
-			$result = $this->connect()->query("SELECT admin FROM users WHERE user_id = ". $_SESSION['user_id']);
+			$conn = $this->connect();
+			$result = $conn->query("SELECT admin FROM users WHERE user_id = ". $_SESSION['user_id']);
 			foreach ($result as $row){
 				if ($row['admin'] == 1){
+					mysqli_close($conn); //$conn->close();
 					return true;
 				}
 			}
+			mysqli_close($conn); //$conn->close();
 		}
 		return false;
 	}
@@ -189,12 +194,15 @@ class AllCore
 	 * @return bool
 	 */
 	public function getUserSub($id){
-		$result = $this->connect()->query("SELECT user_sub FROM users WHERE user_id = " . $id);
+		$conn = $this->connect();
+		$result = $conn->query("SELECT user_sub FROM users WHERE user_id = " . $id);
 		foreach ($result as $row){
 			if ($row['user_sub'] == 1){
+				mysqli_close($conn); //$conn->close();
 				return true;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return false;
 	}
 }

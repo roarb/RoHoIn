@@ -21,12 +21,12 @@ function armyListBuilderShortSave(modelId){
 function armyListBuilderBoot(faction, points, armyName){
     $.post("/ajax/army-builder.php?faction="+faction+"&points="+points+"&name="+armyName)
         .done(function(data){
-            $('#ajax-armybuilder').html(data);
             addBattleGroup(faction, 1);
+            $('#ajax-armybuilder').html(data);
             $('#input-points').val(points);
-            hideAjaxLoading();
-            infoBlockResize();
-            infoBlockToolsResize();
+            showAjaxLoading();
+            //infoBlockResize();
+            //infoBlockToolsResize();
         });
 }
 
@@ -34,6 +34,7 @@ function addBattleGroup(faction, count){
     $.post("/ajax/battlegroup-build.php?faction="+faction+"&count="+count)
         .done(function(data){
             $('#battlegroup-'+count).html(data);
+            hideAjaxLoading(); console.log('hide ajax fires in addBattleGroup');
             infoBlockResize();
             infoBlockToolsResize();
     });
@@ -44,7 +45,7 @@ function setActiveFaction(id, e, name){
     $('.faction-block').removeClass('active');
     $(e.target).parent().addClass('active');
     $('#'+id).attr('checked', 'checked');
-    tempList['faction'] = id;
+    tempList.faction = id;
     // update army name with the faction name
     var cArmyName = $('#army-list-name').attr('value');
     if (cArmyName.indexOf('Army') > -1){
@@ -60,16 +61,8 @@ function setActivePoints(val, e){
     $('.points-block-item').removeClass('primary-focus');
     $(e).addClass('primary-focus');
     $('#points-'+val).attr('checked', 'checked');
-    tempList['points'] = val;
-    // update army name with the faction name
-    var cArmyName = $('#army-list-name').attr('placeholder');
-    //if (cArmyName.indexOf('Army') > -1){
-    //    console.log($(name));
-    //    cArmyName = cArmyName.substring(0, (cArmyName.indexOf("'s")+3)) + name + " Army";
-    //} else {
-        //cArmyName = id+" Army";
-    //}
-    //$('#army-list-name').attr('placeholder', cArmyName);
+    tempList.points = val;
+    tempList.orig_points = val;
 }
 
 function startArmyListBuilder(){
@@ -94,9 +87,9 @@ function startArmyListBuilder(){
         armyName = 'Random Army Name Picker Here';
     }
     // update tempList with the army name
-    tempList['name'] = armyName;
-    armyListBuilderBoot(faction, points, armyName);
+    tempList.name = armyName;
     hideArmyListCreationStartScreen(faction, points, armyName);
+    armyListBuilderBoot(faction, points, armyName);
 }
 
 function hideArmyListCreationStartScreen(faction, points, armyName){
@@ -216,17 +209,17 @@ function applyBGPointsToToolbar(bg){
     }
     var finalPoints = bg + points;
     // update tempList object
-    tempList['points'] = finalPoints;
+    tempList.points = finalPoints;
     var startBGPoints = '<span class="total-army-points-block"><span id="points-count-up">0</span>/<span id="total-points-allowed">'+finalPoints+'</span> ('+points+')</span>';
     $('#display-army-points').html(startBGPoints);
 }
 
 // add a model/unit points cost to the army total, flag with class error if it exceeds the army total
 function addUnitPointsToToolbar(points){
-    tempList['points_used'] = parseInt(points) + tempList['points_used'];
+    tempList.points_used = parseInt(points) + tempList.points_used;
     var totalPoints = $('#total-points-allowed').text();
-    if (tempList['points_used'] <= parseInt(totalPoints)){
-        var htmlOutput = '<span>'+tempList['points_used']+'</span>';
+    if (tempList.points_used <= parseInt(totalPoints)){
+        var htmlOutput = '<span>'+tempList.points_used+'</span>';
         $('#points-count-up').html(htmlOutput);
     }
     else {
@@ -240,12 +233,12 @@ function addUnitPointsToToolbar(points){
 function removeUnitPointsFromToolbar(points){
     tempList['points_used'] = tempList['points_used'] - parseInt(points);
     var totalPoints = $('#total-points-allowed').text();
-    if (tempList['points_used'] <= parseInt(totalPoints)){
-        var htmlOutput = '<span>'+tempList['points_used']+'</span>';
+    if (tempList.points_used <= parseInt(totalPoints)){
+        var htmlOutput = '<span>'+tempList.points_used+'</span>';
         $('#points-count-up').html(htmlOutput);
     }
     else {
-        var htmlOutput = '<span class="error">'+tempList['points_used']+'</span>';
+        var htmlOutput = '<span class="error">'+tempList.points_used+'</span>';
         $('#points-count-up').html(htmlOutput);
     }
 
@@ -317,7 +310,8 @@ function addToJourneymanCaster()
     var object = tempList['journeyman_temp'];
     updateFAonAddedUnit(object); // update the unit selected to .active - if FA is matched update the unit selected to .full
     addUnitPointsToToolbar(object['cost']);
-
+    var journeymanItem = {'name': object['name'], 'id': object['id'], 'count':1};
+    tempList['journeyman_bg'].push(journeymanItem);
     showAjaxLoading();
     $.getJSON('/ajax/get-unit-attachments.php?id='+object['id'], function(data) {
 
@@ -354,7 +348,7 @@ function addToJourneymanCaster()
             innerHtml += '<div class="unit-attachments select-unit-attachment" '+uaScriptWrite+' onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
             innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
         }
-        $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+        $.get('/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
             innerHtml += data;
             innerHtml += '<input name="solos-' + i + '" value="' + object["name"] + '|1" class="hidden ' + object["id"] + '" /></paper-material>';
             // need to add another part to this script to remove the model from the tempList
@@ -420,7 +414,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     }
     innerHtml += '<div class="clearer"></div>';
     // get the model stats and display in a slide down
-    $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+    $.get('/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
         innerHtml += data;
         innerHtml += '</paper-material>';
         innerHtml += '<input name="warcaster'+count+'" value="'+object["name"]+'" class="hidden" />';
@@ -495,7 +489,7 @@ function addUnitToBattleGroup (count, object, free){ // count = battlegroup 1-4,
             innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
             //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
         }
-        $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+        $.get('/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
             innerHtml += data;
             innerHtml += '<input name="battlegroup-' + count + '-' + i + '" value="' + object["name"] + '|1" class="hidden ' + object["id"] + '" /></paper-material>';
             innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
@@ -570,6 +564,9 @@ function addUnitToArmy(e, object, pos){
                 innerHtml += '<paper-material elevation="1" class="unit-model model-id-'+object["id"]+'" id="'+modelIdDisplay+'">';
                 innerHtml += '<div class="model-image model-in-list">'+object["thumb_img"]+'</div>';
                 innerHtml += '<div style="float:left;"><span class="unit-name">' + object["name"] + '</span><br /><span class="unit-title">';
+                // add model to the tempList object under the correct unit type heading
+                writeModelAdditionToTempList(object, object['cost']);
+
                 if (object['purchased_low'] > 0) {
                     if (object['unit_leader'] == 'included') {
                         innerHtml += object['purchased_low'] + ' Grunts &amp; Leader for <span class="points">' + object['cost'] + '</span> pts</span>';
@@ -586,7 +583,13 @@ function addUnitToArmy(e, object, pos){
                         innerHtml += '<span class="points">' + object['cost'] + '</span> pts</span>';
                     }
                     // save army model choice to tempList object
-                    var armyModel = {modelId: object['id'], qty: object['purchased_high']};
+                    var modelCount = 0;
+                    if (object['purchased_high'] != ''){
+                        modelCount = 1;
+                    } else {
+                        modelCount = object['purchased_high'];
+                    }
+                    var armyModel = {modelId: object['id'], qty: modelCount};
                     tempList['armyModels'].push(armyModel);
                 }
                 innerHtml += '</div>';
@@ -601,7 +604,7 @@ function addUnitToArmy(e, object, pos){
                     //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
                 }
                 innerHtml += '<div class="clearer"></div>';
-                $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+                $.get('/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
                     innerHtml += data;
                     innerHtml += '<input name="' + unitType + '-' + i + '" value="' + object["name"] + '|';
                     if (object['purchased_low'] > 1) {
@@ -664,6 +667,8 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                 } else {
                     innerHtml += count + ' Grunts for <span class="points">' + cost + '</span> pts</span>';
                 }
+                // push unit to the tempList['unitModels']
+                writeModelAdditionToTempList(object, cost, count);
                 // save army model choice to tempList object
                 var armyModel = {modelId: object['id'], qty: count};
                 tempList['armyModels'].push(armyModel);
@@ -679,7 +684,7 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
                     innerHtml += '<paper-icon-button icon="attach-file" class="optional-unit-attachments"></paper-icon-button><span class="mo-notice hidden">Unit Attachments</span></div>';
                     //onclick="displayUnitAttachmentChoice('+data+', \''+modelIdDisplay+'\')
                 }
-                $.get('http://roho.in/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
+                $.get('/ajax/display-army-builder-stats.php?id='+object["id"], function(data){
                     innerHtml += data;
                     innerHtml += '<input name="unit-' + i + '" value="' + object["name"] + '|' + count + '" class="hidden ' + object["id"] + '" /></paper-material>';
                     innerHtml += '<script>$(window).ready(function(){$(".remove-' + object["id"] + '").on("touchstart click", function(){removeUnitFromArmy(' + object["id"] + ', this)});});</script>';
@@ -995,4 +1000,37 @@ function getModelAbilities(object) { // object = unitModel Object
     ];
 
     return abilities;
+}
+
+function writeModelAdditionToTempList(object, cost, count){ // object = unitModel Object // cost of the unit added // count - only on unit min/max choice adds
+    cost = parseInt(cost);
+    if (object['type'] == 'Battle Engine'){
+        var bgItem = {id: object['id'], count: 1, name: object['name'], cost: cost};
+        tempList['battleEngineModels'].push(bgItem);
+    }
+    if (object['type'].indexOf('Solo') > -1){
+        var soloCountNum = 1;
+        if (object['purchased_low'] != null){
+            soloCountNum = object['purchased_low'];
+        }
+        var soloItem = {id: object['id'], count: soloCountNum , name: object['name'], cost: cost};
+        tempList['soloModels'].push(soloItem);
+    }
+    if (object['type'].indexOf('Unit') > -1){
+        var unitCountNum = 1;
+        if (object['purchased_low'] != null && count == undefined){
+            unitCountNum = parseInt(object['purchased_low']);
+            if (object['unit_leader'] != null){
+                unitCountNum++;
+            }
+        }
+        if (count != undefined){
+            unitCountNum = count;
+            if (object['unit_leader'] != null){
+                unitCountNum++;
+            }
+        }
+        var unitItem = {id: object['id'], count: unitCountNum , name: object['name'], cost: cost};
+        tempList['unitModels'].push(unitItem);
+    }
 }

@@ -6,8 +6,7 @@ class AllAnimusKnown extends AllCore
 	 * @return string
 	 */
 	function getAllAnimus(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$animus = "SELECT * FROM animus_known ORDER BY name";
 		$animusResult = $conn->query($animus);
@@ -20,6 +19,7 @@ class AllAnimusKnown extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $animusBuild;
 	}
 
@@ -27,8 +27,7 @@ class AllAnimusKnown extends AllCore
 	 * @return string
 	 */
 	function getAllAnimusName(){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$animus = "SELECT name FROM animus_known ORDER BY name";
 		$animusResult = $conn->query($animus);
@@ -41,6 +40,7 @@ class AllAnimusKnown extends AllCore
 				$i++;
 			}
 		}
+		mysqli_close($conn); //$conn->close();
 		return $animusBuild;
 	}
 
@@ -49,8 +49,7 @@ class AllAnimusKnown extends AllCore
 	 * @return string
 	 */
 	function getAnimusByName($name){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		$name = "'".$name."'";
 		$animus = "SELECT * FROM animus_known WHERE name = ".$name;
 		$animusResult = $conn->query($animus);
@@ -62,7 +61,8 @@ class AllAnimusKnown extends AllCore
 				$animusBuild[$i] = $row;
 				$i++;
 			}
-		} 
+		}
+		mysqli_close($conn); //$conn->close();
 		return $animusBuild;
 	}
 
@@ -86,8 +86,7 @@ class AllAnimusKnown extends AllCore
 	 * @param $duration
 	 */
 	function saveAnimus($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -118,8 +117,8 @@ class AllAnimusKnown extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		
-		$conn->close();		
+
+		mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -142,8 +141,7 @@ class AllAnimusKnown extends AllCore
 	 * @param $duration
 	 */
 	function updateAnimus($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$core = new AllCore();
-		$conn = $core->connect();
+		$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -175,6 +173,6 @@ class AllAnimusKnown extends AllCore
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-		$conn->close();		
+		mysqli_close($conn); //$conn->close();
 	}
 }

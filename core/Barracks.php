@@ -25,6 +25,7 @@ class Barracks extends AllCore
 			} 
 			else { $typeMessage = 'painted models';
 			}
+			mysqli_close($conn); //$conn->close();
 			return 'This unit has been added. You now have '.$count.' '.$typeMessage.' saved.';
 		} 
 		else {
@@ -40,9 +41,9 @@ class Barracks extends AllCore
 			}
 			if ($conn->query($sqlUpdate) === TRUE) {
 				return 'This unit has been updated to '.$count.' '.$typeMessage.'.';
-			} 
+			}
 
-			$conn->close();	
+			mysqli_close($conn); //$conn->close();
 			}			
 	}
 
@@ -70,10 +71,10 @@ class Barracks extends AllCore
 		$sqlAdd = "INSERT INTO barracks (user_id, unit_name, owned_qty, painted_qty) VALUES (".$userId.", ".$unitName.", ".$ownedQty.", ".$paintedQty.")";
 		
 		if ($conn->query($sqlAdd) === TRUE) {
-			$conn->close();
+			mysqli_close($conn); //$conn->close();
 			return true;
 		} else {
-			$conn->close();
+			mysqli_close($conn); //$conn->close();
 			return false;
 		}
 	}
@@ -94,6 +95,7 @@ class Barracks extends AllCore
 			foreach ($countResult as $row){
 				$finalCount .= $row['owned_qty'];
 			}
+			mysqli_close($conn); //$conn->close();
 			return $finalCount;
 		} else if ($type == 'painted') {
 			$sqlCount = "SELECT * FROM barracks WHERE user_id = ".$userId." AND unit_name = ".$unit." ORDER BY unit_name";
@@ -102,6 +104,7 @@ class Barracks extends AllCore
 			foreach ($countResult as $row){
 				$finalCount .= $row['painted_qty'];
 			}
+			mysqli_close($conn); //$conn->close();
 			return $finalCount;
 		}	
 		else {return false;}
@@ -133,6 +136,7 @@ class Barracks extends AllCore
 			$finalResults[$i]['model_id'] = $unit->getUnitIdByName($row['unit_name']);
 			$i++;
 		}
+		mysqli_close($conn); //$conn->close();
 		if ($finalResults == ''){
 			return 'No Results Found';
 		} else {
