@@ -210,5 +210,6 @@ class AllTieredLists extends AllCore
 			}
 		}
 		mysqli_close($conn); //$conn->close();
+		return $listsBuild;
 	}
 }

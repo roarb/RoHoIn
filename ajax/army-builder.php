@@ -239,6 +239,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
     </div>
 </div>
 <paper-toast style="z-index:1;" id="battlegroup-needed" text="Please add a model to the battle group before saving."></paper-toast>
+<paper-toast style="z-index:1;" id="over-points" text="You've used too many models and are over your points allotment."></paper-toast>
 
 <div class="tiered-army-list-options" style="display:none;"></div>
 <div class="shadow" id="notice-shadow" style="display:none;"></div>
@@ -343,8 +344,11 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
 
             if (tempList.bg1Models.length == 0){
                 commitSave = false;
-
                 document.querySelector('#battlegroup-needed').show();
+            }
+            if (tempList.points_used > tempList.points){
+                commitSave = false;
+                document.querySelector('#over-points').show();
             }
 
             if (commitSave){

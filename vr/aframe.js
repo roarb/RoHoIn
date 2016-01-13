@@ -11082,7 +11082,7 @@ THREE.LuminanceAlphaFormat = 1023;
 // THREE.RGBEFormat handled as THREE.RGBAFormat in shaders
 THREE.RGBEFormat = THREE.RGBAFormat; //1024;
 
-// DDS / ST3C Compressed texture formats
+// DDS / ST3C Compressed textures formats
 
 THREE.RGB_S3TC_DXT1_Format = 2001;
 THREE.RGBA_S3TC_DXT1_Format = 2002;
@@ -11090,7 +11090,7 @@ THREE.RGBA_S3TC_DXT3_Format = 2003;
 THREE.RGBA_S3TC_DXT5_Format = 2004;
 
 
-// PVRTC compressed texture formats
+// PVRTC compressed textures formats
 
 THREE.RGB_PVRTC_4BPPV1_Format = 2100;
 THREE.RGB_PVRTC_2BPPV1_Format = 2101;
@@ -29109,7 +29109,7 @@ THREE.MaterialLoader.prototype = {
 
 		if ( textures[ name ] === undefined ) {
 
-			console.warn( 'THREE.MaterialLoader: Undefined texture', name );
+			console.warn( 'THREE.MaterialLoader: Undefined textures', name );
 
 		}
 
@@ -30154,7 +30154,7 @@ THREE.CompressedTextureLoader.prototype = {
 
 		} else {
 
-			// compressed cubemap texture stored in a single DDS file
+			// compressed cubemap textures stored in a single DDS file
 
 			loader.load( url, function ( buffer ) {
 
@@ -31549,7 +31549,7 @@ THREE.ShaderMaterial = function ( parameters ) {
 		derivatives: false, // set to use derivatives
 		fragDepth: false, // set to use fragment depth values
 		drawBuffers: false, // set to use draw buffers
-		shaderTextureLOD: false // set to use shader texture LOD
+		shaderTextureLOD: false // set to use shader textures LOD
 	};
 
 	// When rendered geometry doesn't include these attributes but the material does,
@@ -32843,16 +32843,16 @@ THREE.Skeleton = function ( bones, boneInverses, useVertexTexture ) {
 
 	this.bones = bones.slice( 0 );
 
-	// create a bone texture or an array of floats
+	// create a bone textures or an array of floats
 
 	if ( this.useVertexTexture ) {
 
 		// layout (1 matrix = 4 pixels)
 		//      RGBA RGBA RGBA RGBA (=> column1, column2, column3, column4)
-		//  with  8x8  pixel texture max   16 bones * 4 pixels =  (8 * 8)
-		//       16x16 pixel texture max   64 bones * 4 pixels = (16 * 16)
-		//       32x32 pixel texture max  256 bones * 4 pixels = (32 * 32)
-		//       64x64 pixel texture max 1024 bones * 4 pixels = (64 * 64)
+		//  with  8x8  pixel textures max   16 bones * 4 pixels =  (8 * 8)
+		//       16x16 pixel textures max   64 bones * 4 pixels = (16 * 16)
+		//       32x32 pixel textures max  256 bones * 4 pixels = (32 * 32)
+		//       64x64 pixel textures max 1024 bones * 4 pixels = (64 * 64)
 
 		
 		var size = Math.sqrt( this.bones.length * 4 ); // 4 pixels needed for 1 matrix
@@ -33451,7 +33451,7 @@ THREE.LensFlare.prototype.add = function ( texture, size, distance, blending, co
 
 	this.lensFlares.push( {
 		texture: texture,	// THREE.Texture
-		size: size, 		// size in pixels (-1 = use texture.width)
+		size: size, 		// size in pixels (-1 = use textures.width)
 		distance: distance, 	// distance (0-1) from light source (0=at light source)
 		x: 0, y: 0, z: 0,	// screen position (-1 => 1) z = 0 is in front z = 1 is back
 		scale: 1, 		// scale
@@ -35067,7 +35067,7 @@ THREE.ShaderLib = {
 
 	},
 
-	/* Depth encoding into RGBA texture
+	/* Depth encoding into RGBA textures
 	 *
 	 * based on SpiderGL shadow map example
 	 * http://spidergl.org/example.php?id=6
@@ -35752,13 +35752,13 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 		if ( texture.image && textureProperties.__image__webglTextureCube ) {
 
-			// cube texture
+			// cube textures
 
 			_gl.deleteTexture( textureProperties.__image__webglTextureCube );
 
 		} else {
 
-			// 2D texture
+			// 2D textures
 
 			if ( textureProperties.__webglInit === undefined ) return;
 
@@ -36883,7 +36883,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 		}
 
 		// skinning uniforms must be set even if material didn't change
-		// auto-setting of texture unit for bone texture must go before other textures
+		// auto-setting of textures unit for bone textures must go before other textures
 		// not sure why, but otherwise weird things happen
 
 		if ( material.skinning ) {
@@ -37362,7 +37362,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 		if ( textureUnit >= capabilities.maxTextures ) {
 
-			console.warn( 'WebGLRenderer: trying to use ' + textureUnit + ' texture units while this GPU supports only ' + capabilities.maxTextures );
+			console.warn( 'WebGLRenderer: trying to use ' + textureUnit + ' textures units while this GPU supports only ' + capabilities.maxTextures );
 
 		}
 
@@ -38127,7 +38127,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 					} else {
 
-						console.warn( "THREE.WebGLRenderer: Attempt to load unsupported compressed texture format in .uploadTexture()" );
+						console.warn( "THREE.WebGLRenderer: Attempt to load unsupported compressed textures format in .uploadTexture()" );
 
 					}
 
@@ -38348,7 +38348,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 								} else {
 
-									console.warn( "THREE.WebGLRenderer: Attempt to load unsupported compressed texture format in .setCubeTexture()" );
+									console.warn( "THREE.WebGLRenderer: Attempt to load unsupported compressed textures format in .setCubeTexture()" );
 
 								}
 
@@ -38394,7 +38394,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 	// Render targets
 
-	// Setup storage for target texture and bind it to correct framebuffer
+	// Setup storage for target textures and bind it to correct framebuffer
 	function setupFrameBufferTexture ( framebuffer, renderTarget, attachment, textureTarget ) {
 
 		var glFormat = paramThreeToGL( renderTarget.texture.format );
@@ -38432,7 +38432,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 	}
 
-	// Setup GL resources for a non-texture depth buffer
+	// Setup GL resources for a non-textures depth buffer
 	function setupDepthRenderbuffer( renderTarget ) {
 
 		var renderTargetProperties = properties.get( renderTarget );
@@ -38798,7 +38798,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 /*
  In options, we can specify:
- * Texture parameters for an auto-generated target texture
+ * Texture parameters for an auto-generated target textures
  * depthBuffer/stencilBuffer: Booleans to indicate if we should generate these buffers
 */
 THREE.WebGLRenderTarget = function ( width, height, options ) {
@@ -40534,7 +40534,7 @@ THREE.WebGLShadowMap = function ( _renderer, _lights, _objects ) {
 					var vpWidth = shadowMapSize.x / 4.0;
 					var vpHeight = shadowMapSize.y / 2.0;
 
-					// These viewports map a cube-map onto a 2D texture with the
+					// These viewports map a cube-map onto a 2D textures with the
 					// following orientation:
 					//
 					//  xzXZ
@@ -41232,7 +41232,7 @@ THREE.WebGLState = function ( gl, extensions, paramThreeToGL ) {
 
 	};
 
-	// texture
+	// textures
 
 	this.activeTexture = function ( webglSlot ) {
 
@@ -41482,9 +41482,9 @@ THREE.LensFlarePlugin = function ( renderer, flares ) {
 
 						"} else {",
 
-							"vec4 texture = texture2D( map, vUV );",
+							"vec4 textures = texture2D( map, vUV );",
 							"texture.a *= opacity * vVisibility;",
-							"gl_FragColor = texture;",
+							"gl_FragColor = textures;",
 							"gl_FragColor.rgb *= color;",
 
 						"}",
@@ -41568,9 +41568,9 @@ THREE.LensFlarePlugin = function ( renderer, flares ) {
 							"visibility += texture2D( occlusionMap, vec2( 0.1, 0.5 ) ).a;",
 							"visibility = ( 1.0 - visibility / 4.0 );",
 
-							"vec4 texture = texture2D( map, vUV );",
+							"vec4 textures = texture2D( map, vUV );",
 							"texture.a *= opacity * visibility;",
-							"gl_FragColor = texture;",
+							"gl_FragColor = textures;",
 							"gl_FragColor.rgb *= color;",
 
 						"}",
@@ -41682,7 +41682,7 @@ THREE.LensFlarePlugin = function ( renderer, flares ) {
 				screenPositionPixels.y > 0 &&
 				screenPositionPixels.y < viewportHeight ) ) {
 
-				// save current RGB to temp texture
+				// save current RGB to temp textures
 
 				state.activeTexture( gl.TEXTURE0 );
 				state.bindTexture( gl.TEXTURE_2D, null );
@@ -42121,11 +42121,11 @@ THREE.SpritePlugin = function ( renderer, sprites ) {
 
 			'void main() {',
 
-				'vec4 texture = texture2D( map, vUV );',
+				'vec4 textures = texture2D( map, vUV );',
 
-				'if ( texture.a < alphaTest ) discard;',
+				'if ( textures.a < alphaTest ) discard;',
 
-				'gl_FragColor = vec4( color * texture.xyz, texture.a * opacity );',
+				'gl_FragColor = vec4( color * textures.xyz, textures.a * opacity );',
 
 				'if ( fogType > 0 ) {',
 
@@ -55575,14 +55575,14 @@ module.exports.Component = registerComponent('material', {
     }
     this.isLoadingEnvMap = true;
     if (texturePromises[envMap]) {
-      // Another material is already loading this texture. Wait on promise.
+      // Another material is already loading this textures. Wait on promise.
       texturePromises[envMap].then(function (cube) {
         self.isLoadingEnvMap = false;
         material.envMap = cube;
         material.needsUpdate = true;
       });
     } else {
-      // Material is first to load this texture. Load and resolve texture.
+      // Material is first to load this textures. Load and resolve textures.
       texturePromises[envMap] = new Promise(function (resolve) {
         srcLoader.validateCubemapSrc(envMap, function loadEnvMap (urls) {
           CubeLoader.load(urls, function (cube) {
@@ -55597,7 +55597,7 @@ module.exports.Component = registerComponent('material', {
   },
 
   /*
-   * Updates material texture map.
+   * Updates material textures map.
    *
    * @param {string|object} src - An <img> / <video> element or url to an image/video file.
    */
@@ -55621,11 +55621,11 @@ module.exports.Component = registerComponent('material', {
 });
 
 /**
- * Sets image texture on material as `map`.
+ * Sets image textures on material as `map`.
  *
  * @param {object} material - three.js material.
  * @param {string|object} src - An <img> element or url to an image file.
- * @param {string} repeat - X and Y value for size of texture repeating (in UV units).
+ * @param {string} repeat - X and Y value for size of textures repeating (in UV units).
  */
 function loadImageTexture (material, src, repeat) {
   var isEl = typeof src !== 'string';
@@ -55662,7 +55662,7 @@ function loadImageTexture (material, src, repeat) {
 }
 
 /**
- * Creates a video element to be used as a texture.
+ * Creates a video element to be used as a textures.
  *
  * @param {object} material - three.js material.
  * @param {string} src - Url to a video file.
@@ -55690,7 +55690,7 @@ function createVideoEl (material, src, width, height) {
 }
 
 /**
- * Sets video texture on material as map.
+ * Sets video textures on material as map.
  *
  * @param {object} material - three.js material.
  * @param {string} src - Url to a video file.
@@ -55698,7 +55698,7 @@ function createVideoEl (material, src, width, height) {
  * @param {number} height - Height of the video.
 */
 function loadVideoTexture (material, src, height, width) {
-  // three.js video texture loader requires a <video>.
+  // three.js video textures loader requires a <video>.
   var videoEl = typeof src !== 'string' ? fixVideoAttributes(src) : createVideoEl(material, src, height, width);
   var texture = new THREE.VideoTexture(videoEl);
   texture.minFilter = THREE.LinearFilter;
@@ -59135,18 +59135,18 @@ var debug = require('./debug');
 var warn = debug('utils:src-loader:warn');
 
 /**
- * Validates a texture, either as a selector or as a URL.
+ * Validates a textures, either as a selector or as a URL.
  * Detects whether `src` is pointing to an image or to a video, and invokes the
  * appropriate callback.
  *
  * If `src` is selector, check if it's valid, return the el in the callback.
- * An el is returned so that it can be reused for texture loading.
+ * An el is returned so that it can be reused for textures loading.
  *
  * If `src` is a URL, check if it's valid, return the src in the callback.
  *
  * @params {string} src - A selector or a URL. URLs must be wrapped by `url()`.
- * @params {function} isImageCb - callback if texture is an image.
- * @params {function} isVideoCb - callback if texture is a video.
+ * @params {function} isImageCb - callback if textures is an image.
+ * @params {function} isVideoCb - callback if textures is a video.
  */
 function validateSrc (src, isImageCb, isVideoCb) {
   var textureEl;

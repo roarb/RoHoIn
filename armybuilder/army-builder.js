@@ -404,6 +404,7 @@ function addLeaderToBattleGroup (count, object){ // count = battlegroup 1-4, obj
     if (object['tiers'] != ''){
         innerHtml += '<div class="tier-options" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="displayTierListSelection(this';
         var i = 0;
+        console.log(object);
         $(object['tiers']).each(function(){ // loop through all possible tiers and display each as a new object to the displayTierListSelection function
             innerHtml += ','+object["tiers"][i]["id"];
             i++;

@@ -236,8 +236,7 @@ class AllUnits extends AllCore
             OR  type =  'Warlock Unit'
             OR  type =  'Warcaster'
             OR  type =  'Warcaster Unit'
-        )
-        ORDER BY name" ;
+        ) ORDER BY name" ;
         $unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
@@ -258,6 +257,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
+		mysqli_close($conn); //$conn->close();
         // add in 'possible_ua' for each model in the array
 		// add in 'tiered options for each model in the array
         $i = 0;
@@ -266,7 +266,7 @@ class AllUnits extends AllCore
 			$unitsBuild[$i]['tiers'] = $this->getWarcasterTierObject($unitsBuild[$i]['id']);
             $i++;
         }
-		mysqli_close($conn); //$conn->close();
+
         return $unitsBuild;
     }
 
