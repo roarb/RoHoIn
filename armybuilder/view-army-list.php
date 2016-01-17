@@ -5,6 +5,7 @@
     include '../core/Core.php';
     $core = new AllCore();
     $armyBuilder = new ArmyBuilder();
+    $loggedIn = false;
     if ($core->getLoggedIn()){
         $loggedIn = true;
         $creatorName = $_SESSION['user_name'];
@@ -12,7 +13,12 @@
     $allUnits = new AllUnits();
     $listId = $_GET['id'];
     $armyList = $armyBuilder->getListByGuid($listId);
-    if ($armyList){$createdBy = $core->getUserNameById($armyList['created_by']);} ?>
+    if ($armyList){
+        $createdBy = $core->getUserNameById($armyList['created_by']);
+        if ($createdBy == NULL){
+            $createdBy = 'anonymous';
+        }
+    } ?>
     <script src="army-builder.js"></script>
     <script src="tier-rules.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

@@ -7,6 +7,7 @@
     include '../core/Core.php';
     $core = new AllCore();
     $allFactions = new AllFactions();
+    $armyBuilder = new ArmyBuilder();
     $factions = $allFactions->getAllFactions();
     $loggedIn = false;
     if ($core->getLoggedIn()){
@@ -169,6 +170,7 @@
     tempList['paintedBarracksModels'] = 0;
     tempList['creator_id'] = [<?php if ($loggedIn){echo $_SESSION['user_id'];} ?>];
     tempList['journeyman_temp'] = [];
+    tempList['guid'] = '<?php echo $armyBuilder->getGUID() ?>';
 
     $('#start-army-list-builder').on('touchstart click', function(){
 

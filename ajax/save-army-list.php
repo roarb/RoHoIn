@@ -38,8 +38,9 @@ if (isset($_GET['merc_units'])){$merc_units = $_GET['merc_units'];} else {$merc_
 if (isset($_GET['created_by'])){$user = $_GET['created_by'];} else {$user = null;}
 $public = $_GET['public'];
 if (isset($_GET['notes'])){$notes = $_GET['notes'];} else {$notes = null;}
+$guid = $_GET['guid'];
 
-$submit = $armyBuilder->ajaxCreateNewArmyList($name, $faction, $points, $actual_points, $warcaster_1, $tier_1, $battle_group_1, $warcaster_2, $tier_2, $battle_group_2, $warcaster_3, $tier_3, $battle_group_3, $warcaster_4, $tier_4, $battle_group_4, $units, $solos, $battle_engines, $journeyman_caster, $journeyman_battlegroup, $jackmarshal, $jackmarshal_battlegroup, $merc_solo, $merc_units, $user, $public, $notes);
+$submit = $armyBuilder->ajaxCreateNewArmyList($name, $faction, $points, $actual_points, $warcaster_1, $tier_1, $battle_group_1, $warcaster_2, $tier_2, $battle_group_2, $warcaster_3, $tier_3, $battle_group_3, $warcaster_4, $tier_4, $battle_group_4, $units, $solos, $battle_engines, $journeyman_caster, $journeyman_battlegroup, $jackmarshal, $jackmarshal_battlegroup, $merc_solo, $merc_units, $user, $public, $notes, $guid);
 
 //var_dump($submit);
 

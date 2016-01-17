@@ -337,6 +337,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
             if ($('#notes').val().length > 0){
                 query += '&notes='+$('#notes').val();
             }
+            query += '&guid='+tempList.guid;
 
             //console.log(query);
             // run JS validation checks before submitting

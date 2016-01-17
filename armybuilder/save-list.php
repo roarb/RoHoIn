@@ -152,6 +152,7 @@
             $public = $_POST['public']; // bool 1=yes 0=no - saves to db field 'public'
 
             $notes = $_POST['notes'];// notes saves to db field 'notes'
+            $guid = $_POST['guid'];// GUID generated at the create screen
             ?>
 
 <?php /* -- redo display of items to work better in the future.

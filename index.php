@@ -31,6 +31,11 @@
         <div class="horizontal layout col2-set">
             <div class="flex-2 cushion-sides info-block-title col-1">
                 <paper-material elevation="1" class="cushion large" style="display:block">
+                    <p><strong>Jan. 2016 Update -</strong> Created army lists are now able to be saved. I'll be adding more functionality, including a better saved list viewer, additional
+                    tiered list options, the ability to edit / delete list, sharing of lists and adding mercenaries and minions to lists. Look for those additions over the
+                    coming months.</p>
+                </paper-material>
+                <paper-material elevation="1" class="cushion large" style="display:block">
                     <p>The goal of this site is to create a place to research, plan, track and evolve your Warmachine - Hordes wargaming hobby.</p>
                     <p>Currently in the beta state, everything is still a work in progress. If you do happen to see a bug, or something that isn't working quite right,
                         there is a 'bug tracker' button in the bottom right corner of every page. Please click on that button and fill out the form. Every bug reported

@@ -701,6 +701,8 @@ class AllUnits extends AllCore
 			// output data of each row
 			while($row = $unitsResult->fetch_assoc()) {
 				$unitsBuild = $row;
+				$views = $row['views']+1;
+				$conn->query('UPDATE core SET views = '.$views.' WHERE id = "'.$row['id'].'"');
 			}
 		}
         // check for possible Unit Attachments:
@@ -716,7 +718,7 @@ class AllUnits extends AllCore
     function getUnitIdByName($name){
         $conn = $this->connect();
         $name = "'".$name."'";
-        $units = "SELECT id FROM core WHERE name = ".$name;
+        $units = "SELECT id, views FROM core WHERE name = ".$name;
         $unitsResult = $conn->query($units);
         $unitsBuild = '';
         foreach ($unitsResult as $result){
