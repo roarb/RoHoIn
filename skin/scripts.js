@@ -128,7 +128,7 @@ function toggleBarracksFaction(faction){
     }
 
     function removeNotice(){
-        $('#notice-shadow').remove();
+        $('#notice-shadow.shadow').remove();
         $('#notice-loader').remove();
         $('#choice-loader').remove();
     }

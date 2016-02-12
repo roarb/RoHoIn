@@ -25,134 +25,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="create.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
+      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/skin/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-112.46154">
-              <caret line="172" column="63" selection-start-line="172" selection-start-column="63" selection-end-line="172" selection-end-column="63" />
-              <folding />
+            <state vertical-scroll-proportion="0.41216215">
+              <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+              <folding>
+                <marker date="1454988659598" expanded="true" signature="9447:9464" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StereoEffect.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vr/stero/js/StereoEffect.js">
+      <file leaf-file-name="army-builder.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="126" column="21" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view-army-list.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/armybuilder/view-army-list.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.153846">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Unit.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/Unit.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45845696">
-              <caret line="704" column="89" selection-start-line="704" selection-start-column="89" selection-end-line="704" selection-end-column="89" />
+              <caret line="787" column="60" selection-start-line="787" selection-start-column="42" selection-end-line="787" selection-end-column="60" />
               <folding>
-                <marker date="1453050375815" expanded="true" signature="166:184" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="699:798" placeholder="SELECT DISTI..core..." />
-                <marker date="1453050375815" expanded="true" signature="1236:1494" placeholder="SELECT DISTI..core..." />
-                <marker date="1453050375815" expanded="true" signature="1930:2042" placeholder="SELECT DISTI..core..." />
-                <marker date="1453050375815" expanded="true" signature="2477:2635" placeholder="SELECT DISTI..core..." />
-                <marker date="1453050375815" expanded="true" signature="3135:3205" placeholder="SELECT facti..core..." />
-                <marker date="1453050375815" expanded="true" signature="3592:3627" placeholder="SELECT name ..core..." />
-                <marker date="1453050375815" expanded="true" signature="4123:4189" placeholder="SELECT name ..core..." />
-                <marker date="1453050375815" expanded="true" signature="4651:4740" placeholder="SELECT name ..core..." />
-                <marker date="1453050375815" expanded="true" signature="5147:5279" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="5929:6178" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="7772:7804" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="8537:8647" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="9043:9207" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="9603:9796" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="10441:11084" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="11985:12093" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="12734:12904" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="13943:14025" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="14667:14780" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="15827:15891" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="16538:16629" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="19577:19631" placeholder="SELECT name ..core..." />
-                <marker date="1453050375815" expanded="true" signature="20025:20080" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="20327:20374" placeholder="UPDATE core ..." />
-                <marker date="1453050375815" expanded="true" signature="20327:20389" placeholder="UPDATE core ..." />
-                <marker date="1453050375815" expanded="true" signature="20774:20814" placeholder="SELECT id FR..core..." />
-                <marker date="1453050375815" expanded="true" signature="21345:21396" placeholder="SELECT * FRO..core..." />
-                <marker date="1453050375815" expanded="true" signature="24873:25014" placeholder="SELECT attac..core..." />
-                <marker date="1453050375815" expanded="true" signature="34533:36019" placeholder="UPDATE core ..." />
-                <marker date="1453050375815" expanded="true" signature="42483:44038" placeholder="INSERT INTO core..." />
-                <marker date="1453050375815" expanded="true" signature="52080:52107" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="52379:52406" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="52678:52705" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="52977:53004" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="53276:53303" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="53575:53602" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="53921:53948" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="54312:54339" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="54898:54925" placeholder="..." />
-                <marker date="1453050375815" expanded="true" signature="55155:55170" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="7817:7830" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="7869:7882" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="8781:8794" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="14915:14926" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="22939:22950" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="28690:28701" placeholder="..." />
+                <marker date="1452055001224" expanded="true" signature="35465:35476" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="single-unit.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.23077">
-              <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArmyBuilder.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/ArmyBuilder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.846153">
-              <caret line="231" column="97" selection-start-line="231" selection-start-column="16" selection-end-line="231" selection-end-column="97" />
-              <folding>
-                <marker date="1453049798523" expanded="true" signature="2938:3657" placeholder="INSERT INTO army_list..." />
-                <marker date="1453049798523" expanded="true" signature="7370:8266" placeholder="INSERT INTO army_list..." />
-                <marker date="1453049798523" expanded="true" signature="7370:8267" placeholder="INSERT INTO army_list..." />
-                <marker date="1453049798523" expanded="true" signature="7370:8277" placeholder="INSERT INTO army_list..." />
-                <marker date="1453049798523" expanded="true" signature="8770:8808" placeholder="SELECT id FR..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="9369:9425" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="9941:10007" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="10514:10548" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="10514:10552" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="10514:10562" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="10514:10601" placeholder="SELECT * FRO..army_list..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10820" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10828" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10829" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10852" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10853" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10854" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10863" placeholder="UPDATE army_..." />
-                <marker date="1453049798523" expanded="true" signature="10800:10864" placeholder="UPDATE army_..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="get-unit-by-id.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ajax/get-unit-by-id.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -210,7 +108,6 @@
         <option value="$PROJECT_DIR$/core/UnitType.php" />
         <option value="$PROJECT_DIR$/core/Weapons.php" />
         <option value="$PROJECT_DIR$/ajax/battlegroup-build.php" />
-        <option value="$PROJECT_DIR$/skin/scripts.js" />
         <option value="$PROJECT_DIR$/armybuilder/army-builder.js" />
         <option value="$PROJECT_DIR$/core/tiered-list.php" />
         <option value="$PROJECT_DIR$/ajax/view-tier-list-on-builder-page.php" />
@@ -220,9 +117,6 @@
         <option value="$PROJECT_DIR$/vr/stero/js/font.js" />
         <option value="$PROJECT_DIR$/vr/stero/js/three.min.js" />
         <option value="$PROJECT_DIR$/vr/stero/js/three.js" />
-        <option value="$PROJECT_DIR$/vr/stero/js/OrbitControls.js" />
-        <option value="$PROJECT_DIR$/vr/stero/js/StereoEffect.js" />
-        <option value="$PROJECT_DIR$/vr/stero/index.php" />
         <option value="$PROJECT_DIR$/core/Core.php" />
         <option value="$PROJECT_DIR$/armybuilder/create.php" />
         <option value="$PROJECT_DIR$/armybuilder/save-list.php" />
@@ -232,6 +126,10 @@
         <option value="$PROJECT_DIR$/armybuilder/view-army-list.php" />
         <option value="$PROJECT_DIR$/core/ArmyBuilder.php" />
         <option value="$PROJECT_DIR$/core/Unit.php" />
+        <option value="$PROJECT_DIR$/vr/stero/js/OrbitControls.js" />
+        <option value="$PROJECT_DIR$/vr/stero/js/StereoEffect.js" />
+        <option value="$PROJECT_DIR$/vr/stero/index.php" />
+        <option value="$PROJECT_DIR$/skin/scripts.js" />
       </list>
     </option>
   </component>
@@ -275,7 +173,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -304,133 +201,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="vr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stero" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stero" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="textures" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stero" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stero" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="playtest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nav" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="skin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -448,22 +219,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="RoHoIn" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ajax" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -545,14 +303,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16130953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16071428" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286026" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14410481" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -563,6 +320,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14410481" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32532752" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -695,9 +453,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.034483">
           <caret line="103" column="37" selection-start-line="103" selection-start-column="37" selection-end-line="103" selection-end-column="37" />
-          <folding>
-            <marker date="1451746943882" expanded="true" signature="3352:3367" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -712,14 +467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="138" column="46" selection-start-line="138" selection-start-column="46" selection-end-line="138" selection-end-column="46" />
-          <folding>
-            <marker date="1451965846421" expanded="true" signature="972:1067" placeholder="UPDATE barra..." />
-            <marker date="1451965846421" expanded="true" signature="1132:1229" placeholder="UPDATE barra..." />
-            <marker date="1451965846421" expanded="true" signature="1962:2095" placeholder="INSERT INTO barracks..." />
-            <marker date="1451965846421" expanded="true" signature="2510:2605" placeholder="SELECT * FRO..barracks..." />
-            <marker date="1451965846421" expanded="true" signature="2866:2961" placeholder="SELECT * FRO..barracks..." />
-            <marker date="1451965846421" expanded="true" signature="3505:3585" placeholder="SELECT * FRO..barracks..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -741,11 +488,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7287234">
           <caret line="57" column="46" selection-start-line="57" selection-start-column="46" selection-end-line="57" selection-end-column="46" />
-          <folding>
-            <marker date="1451965846340" expanded="true" signature="153:188" placeholder="SELECT * FRO..faction..." />
-            <marker date="1451965846340" expanded="true" signature="661:708" placeholder="SELECT id FR..faction..." />
-            <marker date="1451965846340" expanded="true" signature="1093:1142" placeholder="INSERT INTO faction..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -777,33 +519,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skin/scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ajax/battlegroup-build.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.576923">
           <caret line="24" column="58" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.103449">
-          <caret line="406" column="28" selection-start-line="406" selection-start-column="28" selection-end-line="406" selection-end-column="28" />
-          <folding>
-            <marker date="1452055001224" expanded="true" signature="7817:7830" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="7869:7882" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="8781:8794" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="14915:14926" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="22939:22950" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="28690:28701" placeholder="..." />
-            <marker date="1452055001224" expanded="true" signature="35465:35476" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -835,18 +554,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vr/stero/js/DeviceOrientationControls.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35555556">
-          <caret line="46" column="45" selection-start-line="46" selection-start-column="45" selection-end-line="46" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vr/stero/js/three.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26358697">
           <caret line="437" column="64" selection-start-line="416" selection-start-column="232" selection-end-line="416" selection-end-column="249" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -861,22 +572,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17139" column="6" selection-start-line="17139" selection-start-column="6" selection-end-line="17139" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vr/stero/js/OrbitControls.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-112.46154">
+        <state vertical-scroll-proportion="0.0">
           <caret line="172" column="63" selection-start-line="172" selection-start-column="63" selection-end-line="172" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -891,11 +593,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.415094">
           <caret line="213" column="8" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="8" />
-          <folding>
-            <marker date="1453046125549" expanded="true" signature="2941:2985" placeholder="SELECT user_..users..." />
-            <marker date="1453046125549" expanded="true" signature="3559:3599" placeholder="SELECT admin..users..." />
-            <marker date="1453046125549" expanded="true" signature="3953:3996" placeholder="SELECT user_..users..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -927,13 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vr/stero/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8369863">
-          <caret line="309" column="0" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40684932">
@@ -941,33 +631,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vr/stero/js/StereoEffect.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="126" column="21" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/armybuilder/view-army-list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.153846">
+        <state vertical-scroll-proportion="0.0">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/get-unit-by-id.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9615384">
+        <state vertical-scroll-proportion="0.0">
           <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/ArmyBuilder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.846153">
+        <state vertical-scroll-proportion="0.0">
           <caret line="231" column="97" selection-start-line="231" selection-start-column="16" selection-end-line="231" selection-end-column="97" />
           <folding>
             <marker date="1453049798523" expanded="true" signature="2938:3657" placeholder="INSERT INTO army_list..." />
@@ -995,7 +675,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/playtest/single-unit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.23077">
+        <state vertical-scroll-proportion="0.0">
           <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
           <folding />
         </state>
@@ -1003,50 +683,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/Unit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45845696">
+        <state vertical-scroll-proportion="-15.230769">
           <caret line="704" column="89" selection-start-line="704" selection-start-column="89" selection-end-line="704" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vr/stero/js/OrbitControls.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.4403153">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vr/stero/js/DeviceOrientationControls.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vr/stero/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.75870067">
+          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vr/stero/js/StereoEffect.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8085586">
+          <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/armybuilder/army-builder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="787" column="60" selection-start-line="787" selection-start-column="42" selection-end-line="787" selection-end-column="60" />
           <folding>
-            <marker date="1453050375815" expanded="true" signature="166:184" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="699:798" placeholder="SELECT DISTI..core..." />
-            <marker date="1453050375815" expanded="true" signature="1236:1494" placeholder="SELECT DISTI..core..." />
-            <marker date="1453050375815" expanded="true" signature="1930:2042" placeholder="SELECT DISTI..core..." />
-            <marker date="1453050375815" expanded="true" signature="2477:2635" placeholder="SELECT DISTI..core..." />
-            <marker date="1453050375815" expanded="true" signature="3135:3205" placeholder="SELECT facti..core..." />
-            <marker date="1453050375815" expanded="true" signature="3592:3627" placeholder="SELECT name ..core..." />
-            <marker date="1453050375815" expanded="true" signature="4123:4189" placeholder="SELECT name ..core..." />
-            <marker date="1453050375815" expanded="true" signature="4651:4740" placeholder="SELECT name ..core..." />
-            <marker date="1453050375815" expanded="true" signature="5147:5279" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="5929:6178" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="7772:7804" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="8537:8647" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="9043:9207" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="9603:9796" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="10441:11084" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="11985:12093" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="12734:12904" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="13943:14025" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="14667:14780" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="15827:15891" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="16538:16629" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="19577:19631" placeholder="SELECT name ..core..." />
-            <marker date="1453050375815" expanded="true" signature="20025:20080" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="20327:20374" placeholder="UPDATE core ..." />
-            <marker date="1453050375815" expanded="true" signature="20327:20389" placeholder="UPDATE core ..." />
-            <marker date="1453050375815" expanded="true" signature="20774:20814" placeholder="SELECT id FR..core..." />
-            <marker date="1453050375815" expanded="true" signature="21345:21396" placeholder="SELECT * FRO..core..." />
-            <marker date="1453050375815" expanded="true" signature="24873:25014" placeholder="SELECT attac..core..." />
-            <marker date="1453050375815" expanded="true" signature="34533:36019" placeholder="UPDATE core ..." />
-            <marker date="1453050375815" expanded="true" signature="42483:44038" placeholder="INSERT INTO core..." />
-            <marker date="1453050375815" expanded="true" signature="52080:52107" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="52379:52406" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="52678:52705" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="52977:53004" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="53276:53303" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="53575:53602" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="53921:53948" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="54312:54339" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="54898:54925" placeholder="..." />
-            <marker date="1453050375815" expanded="true" signature="55155:55170" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="7817:7830" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="7869:7882" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="8781:8794" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="14915:14926" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="22939:22950" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="28690:28701" placeholder="..." />
+            <marker date="1452055001224" expanded="true" signature="35465:35476" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skin/scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41216215">
+          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+          <folding>
+            <marker date="1454988659598" expanded="true" signature="9447:9464" placeholder="..." />
           </folding>
         </state>
       </provider>

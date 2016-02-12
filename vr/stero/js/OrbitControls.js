@@ -237,8 +237,6 @@ THREE.OrbitControls = function ( object, domElement ) {
 
         offset.copy( position ).sub( this.target );
 
-        //console.log(this.target);
-
         // rotate offset to "y-axis-is-up" space
         offset.applyQuaternion( quat );
 
