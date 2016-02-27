@@ -31,6 +31,10 @@
         <div class="horizontal layout col2-set">
             <div class="flex-2 cushion-sides info-block-title col-1">
                 <paper-material elevation="1" class="cushion large" style="display:block">
+                    <p><strong>Feb. 2016 Update -</strong> We've changed to a newer server and are experimenting with a complete backend re-write for the army builder section. This will be
+                    a long implementation, relying on a combination of node.js and couchbase. When finished, life should be much more happy.</p>
+                </paper-material>
+                <paper-material elevation="1" class="cushion large" style="display:block">
                     <p><strong>Jan. 2016 Update -</strong> Created army lists are now able to be saved. I'll be adding more functionality, including a better saved list viewer, additional
                     tiered list options, the ability to edit / delete list, sharing of lists and adding mercenaries and minions to lists. Look for those additions over the
                     coming months.</p>
