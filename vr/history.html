@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <title>My first VR site</title>
+    <script src="/vr/aframe-mod.js"></script>
+</head>
+<body>
+
+<a-scene>
+    <!--<a-cube color="#ff0000"></a-cube>-->
+    <a-image id="stereo" rotation="0 0 0" position="0 1" height="10" width="10" color="black" src="/vr/stereo_src/sample1.jpg"></a-image>
+
+    <a-sky src="/vr/img/skybox1.jpg"></a-sky>
+</a-scene>
+
+<script>
+    var stereo = document.getElementById('stereo');
+    stereo.setAttribute('material', {offset: .5});
+    console.log(stereo);
+</script>
+
+</body>
+</html>

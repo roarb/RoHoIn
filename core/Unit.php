@@ -610,6 +610,78 @@ class AllUnits extends AllCore
         return $unitsBuild;
     }
 
+	function getBuilderMercSolosByFaction($faction) {
+		$conn = $this->connect();
+
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($this->getLoggedIn()){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
+		$faction = "'%".$faction."%'";
+		$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%solo%' ORDER BY  name" ;
+		$unitsResult = $conn->query($units);
+		$unitsBuild = '';
+		if ($unitsResult->num_rows > 0) {
+			// output data of each row
+			$i = 0;
+			while($row = $unitsResult->fetch_assoc()) {
+				$unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
+				$i++;
+			}
+		}
+		mysqli_close($conn); //$conn->close();
+		return $unitsBuild;
+	}
+
+	function getBuilderMercUnitsByFaction($faction) {
+		$conn = $this->connect();
+
+		$barracks = new Barracks();
+		$loggedIn = false; $userId = 0;
+		if ($this->getLoggedIn()){
+			$loggedIn = true;
+			$userId = $_SESSION['user_id'];
+		}
+
+		$faction = "'%".$faction."%'";
+		$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%unit%' ORDER BY  name" ;
+		$unitsResult = $conn->query($units);
+		$unitsBuild = '';
+		if ($unitsResult->num_rows > 0) {
+			// output data of each row
+			$i = 0;
+			while($row = $unitsResult->fetch_assoc()) {
+				$unitsBuild[$i] = $row;
+				$unitsBuild[$i]['thumb_img'] = $this->getUnitImageThumbnail($row['name']);
+				if ($loggedIn){
+					$barracksModels = $barracks->getAllUserModels($userId);
+					foreach ($barracksModels as $modelItem){
+						if ($modelItem['model_id'] == $row['id']){
+							$unitsBuild[$i]['owned_models'] = $modelItem['owned_qty'];
+							$unitsBuild[$i]['painted_models'] = $modelItem['painted_qty'];
+						}
+					}
+				}
+				$i++;
+			}
+		}
+		mysqli_close($conn); //$conn->close();
+		return $unitsBuild;
+	}
+
 	/**
 	 * @param $list
 	 * @return mixed

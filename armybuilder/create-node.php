@@ -10,13 +10,14 @@
     $armyBuilder = new ArmyBuilder();
     $factions = $allFactions->getAllFactions();
     $loggedIn = false;
+    $creatorName = false;
     if ($core->getLoggedIn()){
         $loggedIn = true;
         $creatorName = $_SESSION['user_name'];
     }
     ?>
-    <script src="army-builder.js"></script>
-    <script src="tier-rules.js"></script>
+    <script src="army-builder-node.js"></script>
+    <script src="tier-rules-node.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Create a Warmachine or Hordes Army with RoHo.In</title>
 </head>
@@ -135,42 +136,83 @@
 
 <script>
     // start the session array of objects that will temp store this army list until it is saved.
-    var tempList = [];
-    tempList['armyModels'] = [];
-    tempList['bg1Models'] = [];
-    tempList['bg2Models'] = [];
-    tempList['bg3Models'] = [];
-    tempList['bg4Models'] = [];
-    tempList['unitModels'] = [];
-    tempList['soloModels'] = [];
-    tempList['battleEngineModels'] = [];
-    tempList['merArmyModels'] = [];
-    tempList['mercbg1Models'] = [];
-    tempList['orig_points'] = 0;
-    tempList['points_used'] = 0;
-    tempList['uaModel'] = [];
-    tempList['companionModel'] = [];
-    tempList['tierListLevel'] = 0;
-    tempList['tierList1Ben'] = [];
-    tempList['tierList2Ben'] = [];
-    tempList['tierList3Ben'] = [];
-    tempList['tierList4Ben'] = [];
-    tempList['tierList1Req'] = [];
-    tempList['tierList2Req'] = [];
-    tempList['tierList3Req'] = [];
-    tempList['tierList4Req'] = [];
-    tempList['publicList'] = 1;
-    tempList['journeyman'] = [];
-    tempList['journeyman']['active'] = 0;
-    tempList['journeyman_bg'] = [];
-    tempList['jackmarshal'] = [];
-    tempList['jackmarshal']['active'] = 0;
-    tempList['jackmarshal_battlegroup'] = [];
-    tempList['barracksModels'] = 0;
-    tempList['paintedBarracksModels'] = 0;
-    tempList['creator_id'] = [<?php if ($loggedIn){echo $_SESSION['user_id'];} ?>];
-    tempList['journeyman_temp'] = [];
-    tempList['guid'] = '<?php echo $armyBuilder->getGUID() ?>';
+    var armyBuilder = {
+        "army": {
+            "name": null,
+            "faction": {
+                "faction_id": null,
+                "faction_name": null
+            },
+            "army_models_avil": {
+                "leader": null,
+                    "bg1_models": null,
+                    "unit_models": null,
+                    "solo_models": null,
+                    "battle_engine_models": null,
+                    "merc_army_models": null,
+                    "merc_bg_models": null,
+                    "journeyman": {
+                    "model_id": null,
+                        "active": false,
+                        "battlegroup": null,
+                        "temp": null
+                },
+                "jackmarshal": {
+                    "model_id": null,
+                        "active": false,
+                        "battlegroup": null,
+                        "temp": null
+                }
+            },
+            "army_models_added": {
+                "leader": null,
+                    "bg1_models": null,
+                    "unit_models": null,
+                    "solo_models": null,
+                    "battle_engine_models": null,
+                    "merc_army_models": null,
+                    "merc_bg_models": null,
+                    "journeyman": {
+                    "model_id": null,
+                        "active": false,
+                        "battlegroup": null,
+                        "temp": null
+                },
+                "jackmarshal": {
+                    "model_id": null,
+                        "active": false,
+                        "battlegroup": null,
+                        "temp": null
+                }
+            },
+            "points": {
+                "selected": null,
+                    "caster_mod": null,
+                    "used": null
+            },
+            "tiers": {
+                "list_level_set": null,
+                    "level_1_ben": null,
+                    "level_2_ben": null,
+                    "level_3_ben": null,
+                    "level_4_ben": null,
+                    "level_1_req": null,
+                    "level_2_req": null,
+                    "level_3_req": null,
+                    "level_4_req": null,
+                    "model_updates": null
+            },
+            "public_list": true,
+                "barracks_models": false,
+                "painted_models": false,
+                "owner": {
+                    "logged_in": <?php if ($loggedIn){echo 'true';}else {echo 'false';} ?>,
+                    "name": <?php if ($creatorName){echo "'".$creatorName."'";}else {echo 'null';} ?>,
+                    "id": <?php if ($loggedIn){echo $_SESSION['user_id'];}else {echo 'null';} ?>
+            },
+            "guid": '<?php echo $armyBuilder->getGUID() ?>'
+        }
+    };
 
     $('#start-army-list-builder').on('touchstart click', function(){
 
@@ -189,7 +231,12 @@
             document.querySelector('#single-caster-error').show();
             return false;
         }
-        startArmyListBuilder();
+
+        $.get("http://127.0.0.1:8081/army_builder", {armyBuilder}, function(data){
+           console.log(data);
+        }, "json");
+
+        //startArmyListBuilder();
     });
     $(document).ready(function(){
         $('#army-points-10').on('touchstart click', function(){

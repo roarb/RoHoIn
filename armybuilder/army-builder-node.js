@@ -45,15 +45,18 @@ function setActiveFaction(id, e, name){
     $('.faction-block').removeClass('active');
     $(e.target).parent().addClass('active');
     $('#'+id).attr('checked', 'checked');
-    tempList.faction = id;
+    armyBuilder.army.faction.faction_id = id;
+    armyBuilder.army.faction.faction_name = name;
     // update army name with the faction name
-    var cArmyName = $('#army-list-name').attr('value');
-    if (cArmyName.indexOf('Army') > -1){
-        cArmyName = cArmyName.substring(0, (cArmyName.indexOf("'s")+3)) + name + " Army";
-    } else {
-        cArmyName = name+" Army";
+    var cArmyName = name;
+    if (armyBuilder.army.owner.logged_in){
+        cArmyName = armyBuilder.army.owner.name + "'s " + name;
     }
-    $('#army-list-name').attr('value', cArmyName);
+    if (armyBuilder.army.points.selected != null){
+        $('#army-list-name').attr('value', cArmyName + " Army - " + armyBuilder.army.points.selected + " Points");
+    } else {
+        $('#army-list-name').attr('value', cArmyName + " Army");
+    }
 }
 
 
@@ -61,8 +64,24 @@ function setActivePoints(val, e){
     $('.points-block-item').removeClass('primary-focus');
     $(e).addClass('primary-focus');
     $('#points-'+val).attr('checked', 'checked');
-    tempList.points = val;
-    tempList.orig_points = val;
+    armyBuilder.army.points.selected = val;
+    if (armyBuilder.army.faction.faction_name != null){
+        var cArmyName = armyBuilder.army.faction.faction_name;
+        if (armyBuilder.army.owner.logged_in){
+            cArmyName = armyBuilder.army.owner.name + "'s " + armyBuilder.army.faction.faction_name;
+            armyBuilder.army.name = cArmyName;
+        }
+        $('#army-list-name').attr('value', cArmyName + " Army - " + val + " Points");
+        armyBuilder.army.name = cArmyName + " Army - " + val + " Points";
+    } else {
+        if (armyBuilder.army.owner.logged_in){
+            $('#army-list-name').attr('value', armyBuilder.army.owner.name + "'s " + val + " Point Army");
+            armyBuilder.army.name = armyBuilder.army.owner.name + "'s " + val + " Point Army";
+        } else {
+            $('#army-list-name').attr('value', val + " Point Army");
+            armyBuilder.army.name = val + " Point Army";
+        }
+    }
 }
 
 function startArmyListBuilder(){

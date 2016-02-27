@@ -47,6 +47,8 @@ if ($faction == 'Circle Orboros' || $faction == 'Legion of Everblight' || $facti
 $units = $allUnits->getBuilderUnitsByFaction($faction);
 $solos = $allUnits->getBuilderSolosByFaction($faction);
 $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
+$mercUnits = $allUnits->getBuilderMercUnitsByFaction($faction);
+$mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
 
 ?>
 
@@ -62,7 +64,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
             <?php $i = 0 ?>
             <script>var unitModelObject = new Array();</script>
             <?php foreach ($units as $unit): ?>
-                <?php $_unit = $allUnits->getUnitByName($unit['name']); ?>
+                <?php //$_unit = $allUnits->getUnitByName($unit['name']); ?>
                 <script>unitModelObject[<?php echo $i ?>] = <?php echo json_encode($unit) ?>;</script>
                 <div class="unit unit-model-option model-id-<?php echo $unit['id'] ?>">
                     <div class="add-model-to-list" onclick="addUnitToArmy(this, unitModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -106,7 +108,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
             <script>var soloModelObject = new Array();</script>
             <?php $i = 0 ?>
             <?php foreach ($solos as $solo): ?>
-                <?php $_unit = $allUnits->getUnitByName($solo['name']); ?>
+                <?php //$_unit = $allUnits->getUnitByName($solo['name']); ?>
                 <script>soloModelObject[<?php echo $i ?>] = <?php echo json_encode($solo) ?>;</script>
                 <div class="unit solo-model model-id-<?php echo $solo['id'] ?>">
                     <div class="add-model-to-list" onclick="addUnitToArmy(this, soloModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -154,7 +156,7 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                 <script>var battleEngineModelObject = new Array();</script>
                 <?php $i = 0 ?>
                 <?php foreach ($battleEngines as $battleEngine): ?>
-                    <?php $_unit = $allUnits->getUnitByName($battleEngine['name']); ?>
+                    <?php //$_unit = $allUnits->getUnitByName($battleEngine['name']); ?>
                     <script>battleEngineModelObject[<?php echo $i ?>] = <?php echo json_encode($battleEngine) ?>;</script>
                     <div class="unit battle-engine-model model-id-<?php echo $battleEngine['id'] ?>">
                         <div class="add-model-to-list" onclick="addUnitToArmy(this, battleEngineModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -193,6 +195,101 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
                 <?php endforeach; ?>
             </paper-material>
         <?php endif ?>
+        <?php if(isset($mercSolos)): ?>
+            <paper-material elevation="1" class="m-cushion padding-top-bottom merc-solos" id="merc-solo-picker" style="display:none;">
+                <div class="merc-solos-title army-entry-select-title">Mercenary/Minion Solos <span id="merc-solo-points"></span></div>
+                <script>var mercSoloModelObject = new Array();</script>
+                <?php $i = 0 ?>
+                <?php foreach ($mercSolos as $solo): ?>
+                    <?php //$_unit = $allUnits->getUnitByName($solo['name']); ?>
+                    <script>mercSoloModelObject[<?php echo $i ?>] = <?php echo json_encode($solo) ?>;</script>
+                    <div class="unit merc-solo-model model-id-<?php echo $solo['id'] ?>">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, mercSoloModelObject,<?php echo $i ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                            <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
+                            <span class="mo-notice hidden">Add to List</span>
+                        </div>
+                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                            <span class="mo-notice hidden">View Stats</span>
+                        </div>
+                        <div class="focus-circle">
+                            <span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>
+                            <span class="field-allowance">
+                                <?php if ($solo['field_allowance'] == 'U'): echo '&#x221e;'; ?>
+                                <?php else: echo $solo['field_allowance']; ?>
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                        <div class="model-image">
+                            <?php echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
+                        </div>
+                        <label for="<?php echo $solo['name'] ?>" class="unit-label">
+                            <span class="unit-name"><?php echo $solo['name'] ?></span><br />
+                            <span class="unit-title"><?php echo $solo['title'] ?></span><br />
+                            <?php if ($loggedIn): ?>
+                                <div class="barracks-qty-wrapper">
+                                    <span class="owned-qty">Owned: <?php if (isset($solo['owned_models'])){echo $solo['owned_models'];} else {echo '0';} ?></span> -
+                                    <span class="painted-qty">Painted: <?php if (isset($solo['painted_models'])){echo $solo['painted_models'];} else {echo '0';} ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </label>
+                        <div class="unit-cost"><?php echo $solo['cost']?> pts</div>
+                        <div class="clearer"></div>
+                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                        <div class="additional-model-info" style="display:none;">
+                            <?php echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
+                        </div>
+                    </div>
+                    <?php $i++ ?>
+                <?php endforeach; ?>
+            </paper-material>
+        <?php endif; ?>
+        <?php if (isset($mercUnits)): ?>
+            <paper-material elevation="1" class="m-cushion padding-top-bottom merc-units" id="merc-unit-picker" style="display:none;">
+                <div class="merc-units-title army-entry-select-title">Mercenary/Minion Units <span id="merc-unit-points"></span></div>
+                <?php $i = 0 ?>
+                <script>var mercUnitModelObject = new Array();</script>
+                <?php foreach ($mercUnits as $unit): ?>
+                    <?php //$_unit = $allUnits->getUnitByName($unit['name']); ?>
+                    <script>mercUnitModelObject[<?php echo $i ?>] = <?php echo json_encode($unit) ?>;</script>
+                    <div class="unit merc-unit-model-option model-id-<?php echo $unit['id'] ?>">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, mercUnitModelObject,<?php echo $i ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                            <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
+                            <span class="mo-notice hidden">Add to List</span>
+                        </div>
+                        <div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">
+                            <paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>
+                            <span class="mo-notice hidden">View Stats</span>
+                        </div>
+                        <div class="focus-circle">
+                            <span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>
+                            <span class="field-allowance"><?php if ($unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $unit['field_allowance']; ?><?php endif; ?></span>
+                        </div>
+                        <div class="model-image">
+                            <?php echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
+                        </div>
+                        <label for="<?php echo $unit['name'] ?>" class="unit-label">
+                            <span class="unit-name"><?php echo $unit['name'] ?></span><br />
+                            <span class="unit-title"><?php echo $unit['title'] ?></span><br />
+                            <?php if ($loggedIn): ?>
+                                <div class="barracks-qty-wrapper">
+                                    <span class="owned-qty">Owned: <?php if (isset($unit['owned_models'])){echo $unit['owned_models'];} else {echo '0';} ?></span> -
+                                    <span class="painted-qty">Painted: <?php if (isset($unit['painted_models'])){echo $unit['painted_models'];} else {echo '0';} ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </label>
+                        <div class="unit-cost"><?php $pts = explode(',', $unit['cost']); echo $pts[0]; ?>pts
+                            <?php if (isset($pts[1])): echo ' | ' . $pts[1]; ?>pts<?php endif; ?></div>
+                        <div class="clearer"></div>
+                        <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
+                        <div class="additional-model-info" style="display:none;">
+                            <?php echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
+                        </div>
+                    </div>
+                    <?php $i++ ?>
+                <?php endforeach; ?>
+            </paper-material>
+        <?php endif; ?>
     </div>
     <div class="flex-2 added-to-list-panel info-block-tools" style="overflow-y:auto;">
         <div id="tier-list-req-notice">
@@ -210,6 +307,8 @@ $battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
             <paper-material class="units-built m-cushion" id="units-built" style="display:none;"></paper-material>
             <paper-material class="solos-built m-cushion" id="solos-built" style="display:none;"></paper-material>
             <paper-material class="battle-engines-built m-cushion" id="battle-engines-built" style="display:none;"></paper-material>
+            <paper-material class="merc-solos-built m-cushion" id="merc-solos-built" style="display:none;"></paper-material>
+            <paper-material class="merc-units-built m-cushion" id="merc-units-built" style="display:none;"></paper-material>
             <div class="hidden">
                 <input type="text" name="army-name" id="input-army-name" value="<?php echo $name ?>" />
                 <input type="text" name="faction" value="<?php echo $faction ?>" />

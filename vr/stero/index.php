@@ -31,7 +31,11 @@
         stereo,
         stereoTexture,
         stereoMaterial,
-        stereoGeometry;
+        stereoGeometry,
+        nextMaterial,
+        nextIcon,
+        prevMaterial,
+        prevIcon;
 
     init();
 
@@ -76,53 +80,48 @@
 
         // Lighting
         var light = new THREE.PointLight(0x999999, 1, 600);
-        light.position.set(50, 50, 0);
+        light.position.set(50, 80, 0);
         //scene.add(light);
 
         var lightScene = new THREE.PointLight(0x999999, 2, 100);
-        lightScene.position.set(0, 5, 0);
-        //scene.add(lightScene);
+        lightScene.position.set(0, 50, 0);
+        scene.add(lightScene);
 
         //scene.add(new THREE.AmbientLight(0x404040));
 
         // floor texture
-        //var floorTexture = THREE.ImageUtils.loadTexture('textures/united_states_wall_2002_us.jpg');
-        //floorTexture.wrapS = THREE.RepeatWrapping;
-        //floorTexture.wrapT = THREE.RepeatWrapping;
-        //floorTexture.repeat = new THREE.Vector2(1, 1);
-        //floorTexture.anisotropy = renderer.getMaxAnisotropy();
+        var floorTexture = THREE.ImageUtils.loadTexture('textures/united_states_wall_2002_us.jpg');
+        floorTexture.wrapS = THREE.RepeatWrapping;
+        floorTexture.wrapT = THREE.RepeatWrapping;
+        floorTexture.repeat = new THREE.Vector2(1, 1);
+        floorTexture.anisotropy = renderer.getMaxAnisotropy();
 
-        //var floorMaterial = new THREE.MeshPhongMaterial({
-        //    color: 0xffffff,
-        //    specular: 0xffffff,
-        //    shininess: 0,
-        //    shading: THREE.FlatShading,
-        //    map: floorTexture
-        //});
+        var floorMaterial = new THREE.MeshPhongMaterial({
+            color: 0xffffff,
+            specular: 0xffffff,
+            shininess: 0,
+            shading: THREE.FlatShading,
+            map: floorTexture
+        });
 
-        //var geometry = new THREE.PlaneBufferGeometry(1000, 1000);
+        var geometry = new THREE.PlaneBufferGeometry(1000, 1000);
 
-        //var floor = new THREE.Mesh(geometry, floorMaterial);
-        //floor.rotation.x = -Math.PI / 2;
-        //scene.add(floor);
+        var floor = new THREE.Mesh(geometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;
+        scene.add(floor);
 
+
+    /// STEREO Texture - will change in the stereo.js rendering
         //stereoTexture = THREE.ImageUtils.loadTexture('img/approach_to_battlefield-to-size.jpg');
         stereoTexture = THREE.ImageUtils.loadTexture('img/ore-docks-bay-of-marquette.jpg');
         stereoTexture.offset.set(.5, 0);
         stereoTexture.repeat.set(.5, 1);
-        //stereoTexture = THREE.ImageUtils.loadTexture('textures/mountains.jpg');
-        //stereoTexture.repeat = new THREE.Vector2(1, 1);
-        //stereoTexture.anisotropy = renderer.getMaxAnisotropy();
 
         stereoMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             shading: THREE.FlatShading,
             map: stereoTexture
         });
-
-        //new THREE.Mesh(currentCityText, new THREE.MeshBasicMaterial({
-        //    color: 0xffffff, opacity: 1
-        //}));
 
         stereoGeometry = new THREE.PlaneBufferGeometry(100,100);
 
@@ -134,17 +133,36 @@
         stereo.rotation.y = -Math.PI / 2;
         scene.add(stereo);
 
-        var reticle = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({
-            color: 0xff0000, opacity: 1, shading: THREE.FlatShading
-        }));
+        //var reticle = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({
+        //    color: 0xff0000, opacity: 1, shading: THREE.FlatShading
+        //}));
 
-        reticle.position.y = 15;
-        reticle.position.x = 10;
-        reticle.position.z = 4;
-        reticle.rotation.x = 0;
-        reticle.rotation.y = 180;
+        //reticle.position.y = 15;
+        //reticle.position.x = 10;
+        //reticle.position.z = 4;
+        //reticle.rotation.x = 0;
+        //reticle.rotation.y = 180;
         //scene.add(reticle);
 
+        var nextGeometry = new THREE.SphereGeometry( 4, 32, 32 );
+        nextMaterial = new THREE.MeshLambertMaterial( { color: 0x447777 } );
+        nextIcon = new THREE.Mesh( nextGeometry, nextMaterial );
+
+        nextIcon.position.x = 30;
+        nextIcon.position.y = 50;
+        nextIcon.position.z = 50;
+        //nextIcon.position.z = 0.001;
+        scene.add(nextIcon);
+
+        var prevGeometry = new THREE.SphereGeometry( 4, 32, 32 );
+        prevMaterial = new THREE.MeshLambertMaterial( { color: 0x447777 } );
+        prevIcon = new THREE.Mesh( prevGeometry, prevMaterial );
+
+        prevIcon.position.x = 30;
+        prevIcon.position.y = 50;
+        prevIcon.position.z = -50;
+        //nextIcon.position.z = 0.001;
+        scene.add(prevIcon);
 
         // need the clock & animate() == not sure why yet
         clock = new THREE.Clock();
@@ -234,23 +252,61 @@
         scene.add(currentCityTextMesh);
     }
     */ ?>
+
+    // temp slideChanged until we can build better navigation
+    var slideLoc = 1;
+
     function animate() {
         var elapsedSeconds = clock.getElapsedTime();
 
-        if (elapsedSeconds > 2){
-            //scene.remove(stereo);
-            //stereo.material.map.dispose();
-            //stereo.material.map = THREE.ImageUtils.loadTexture('textures/mountains.jpg');
-            //scene.add(stereo);
-            stereoTexture.offset.set(0, 0);
+        var cameraPointing = camera.getWorldDirection();
+        if (cameraPointing.z > .7 ){
+            console.log('start the selecting next process');
+            nextIcon.material.color.setHex(0x00ff00);
+            if (slideLoc === 1){
+                nextSlide();
+            }
+        } else {
+            nextIcon.material.color.setHex(0x447777);
         }
-
-
+        if (cameraPointing.z < -.7 ){
+            console.log('start the selecting previous process');
+            prevIcon.material.color.setHex(0x00ff00);
+            if (slideLoc === 2){
+                prevSlide();
+            }
+        } else {
+            prevIcon.material.color.setHex(0x447777);
+        }
 
         requestAnimationFrame(animate);
 
         update(clock.getDelta());
         render(clock.getDelta());
+    }
+
+    function nextSlide() {
+
+        slideLoc = 2;
+
+        stereoTexture = THREE.ImageUtils.loadTexture('img/approach_to_battlefield-to-size.jpg');
+        stereoTexture.offset.set(.5, 0);
+        stereoTexture.repeat.set(.5, 1);
+
+        stereoMaterial.map = stereoTexture;
+        stereoMaterial.needsUpdate = true;
+
+    }
+
+    function prevSlide() {
+        slideLoc = 1;
+
+        stereoTexture = THREE.ImageUtils.loadTexture('img/ore-docks-bay-of-marquette.jpg');
+        stereoTexture.offset.set(.5, 0);
+        stereoTexture.repeat.set(.5, 1);
+
+        stereoMaterial.map = stereoTexture;
+        stereoMaterial.needsUpdate = true;
     }
 
     function resize() {
