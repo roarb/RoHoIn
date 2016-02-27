@@ -123,7 +123,7 @@ class Barracks extends AllCore
 		
 		$sql = "SELECT * FROM barracks WHERE user_id = ".$userId." AND owned_qty > 0 ORDER BY id";
 		$modelsResult = $conn->query($sql);
-		$finalResuts = []; $i = 0;
+		$finalResuts = array(); $i = 0;
 		
 		foreach($modelsResult as $row){
 			$finalResults[$i] = $row;
