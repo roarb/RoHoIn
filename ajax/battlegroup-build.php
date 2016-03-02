@@ -29,9 +29,8 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
 
 <div class="warcaster warcaster-<?php echo $count ?>">
     <div class="warcaster<?php echo $count ?>-title army-entry-select-title">Select a <?php echo $leader ?> for Battle Group <?echo $count ?></div>
-    <?php $i = 1 ?>
     <?php foreach ($warcasters as $warcaster): ?>
-        <script>var unitObject<?php echo $i ?> = <?php echo json_encode($warcaster) ?>;</script>
+        <script>armyBuilder.army.army_models_avil.leaders.push(<?php echo json_encode($warcaster) ?>);</script>
         <div class="single-caster unit <?php echo $warcaster['id'].'-'.$count ?> model-id-<?php echo $warcaster['id'] ?>">
             <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?></div>
             <label for="<?php echo $warcaster['name'] ?>" class="warcaster<?php echo $count ?>">
@@ -44,7 +43,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                     </div>
                 <?php endif; ?>
             </label>
-            <div class="add-model-to-list" onclick="leaderSelected(this, <?php echo $count ?>, unitObject<?php echo $i ?>)" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+            <div class="add-model-to-list" onclick="leaderSelected(this, <?php echo $count ?>, <?php echo $warcaster['id'] ?>)" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                 <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                 <span class="mo-notice hidden">Add to List</span>
             </div>
@@ -65,19 +64,17 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
             </div>
             <input type="radio" id="<?php echo $warcaster['name'] ?>" name="warcaster<?php echo $count ?>" value="<?php echo $warcaster['name'] ?>" class="hidden" /><br />
         </div>
-        <?php $i++ ?>
     <?php endforeach ?>
 </div>
+
 <div class="clearer"></div>
 <div class="battlegroup battlegroup-<?php echo $count ?> hidden">
     <div class="battlegroup<?php echo $count ?>-title army-entry-select-title"><span class="leader-name"></span><span class="battlegroup-points"></span></div>
-    <script>var bgUnitObject = new Array();</script>
-    <?php $i = 1 ?>
     <?php foreach ($battlegroup as $bgUnit): ?>
         <?php $_unit = $allUnits->getUnitByName($bgUnit['name']); ?>
-        <script>bgUnitObject[<?php echo $i ?>] = <?php echo json_encode($bgUnit) ?>;</script>
+        <script>armyBuilder.army.army_models_avil.bg1_models.push(<?php echo json_encode($bgUnit) ?>);</script>
         <div class="unit battle-group-unit model-id-<?php echo $_unit['id'] ?>">
-            <div class="add-model-to-list" onclick="addToBattleGroup(this, <?php echo $count ?>, bgUnitObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+            <div class="add-model-to-list" onclick="addToBattleGroup(this, <?php echo $count ?>, <?php echo $_unit['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                 <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                 <span class="mo-notice hidden">Add to List</span>
             </div>
@@ -109,7 +106,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                 <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
             </div>
         </div>
-        <?php $i++ ?>
     <?php endforeach; ?>
 </div>
+<script>console.log(armyBuilder);</script>
 <paper-toast style="z-index:1;" id="not-in-barracks" text="This models is not in your Barracks and cannot be added to the army list while 'Use only models from your Barracks' is selected."></paper-toast>

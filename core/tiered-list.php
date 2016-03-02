@@ -198,7 +198,7 @@ class AllTieredLists extends AllCore
 	function getTierByCasterId($id){
 		$conn = $this->connect();
 
-		$list = "SELECT * FROM tiered_list WHERE caster = ".$id." ORDER BY name";
+		$list = "SELECT name, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req FROM tiered_list WHERE caster = ".$id." ORDER BY name";
 		$listsResult = $conn->query($list);
 		$listsBuild = '';
 		if ($listsResult->num_rows > 0) {

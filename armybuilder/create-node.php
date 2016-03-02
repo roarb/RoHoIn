@@ -144,45 +144,33 @@
                 "faction_name": null
             },
             "army_models_avil": {
-                "leader": null,
-                    "bg1_models": null,
-                    "unit_models": null,
-                    "solo_models": null,
-                    "battle_engine_models": null,
-                    "merc_army_models": null,
-                    "merc_bg_models": null,
-                    "journeyman": {
-                    "model_id": null,
-                        "active": false,
-                        "battlegroup": null,
-                        "temp": null
-                },
-                "jackmarshal": {
-                    "model_id": null,
-                        "active": false,
-                        "battlegroup": null,
-                        "temp": null
-                }
+                "leaders": [],
+                "bg1_models": [],
+                "unit_models": [],
+                "solo_models": [],
+                "battle_engine_models": [],
+                "merc_army_models": [],
+                "merc_bg_models": []
             },
             "army_models_added": {
-                "leader": null,
-                    "bg1_models": null,
-                    "unit_models": null,
-                    "solo_models": null,
-                    "battle_engine_models": null,
-                    "merc_army_models": null,
-                    "merc_bg_models": null,
-                    "journeyman": {
+                "leader": [],
+                "bg1_models": [],
+                "unit_models": [],
+                "solo_models": [],
+                "battle_engine_models": [],
+                "merc_army_models": [],
+                "merc_bg_models": [],
+                "journeyman": {
                     "model_id": null,
-                        "active": false,
-                        "battlegroup": null,
-                        "temp": null
+                    "active": false,
+                    "battlegroup": null,
+                    "temp": null
                 },
                 "jackmarshal": {
                     "model_id": null,
-                        "active": false,
-                        "battlegroup": null,
-                        "temp": null
+                    "active": false,
+                    "battlegroup": null,
+                    "temp": null
                 }
             },
             "points": {
@@ -232,12 +220,13 @@
             return false;
         }
 
-        $.get("http://roho.in:8081/army_builder", {armyBuilder}, function(data){
-           console.log(data);
-        }, "json");
+        //$.get("http://roho.in:8081/army_builder", {armyBuilder}, function(data){
+        //   console.log(data);
+        //}, "json");
 
-        //startArmyListBuilder();
+        startArmyListBuilder();
     });
+
     $(document).ready(function(){
         $('#army-points-10').on('touchstart click', function(){
             setActivePoints(10,'.army-points-10');

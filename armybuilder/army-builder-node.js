@@ -18,20 +18,19 @@ function armyListBuilderShortSave(modelId){
     }
 }
 
-function armyListBuilderBoot(faction, points, armyName){
-    $.post("/ajax/army-builder.php?faction="+faction+"&points="+points+"&name="+armyName)
+function armyListBuilderBoot(){
+    console.log(armyBuilder);
+    $.post("/ajax/army-builder.php?faction="+armyBuilder.army.faction.faction_name+"&points="+armyBuilder.army.points.selected+"&name="+armyBuilder.army.name)
         .done(function(data){
-            addBattleGroup(faction, 1);
+            addBattleGroup(1);
             $('#ajax-armybuilder').html(data);
-            $('#input-points').val(points);
+            $('#input-points').val(armyBuilder.army.points.selected);
             showAjaxLoading();
-            //infoBlockResize();
-            //infoBlockToolsResize();
         });
 }
 
-function addBattleGroup(faction, count){
-    $.post("/ajax/battlegroup-build.php?faction="+faction+"&count="+count)
+function addBattleGroup(count){
+    $.post("/ajax/battlegroup-build.php?faction="+armyBuilder.army.faction.faction_name+"&count="+count)
         .done(function(data){
             $('#battlegroup-'+count).html(data);
             hideAjaxLoading(); console.log('hide ajax fires in addBattleGroup');
@@ -106,9 +105,9 @@ function startArmyListBuilder(){
         armyName = 'Random Army Name Picker Here';
     }
     // update tempList with the army name
-    tempList.name = armyName;
+    //tempList.name = armyName;
     hideArmyListCreationStartScreen(faction, points, armyName);
-    armyListBuilderBoot(faction, points, armyName);
+    armyListBuilderBoot();
 }
 
 function hideArmyListCreationStartScreen(faction, points, armyName){
@@ -127,7 +126,7 @@ function hideArmyListCreationStartScreen(faction, points, armyName){
 function updateArmyName(el){
     var name = $(el).val();
     $('#input-army-name').val(name);
-    tempList.name = name;
+    armyBuilder.army.name = name;
 }
 
 // add a leader to its battlegroup

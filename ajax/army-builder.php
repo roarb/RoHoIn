@@ -347,22 +347,22 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
     $(document).ready(function(){
         $('#public-list-toggle').on('touchstart click', function(){
             toggleCheckbox('#public-input');
-            if (tempList.publicList == 1){
-                tempList.publicList = 0;
+            if (armyBuilder.army.public_list){
+                armyBuilder.army.public_list = false;
             } else {
-                tempList.publicList = 1;
+                armyBuilder.army.public_list = true;
             }
         });
         <?php if ($Core->getLoggedIn()): ?>
             $('#barracks-models-toggle').on('touchstart click', function(){
                 toggleCheckbox('#barracks-models-input');
                 var barracksModels = <?php echo json_encode($Barracks->getAllUserModels($Core->getUserId())) ?>;
-                if (tempList.barracksModels == 1){
+                if (armyBuilder.army.barracks_models){
                     useOnlyBarracksModels(false, '');
-                    tempList.barracksModels = 0;
+                    armyBuilder.army.barracks_models = true;
                 } else {
                     useOnlyBarracksModels(true, barracksModels);
-                    tempList.barracksModels = 1;
+                    armyBuilder.army.barracks_models = false;
                 }
             });
         <?php endif; ?>
@@ -370,8 +370,8 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
         $('#submit').on('touchstart click', function(e){
             e.preventDefault();
             //submitForm('#create-army-list');
-            console.log(tempList);
-
+            console.log(armyBuilder);
+<?php /* submission section
             var battleGroupSql1 = '';
             $(tempList.bg1Models).each(function(key, val){
                 battleGroupSql1 += '['+val+',1]';
@@ -459,14 +459,12 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                     displayNotice(msg, true)
                 });
             }
-
+*/ ?>
         });
         $('#go-back').on('touchstart click', function(){
             backToCreateArmyStepOne()
         });
 
     });
-
-    var casterTierListObj = [];
 
 </script>
