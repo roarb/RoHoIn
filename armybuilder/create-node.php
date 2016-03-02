@@ -232,7 +232,7 @@
             return false;
         }
 
-        $.get("http://127.0.0.1:8081/army_builder", {armyBuilder}, function(data){
+        $.get("http://roho.in:8081/army_builder", {armyBuilder}, function(data){
            console.log(data);
         }, "json");
 
