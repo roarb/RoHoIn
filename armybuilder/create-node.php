@@ -149,7 +149,8 @@
                 "unit_models": [],
                 "solo_models": [],
                 "battle_engine_models": [],
-                "merc_army_models": [],
+                "merc_unit_models": [],
+                "merc_solo_models": [],
                 "merc_bg_models": []
             },
             "army_models_added": {
@@ -158,7 +159,8 @@
                 "unit_models": [],
                 "solo_models": [],
                 "battle_engine_models": [],
-                "merc_army_models": [],
+                "merc_unit_models": [],
+                "merc_solo_models": [],
                 "merc_bg_models": [],
                 "journeyman": {
                     "model_id": null,

@@ -61,13 +61,10 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
 
         <paper-material elevation="1" class="m-cushion padding-top-bottom units" id="unit-picker" style="display:none;">
             <div class="units-title army-entry-select-title">Units <span id="unit-points"></span></div>
-            <?php $i = 0 ?>
-            <script>var unitModelObject = new Array();</script>
             <?php foreach ($units as $unit): ?>
-                <?php //$_unit = $allUnits->getUnitByName($unit['name']); ?>
-                <script>unitModelObject[<?php echo $i ?>] = <?php echo json_encode($unit) ?>;</script>
+                <script>armyBuilder.army.army_models_avil.unit_models.push(<?php echo json_encode($unit) ?>);</script>
                 <div class="unit unit-model-option model-id-<?php echo $unit['id'] ?>">
-                    <div class="add-model-to-list" onclick="addUnitToArmy(this, unitModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                    <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $unit['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                         <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                         <span class="mo-notice hidden">Add to List</span>
                     </div>
@@ -97,21 +94,17 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                     <div class="clearer"></div>
                     <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                     <div class="additional-model-info" style="display:none;">
-                        <?php echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
+                        <?php //echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
                     </div>
                 </div>
-                <?php $i++ ?>
             <?php endforeach; ?>
         </paper-material>
         <paper-material elevation="1" class="m-cushion padding-top-bottom solos" id="solo-picker" style="display:none;">
             <div class="solos-title army-entry-select-title">Solos <span id="solo-points"></span></div>
-            <script>var soloModelObject = new Array();</script>
-            <?php $i = 0 ?>
             <?php foreach ($solos as $solo): ?>
-                <?php //$_unit = $allUnits->getUnitByName($solo['name']); ?>
-                <script>soloModelObject[<?php echo $i ?>] = <?php echo json_encode($solo) ?>;</script>
+                <script>armyBuilder.army.army_models_avil.solo_models.push(<?php echo json_encode($solo) ?>);</script>
                 <div class="unit solo-model model-id-<?php echo $solo['id'] ?>">
-                    <div class="add-model-to-list" onclick="addUnitToArmy(this, soloModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                    <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $solo['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                         <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                         <span class="mo-notice hidden">Add to List</span>
                     </div>
@@ -144,22 +137,18 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                     <div class="clearer"></div>
                     <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                     <div class="additional-model-info" style="display:none;">
-                        <?php echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
+                        <?php //echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
                     </div>
                 </div>
-                <?php $i++ ?>
             <?php endforeach; ?>
         </paper-material>
         <?php if (isset($battleEngines)): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom battle-engines" id="battle-engine-picker" style="display:none;">
                 <div class="battle-engine-title army-entry-select-title">Battle Engines<span id="battle-engine-points"></span></div>
-                <script>var battleEngineModelObject = new Array();</script>
-                <?php $i = 0 ?>
                 <?php foreach ($battleEngines as $battleEngine): ?>
-                    <?php //$_unit = $allUnits->getUnitByName($battleEngine['name']); ?>
-                    <script>battleEngineModelObject[<?php echo $i ?>] = <?php echo json_encode($battleEngine) ?>;</script>
+                    <script>armyBuilder.army.army_models_avil.battle_engine_models.push(<?php echo json_encode($battleEngine) ?>);</script>
                     <div class="unit battle-engine-model model-id-<?php echo $battleEngine['id'] ?>">
-                        <div class="add-model-to-list" onclick="addUnitToArmy(this, battleEngineModelObject,<?php echo $i ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $battleEngine['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                             <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                             <span class="mo-notice hidden">Add to List</span>
                         </div>
@@ -188,23 +177,19 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <div class="clearer"></div>
                         <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                         <div class="additional-model-info" style="display:none;">
-                            <?php echo $allUnits->displayArmyBuilderStatsLine($battleEngine) ?>
+                            <?php //echo $allUnits->displayArmyBuilderStatsLine($battleEngine) ?>
                         </div>
                     </div>
-                    <?php $i++ ?>
                 <?php endforeach; ?>
             </paper-material>
         <?php endif ?>
         <?php if(isset($mercSolos)): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom merc-solos" id="merc-solo-picker" style="display:none;">
                 <div class="merc-solos-title army-entry-select-title">Mercenary/Minion Solos <span id="merc-solo-points"></span></div>
-                <script>var mercSoloModelObject = new Array();</script>
-                <?php $i = 0 ?>
                 <?php foreach ($mercSolos as $solo): ?>
-                    <?php //$_unit = $allUnits->getUnitByName($solo['name']); ?>
-                    <script>mercSoloModelObject[<?php echo $i ?>] = <?php echo json_encode($solo) ?>;</script>
+                    <script>armyBuilder.army.army_models_avil.merc_solo_models.push(<?php echo json_encode($solo) ?>);</script>
                     <div class="unit merc-solo-model model-id-<?php echo $solo['id'] ?>">
-                        <div class="add-model-to-list" onclick="addUnitToArmy(this, mercSoloModelObject,<?php echo $i ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $solo['id'] ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                             <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                             <span class="mo-notice hidden">Add to List</span>
                         </div>
@@ -237,23 +222,19 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <div class="clearer"></div>
                         <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                         <div class="additional-model-info" style="display:none;">
-                            <?php echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
+                            <?php //echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
                         </div>
                     </div>
-                    <?php $i++ ?>
                 <?php endforeach; ?>
             </paper-material>
         <?php endif; ?>
         <?php if (isset($mercUnits)): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom merc-units" id="merc-unit-picker" style="display:none;">
                 <div class="merc-units-title army-entry-select-title">Mercenary/Minion Units <span id="merc-unit-points"></span></div>
-                <?php $i = 0 ?>
-                <script>var mercUnitModelObject = new Array();</script>
                 <?php foreach ($mercUnits as $unit): ?>
-                    <?php //$_unit = $allUnits->getUnitByName($unit['name']); ?>
-                    <script>mercUnitModelObject[<?php echo $i ?>] = <?php echo json_encode($unit) ?>;</script>
+                    <script>armyBuilder.army.army_models_avil.merc_unit_models.push(<?php echo json_encode($unit) ?>);</script>
                     <div class="unit merc-unit-model-option model-id-<?php echo $unit['id'] ?>">
-                        <div class="add-model-to-list" onclick="addUnitToArmy(this, mercUnitModelObject,<?php echo $i ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
+                        <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $unit['id'] ?>, true);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
                             <paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>
                             <span class="mo-notice hidden">Add to List</span>
                         </div>
@@ -283,10 +264,9 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <div class="clearer"></div>
                         <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
                         <div class="additional-model-info" style="display:none;">
-                            <?php echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
+                            <?php //echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
                         </div>
                     </div>
-                    <?php $i++ ?>
                 <?php endforeach; ?>
             </paper-material>
         <?php endif; ?>

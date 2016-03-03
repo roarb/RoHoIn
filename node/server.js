@@ -2,13 +2,18 @@
  * Created by rhoeh on 2/25/2016.
  */
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Add headers
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://roho.in');
+    //res.setHeader('Access-Control-Allow-Origin', 'http://local.roho.in'); // for use on local wamp
+    res.setHeader('Access-Control-Allow-Origin', 'http://roho.in'); // for use on roho.in
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -24,6 +29,19 @@ app.use(function (req, res, next) {
     next();
 });
 
+// START ROHO Builds
+
+// This responds with a replacement src for a models' image from the model object.
+app.post('/rest/model-image-replace', function (req, res, next) {
+    console.log("Got a POST request for a model image");
+    var obj = req.body;
+    console.log(obj.name);
+    var src = obj.name.replace(/[^a-zA-Z0-9]/g, "");
+    res.send(src);
+    next();
+});
+
+// START examples
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");

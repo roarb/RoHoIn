@@ -32,7 +32,21 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
     <?php foreach ($warcasters as $warcaster): ?>
         <script>armyBuilder.army.army_models_avil.leaders.push(<?php echo json_encode($warcaster) ?>);</script>
         <div class="single-caster unit <?php echo $warcaster['id'].'-'.$count ?> model-id-<?php echo $warcaster['id'] ?>">
-            <div class="focus-circle warcaster-portrait"><?php echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?></div>
+            <div class="focus-circle warcaster-portrait">
+                <img src="/skin/images/spacer.gif" alt="<?php echo $warcaster['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $warcaster['id'] ?>-thumbnail" />
+                <script>
+                    $.ajax({
+                        type: "POST",
+                        url: 'http://roho.in:8081/rest/model-image-replace',
+                        <?php /*data: '<?php echo json_encode($warcaster) ?>, */ ?>
+                        data: {"name":"Aurora, Numen of Aerogenesis"},
+                        dataType: 'application/json'
+                    }).done(function(data) {
+                        console.log(data);
+                    });
+                </script>
+                <?php //echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?>
+            </div>
             <label for="<?php echo $warcaster['name'] ?>" class="warcaster<?php echo $count ?>">
                 <span class="unit-name"><?php echo $warcaster['name'] ?></span><br />
                 <span class="unit-title"><?php echo $warcaster['title'] ?></span><div class="bg-points">BG+<?php echo $warcaster['bg_points']?></div><br />
@@ -60,7 +74,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
             <div class="clearer"></div>
             <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
             <div class="additional-model-info" style="display:none;">
-                <?php echo $allUnits->displayArmyBuilderStatsLine($warcaster) ?>
+                <?php //echo $allUnits->displayArmyBuilderStatsLine($warcaster) ?>
             </div>
             <input type="radio" id="<?php echo $warcaster['name'] ?>" name="warcaster<?php echo $count ?>" value="<?php echo $warcaster['name'] ?>" class="hidden" /><br />
         </div>
@@ -103,7 +117,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
             <div class="clearer"></div>
             <?php // the remaining unit specs are hidden until the model item is clicked to display this info ?>
             <div class="additional-model-info" style="display:none;">
-                <?php echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
+                <?php //echo $allUnits->displayArmyBuilderStatsLine($_unit) ?>
             </div>
         </div>
     <?php endforeach; ?>
