@@ -39,7 +39,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                         type: "POST",
                         url: 'http://roho.in:8081/rest/model-image-replace',
                         <?php /*data: '<?php echo json_encode($warcaster) ?>, */ ?>
-                        data: {"name":"Aurora, Numen of Aerogenesis"},
+                        data: JSON.stringify({"name":"Aurora, Numen of Aerogenesis"}),
                         dataType: 'application/json'
                     }).done(function(data) {
                         console.log(data);
