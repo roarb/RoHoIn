@@ -4,6 +4,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+require('./func.js');
 
 // parse application/json
 app.use(bodyParser.json());
@@ -37,6 +38,8 @@ app.post('/rest/model-image-replace', function (req, res, next) {
     var obj = req.body;
     console.log(obj.name);
     var src = obj.name.replace(/[^a-zA-Z0-9]/g, "");
+    // next check if that image exists, if not serve the default graphic
+    console.log(doesModelImageExist(src));
     src = JSON.stringify(src);
     res.send(src);
 });
