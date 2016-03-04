@@ -40,10 +40,10 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                         url: 'http://roho.in:8081/rest/model-image-replace',
                         data: JSON.stringify(<?php echo json_encode($warcaster) ?>),
                         dataType: 'json',
-                        contentType: 'application/json; charset=UTF-8'
-                    }).done(function(data) {
-                        console.log('finished with the node service request');
-                        console.log(data);
+                        contentType: 'application/json; charset=UTF-8',
+                        success: function (date) {
+                            console.log(date);
+                        }
                     });
                 </script>
                 <?php //echo $allUnits->getUnitImageThumbnail($warcaster['name']) ?>
