@@ -38,10 +38,11 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                     $.ajax({
                         type: "POST",
                         url: 'http://roho.in:8081/rest/model-image-replace',
-                        <?php /*data: '<?php echo json_encode($warcaster) ?>, */ ?>
-                        data: JSON.stringify({"name":"Aurora, Numen of Aerogenesis"}),
-                        dataType: 'application/json'
+                        data: JSON.stringify(<?php echo json_encode($warcaster) ?>),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=UTF-8'
                     }).done(function(data) {
+                        console.log('finished with the node service request');
                         console.log(data);
                     });
                 </script>

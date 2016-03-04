@@ -38,7 +38,6 @@ app.post('/rest/model-image-replace', function (req, res, next) {
     console.log(obj.name);
     var src = obj.name.replace(/[^a-zA-Z0-9]/g, "");
     res.send(src);
-    next();
 });
 
 // START examples
