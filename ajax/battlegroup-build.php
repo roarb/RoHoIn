@@ -42,7 +42,7 @@ $battlegroup = $allUnits->getBattleGroupUnitsByFaction($faction);
                         dataType: 'json',
                         contentType: 'application/json; charset=UTF-8',
                         success: function (data) {
-                            $('#model-<?php echo $warcaster['id'] ?>-thumbnail').attr('src', '/res/'+data+'.jpg');
+                            $('#model-<?php echo $warcaster['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
                         }
                     });
                 </script>
