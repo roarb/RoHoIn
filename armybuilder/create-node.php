@@ -18,6 +18,7 @@
     ?>
     <script src="army-builder-node.js"></script>
     <script src="tier-rules-node.js"></script>
+    <script src="/node/db/models.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Create a Warmachine or Hordes Army with RoHo.In</title>
 </head>
@@ -42,10 +43,13 @@
         </paper-toolbar>
         <paper-toolbar class="army-builder-toolbar hidden secondary full-width">
             <div class="horizontal layout" style="width:100%;">
-                <div id="display-army-name" class="flex-4"></div>
-                <div id="display-faction" class="flex-4"></div>
-                <div id="display-army-points" class="flex-4"></div>
-                <div id="display-army-tier" class="flex-4"></div>
+                <div id="display-army-name" class="flex-3"></div>
+                <div id="display-army-points" class="flex-3">
+                    <span class="total-army-points-block">
+                        <span id="points-count-up">0</span>/<span id="total-points-allowed">0</span>
+                    </span>
+                </div>
+                <div id="display-army-tier" class="flex-3"></div>
             </div>
         </paper-toolbar>
         <div class="vertical layout info-block army-builder-content">
@@ -145,7 +149,8 @@
             },
             "army_models_avil": {
                 "leaders": [],
-                "bg1_models": [],
+                "aux_models": [],
+                "battlegroup_models": [],
                 "unit_models": [],
                 "solo_models": [],
                 "battle_engine_models": [],
@@ -155,7 +160,8 @@
             },
             "army_models_added": {
                 "leader": [],
-                "bg1_models": [],
+                "aux_models": [],
+                "battlegroup_models": [],
                 "unit_models": [],
                 "solo_models": [],
                 "battle_engine_models": [],
@@ -163,42 +169,43 @@
                 "merc_solo_models": [],
                 "merc_bg_models": [],
                 "journeyman": {
-                    "model_id": null,
-                    "active": false,
-                    "battlegroup": null,
-                    "temp": null
+                "model_id": null,
+                "active": false,
+                "battlegroup": null,
+                "temp": null
                 },
-                "jackmarshal": {
-                    "model_id": null,
-                    "active": false,
-                    "battlegroup": null,
-                    "temp": null
+            "jackmarshal": {
+                "model_id": null,
+                "active": false,
+                "battlegroup": null,
+                "temp": null
                 }
             },
             "points": {
-                "selected": null,
-                    "caster_mod": null,
-                    "used": null
+                "mod_total": 0,
+                "selected": 0,
+                "caster_mod": 0,
+                "used": 0
             },
             "tiers": {
                 "list_level_set": null,
-                    "level_1_ben": null,
-                    "level_2_ben": null,
-                    "level_3_ben": null,
-                    "level_4_ben": null,
-                    "level_1_req": null,
-                    "level_2_req": null,
-                    "level_3_req": null,
-                    "level_4_req": null,
-                    "model_updates": null
+                "level_1_ben": null,
+                "level_2_ben": null,
+                "level_3_ben": null,
+                "level_4_ben": null,
+                "level_1_req": null,
+                "level_2_req": null,
+                "level_3_req": null,
+                "level_4_req": null,
+                "model_updates": null
             },
             "public_list": true,
-                "barracks_models": false,
-                "painted_models": false,
-                "owner": {
-                    "logged_in": <?php if ($loggedIn){echo 'true';}else {echo 'false';} ?>,
-                    "name": <?php if ($creatorName){echo "'".$creatorName."'";}else {echo 'null';} ?>,
-                    "id": <?php if ($loggedIn){echo $_SESSION['user_id'];}else {echo 'null';} ?>
+            "barracks_models": false,
+            "painted_models": false,
+            "owner": {
+                "logged_in": <?php if ($loggedIn){echo 'true';}else {echo 'false';} ?>,
+                "name": <?php if ($creatorName){echo "'".$creatorName."'";}else {echo 'null';} ?>,
+                "id": <?php if ($loggedIn){echo $_SESSION['user_id'];}else {echo 'null';} ?>
             },
             "guid": '<?php echo $armyBuilder->getGUID() ?>'
         }
@@ -221,10 +228,6 @@
             document.querySelector('#single-caster-error').show();
             return false;
         }
-
-        //$.get("http://roho.in:8081/army_builder", {armyBuilder}, function(data){
-        //   console.log(data);
-        //}, "json");
 
         startArmyListBuilder();
     });

@@ -6,10 +6,14 @@ class AllWeapons extends AllCore
 	 * @return string
 	 */
 	function getAllWeapons(){
-		$conn = $this->connect();
-		
-		$weapons = "SELECT * FROM weapon ORDER BY name";
-		$weaponsResult = $conn->query($weapons);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM weapon ORDER BY name";
+		$weaponsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$weapons = "SELECT * FROM weapon ORDER BY name";
+		//$weaponsResult = $conn->query($weapons);
 		$weaponsBuild = '';
 		if ($weaponsResult->num_rows > 0) {
 			// output data of each row
@@ -19,7 +23,7 @@ class AllWeapons extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $weaponsBuild;
 	}
 
@@ -27,10 +31,14 @@ class AllWeapons extends AllCore
 	 * @return string
 	 */
 	function getAllWeaponsName(){
-		$conn = $this->connect();
-		
-		$weapons = "SELECT name FROM weapon ORDER BY name";
-		$weaponsResult = $conn->query($weapons);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM weapon ORDER BY name";
+		$weaponsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$weapons = "SELECT name FROM weapon ORDER BY name";
+		//$weaponsResult = $conn->query($weapons);
 		$weaponsBuild = '';
 		if ($weaponsResult->num_rows > 0) {
 			// output data of each row
@@ -40,7 +48,7 @@ class AllWeapons extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $weaponsBuild;
 	}
 
@@ -49,10 +57,15 @@ class AllWeapons extends AllCore
 	 * @return string
 	 */
 	function getWeaponByName($name){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		$name = "'".$name."'";
-		$weapon = "SELECT * FROM weapon WHERE name = ".$name."";
-		$weaponResult = $conn->query($weapon);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM weapon WHERE name = ".$name."";
+		$weaponResult = $mysqli->query($sql_query);
+
+		//$weapon = "SELECT * FROM weapon WHERE name = ".$name."";
+		//$weaponResult = $conn->query($weapon);
 		$weaponBuild = '';
 		if ($weaponResult->num_rows > 0) {
 			// output data of each row
@@ -62,7 +75,7 @@ class AllWeapons extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $weaponBuild;
 	}
 
@@ -89,7 +102,7 @@ class AllWeapons extends AllCore
 	 * @param $shield
 	 */
 	function saveWeapon($name, $ranged, $range, $rof, $aoe, $pow, $reach, $damageType, $criticalEffect, $continuousEffect, $openFist, $magical, $specialAction1, $specialAction2, $specialAction3, $specialAction4, $weaponsMaster, $thrown, $buckler, $shield){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$ranged = "'".$ranged."'";
@@ -111,16 +124,21 @@ class AllWeapons extends AllCore
 		if ($specialAction2 == ''){$specialAction2 = 'NULL';} else {$specialAction2 = "'".$specialAction2."'";}
         if ($specialAction3 == ''){$specialAction3 = 'NULL';} else {$specialAction3 = "'".$specialAction3."'";}
         if ($specialAction4 == ''){$specialAction4 = 'NULL';} else {$specialAction4 = "'".$specialAction4."'";}
-		
-		$sql = "INSERT INTO weapon (name, ranged, rof, aoe, pow, reach, damage_type, critical_effect, continuous_effect, open_fist, magical, special_action_1, special_action_2, special_action_3, special_action_4, weapons_master, shooting_distance, thrown, buckler, shield)
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "INSERT INTO weapon (name, ranged, rof, aoe, pow, reach, damage_type, critical_effect, continuous_effect, open_fist, magical, special_action_1, special_action_2, special_action_3, special_action_4, weapons_master, shooting_distance, thrown, buckler, shield)
 		VALUES (".$name.", ".$ranged.", ".$rof.", ".$aoe.", ".$pow.", ".$reach.", ".$damageType.", ".$criticalEffect.", ".$continuousEffect.", ".$openFist.", ".$magical.", ".$specialAction1.", ".$specialAction2.", ".$specialAction3.", ".$specialAction4.", ".$weaponsMaster.", ".$range.", ".$thrown.", ".$buckler.", ".$shield.")";
+
+		//$sql = "INSERT INTO weapon (name, ranged, rof, aoe, pow, reach, damage_type, critical_effect, continuous_effect, open_fist, magical, special_action_1, special_action_2, special_action_3, special_action_4, weapons_master, shooting_distance, thrown, buckler, shield)
+		//VALUES (".$name.", ".$ranged.", ".$rof.", ".$aoe.", ".$pow.", ".$reach.", ".$damageType.", ".$criticalEffect.", ".$continuousEffect.", ".$openFist.", ".$magical.", ".$specialAction1.", ".$specialAction2.", ".$specialAction3.", ".$specialAction4.", ".$weaponsMaster.", ".$range.", ".$thrown.", ".$buckler.", ".$shield.")";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE) {
 			echo "New record created successfully<br>";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			echo "Error: " . $sql_query . "<br>" . $mysqli->error;
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -146,7 +164,7 @@ class AllWeapons extends AllCore
 	 * @param $shield
 	 */
 	function updateWeapon($name, $ranged, $range, $rof, $aoe, $pow, $reach, $damageType, $criticalEffect, $continuousEffect, $openFist, $magical, $specialAction1, $specialAction2, $specialAction3, $specialAction4, $weaponsMaster, $thrown, $buckler, $shield){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$ranged = "'".$ranged."'";
@@ -169,16 +187,22 @@ class AllWeapons extends AllCore
         if ($specialAction3 == ''){$specialAction3 = 'NULL';} else {$specialAction3 = "'".$specialAction3."'";}
         if ($specialAction4 == ''){$specialAction4 = 'NULL';} else {$specialAction4 = "'".$specialAction4."'";}
 
-		$sql = "UPDATE weapon 
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "UPDATE weapon
 		SET ranged=".$ranged.", reach=".$reach.", open_fist=".$openFist.", rof=".$rof.", aoe=".$aoe.", pow=".$pow.", damage_type=".$damageType.", critical_effect=".$criticalEffect.", continuous_effect=".$continuousEffect.", magical=".$magical.", thrown=".$thrown.", buckler=".$buckler.", shield=".$shield.", special_action_1=".$specialAction1.", special_action_2=".$specialAction2.", special_action_3=".$specialAction3.", special_action_4=".$specialAction4.", weapons_master=".$weaponsMaster."
 		WHERE name=".$name."";
+
+		//$sql = "UPDATE weapon
+		//SET ranged=".$ranged.", reach=".$reach.", open_fist=".$openFist.", rof=".$rof.", aoe=".$aoe.", pow=".$pow.", damage_type=".$damageType.", critical_effect=".$criticalEffect.", continuous_effect=".$continuousEffect.", magical=".$magical.", thrown=".$thrown.", buckler=".$buckler.", shield=".$shield.", special_action_1=".$specialAction1.", special_action_2=".$specialAction2.", special_action_3=".$specialAction3.", special_action_4=".$specialAction4.", weapons_master=".$weaponsMaster."
+		//WHERE name=".$name."";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE) {
 			echo "Record updated successfully<br>";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			echo "Error: " . $sql_query . "<br>" . $mysqli->error;
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 	
 }

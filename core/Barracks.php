@@ -10,7 +10,9 @@ class Barracks extends AllCore
 	 * @return string
 	 */
 	function updateUnitForUser($userId, $unitName, $count, $type){
-		$conn = $this->connect();
+		//$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
 		// check if the user already has the unit counted 
 		$exists = $this->userModelCountCheck($userId, $unitName, 'count');
 		// check again for counted painted models
@@ -25,7 +27,7 @@ class Barracks extends AllCore
 			} 
 			else { $typeMessage = 'painted models';
 			}
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 			return 'This unit has been added. You now have '.$count.' '.$typeMessage.' saved.';
 		} 
 		else {
@@ -39,11 +41,13 @@ class Barracks extends AllCore
 				$sqlUpdate = "UPDATE barracks SET painted_qty=".$count." WHERE user_id=".$userId." AND unit_name=".$unitName."";
 				$typeMessage = 'painted models';
 			}
-			if ($conn->query($sqlUpdate) === TRUE) {
+
+
+			if ($mysqli->query($sqlUpdate) === TRUE) {
 				return 'This unit has been updated to '.$count.' '.$typeMessage.'.';
 			}
 
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 			}			
 	}
 
@@ -55,7 +59,7 @@ class Barracks extends AllCore
 	 * @return bool
 	 */
 	function addUnitForUser($userId, $unitName, $count, $type){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		$userId = "'".$userId."'";
 		$unitName = "'".$unitName."'";
 		// install a check to only update the owned or painted and not reset the other to 0
@@ -66,15 +70,19 @@ class Barracks extends AllCore
 		} else {
 			$ownedQty = 0;
 			$paintedQty = "'".$count."'";
-			}
+		}
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "INSERT INTO barracks (user_id, unit_name, owned_qty, painted_qty) VALUES (".$userId.", ".$unitName.", ".$ownedQty.", ".$paintedQty.")";
+
+		//$sqlAdd = "INSERT INTO barracks (user_id, unit_name, owned_qty, painted_qty) VALUES (".$userId.", ".$unitName.", ".$ownedQty.", ".$paintedQty.")";
 		
-		$sqlAdd = "INSERT INTO barracks (user_id, unit_name, owned_qty, painted_qty) VALUES (".$userId.", ".$unitName.", ".$ownedQty.", ".$paintedQty.")";
-		
-		if ($conn->query($sqlAdd) === TRUE) {
-			mysqli_close($conn); //$conn->close();
+		if ($mysqli->query($sql_query) === TRUE) {
+			//mysqli_close($conn); //$conn->close();
 			return true;
 		} else {
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 			return false;
 		}
 	}
@@ -86,25 +94,28 @@ class Barracks extends AllCore
 	 * @return bool|string
 	 */
 	function userModelCountCheck($userId,$unit,$type){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+
+		//$conn = $this->connect();
 		$unit = "'".$unit."'";
 		if ($type == 'count'){
 			$sqlCount = "SELECT * FROM barracks WHERE user_id = ".$userId." AND unit_name = ".$unit." ORDER BY unit_name";
-			$countResult = $conn->query($sqlCount);
+			$countResult = $mysqli->query($sqlCount);
 			$finalCount = '';
 			foreach ($countResult as $row){
 				$finalCount .= $row['owned_qty'];
 			}
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 			return $finalCount;
 		} else if ($type == 'painted') {
 			$sqlCount = "SELECT * FROM barracks WHERE user_id = ".$userId." AND unit_name = ".$unit." ORDER BY unit_name";
-			$countResult = $conn->query($sqlCount);
+			$countResult = $mysqli->query($sqlCount);
 			$finalCount = '';
 			foreach ($countResult as $row){
 				$finalCount .= $row['painted_qty'];
 			}
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 			return $finalCount;
 		}	
 		else {return false;}
@@ -116,13 +127,15 @@ class Barracks extends AllCore
 	 * @return string
 	 */
 	function getAllUserModels($userId){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		//$conn = $this->connect();
 		// add in unit class for getting the faction of the units
 		$unit = new AllUnits;
         $allFactions = new AllFactions;
 		
 		$sql = "SELECT * FROM barracks WHERE user_id = ".$userId." AND owned_qty > 0 ORDER BY id";
-		$modelsResult = $conn->query($sql);
+		$modelsResult = $mysqli->query($sql);
 		$finalResuts = array(); $i = 0;
 		
 		foreach($modelsResult as $row){
@@ -136,7 +149,7 @@ class Barracks extends AllCore
 			$finalResults[$i]['model_id'] = $unit->getUnitIdByName($row['unit_name']);
 			$i++;
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		if ($finalResults == ''){
 			return 'No Results Found';
 		} else {

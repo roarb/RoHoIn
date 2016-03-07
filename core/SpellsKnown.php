@@ -6,10 +6,14 @@ class AllSpellsKnown extends AllCore
 	 * @return string
 	 */
 	function getAllSpells(){
-		$conn = $this->connect();
-		
-		$spells = "SELECT * FROM spells_known ORDER BY name";
-		$spellsResult = $conn->query($spells);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM spells_known ORDER BY name";
+		$spellsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$spells = "SELECT * FROM spells_known ORDER BY name";
+		//$spellsResult = $conn->query($spells);
 		$spellsBuild = '';
 		if ($spellsResult->num_rows > 0) {
 			// output data of each row
@@ -19,7 +23,7 @@ class AllSpellsKnown extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $spellsBuild;
 	}
 
@@ -27,10 +31,14 @@ class AllSpellsKnown extends AllCore
 	 * @return string
 	 */
 	function getAllSpellsName(){
-		$conn = $this->connect();
-		
-		$spells = "SELECT name FROM spells_known ORDER BY name";
-		$spellsResult = $conn->query($spells);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM spells_known ORDER BY name";
+		$spellsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$spells = "SELECT name FROM spells_known ORDER BY name";
+		//$spellsResult = $conn->query($spells);
 		$spellsBuild = '';
 		if ($spellsResult->num_rows > 0) {
 			// output data of each row
@@ -40,7 +48,7 @@ class AllSpellsKnown extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $spellsBuild;
 	}
 
@@ -49,10 +57,15 @@ class AllSpellsKnown extends AllCore
 	 * @return string
 	 */
 	function getSpellByName($name){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		$name = "'".$name."'";
-		$spell = "SELECT * FROM spells_known WHERE name = ".$name;
-		$spellResult = $conn->query($spell);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM spells_known WHERE name = ".$name;
+		$spellResult = $mysqli->query($sql_query);
+
+		//$spell = "SELECT * FROM spells_known WHERE name = ".$name;
+		//$spellResult = $conn->query($spell);
 		$spellBuild = '';
 		if ($spellResult->num_rows > 0) {
 			// output data of each row
@@ -62,7 +75,7 @@ class AllSpellsKnown extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $spellBuild;
 	}
 
@@ -86,7 +99,7 @@ class AllSpellsKnown extends AllCore
 	 * @param $duration
 	 */
 	function saveSpells($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -108,15 +121,21 @@ class AllSpellsKnown extends AllCore
 		if ($offDefMod == ''){$offDefMod = 'NULL';} else {$offDefMod = "'".$offDefMod."'";}
 		if ($offArmMod == ''){$offArmMod = 'NULL';} else {$offArmMod = "'".$offArmMod."'";}
 		if ($duration == ''){$duration = 'NULL';} else{$duration = "'".$duration."'";}
-		
-		$sql = "INSERT INTO spells_known (name, description, cost, range_distance, aoe, pow, upkeep, offensive, ability_granted, second_ability_granted, off_spd_mod, off_str_mod, off_mat_mod, off_rat_mod, off_def_mod, off_arm_mod, duration)
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "INSERT INTO spells_known (name, description, cost, range_distance, aoe, pow, upkeep, offensive, ability_granted, second_ability_granted, off_spd_mod, off_str_mod, off_mat_mod, off_rat_mod, off_def_mod, off_arm_mod, duration)
 		VALUES (".$name.", ".$description.", ".$cost.", ".$range.", ".$aoe.", ".$pow.", ".$upkeep.", ".$offensive.", ".$specialAbility1.", ".$specialAbility2.", ".$offSpdMod.", ".$offStrMod.", ".$offMatMod.", ".$offRatMod.", ".$offDefMod.", ".$offArmMod.", ".$duration.")";
+		$spellResult = $mysqli->query($sql_query);
+
+		//$sql = "INSERT INTO spells_known (name, description, cost, range_distance, aoe, pow, upkeep, offensive, ability_granted, second_ability_granted, off_spd_mod, off_str_mod, off_mat_mod, off_rat_mod, off_def_mod, off_arm_mod, duration)
+		//VALUES (".$name.", ".$description.", ".$cost.", ".$range.", ".$aoe.", ".$pow.", ".$upkeep.", ".$offensive.", ".$specialAbility1.", ".$specialAbility2.", ".$offSpdMod.", ".$offStrMod.", ".$offMatMod.", ".$offRatMod.", ".$offDefMod.", ".$offArmMod.", ".$duration.")";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE) {
 			echo "New record created successfully<br>";
 		}
 
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -139,7 +158,7 @@ class AllSpellsKnown extends AllCore
 	 * @param $duration
 	 */
 	function updateSpell($name, $description, $cost, $range, $aoe, $pow, $upkeep, $offensive, $specialAbility1, $specialAbility2, $offSpdMod, $offStrMod, $offMatMod, $offRatMod, $offDefMod, $offArmMod, $duration){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		
 		$name = "'".$name."'";
 		$upkeep = "'".$upkeep."'";
@@ -161,14 +180,20 @@ class AllSpellsKnown extends AllCore
 		if ($offDefMod == ''){$offDefMod = 'NULL';} else {$offDefMod = "'".$offDefMod."'";}
 		if ($offArmMod == ''){$offArmMod = 'NULL';} else {$offArmMod = "'".$offArmMod."'";}
 		if ($duration == ''){$duration = 'NULL';} else{$duration = "'".$duration."'";}
-				
-		$sql = "UPDATE spells_known 
-		SET description=".$description.", cost=".$cost.", range_distance=".$range.", aoe=".$aoe.", pow=".$pow.", upkeep=".$upkeep.", offensive=".$offensive.", ability_granted=".$specialAbility1.", second_ability_granted=".$specialAbility2.", off_spd_mod=".$offSpdMod.", off_str_mod=".$offStrMod.", off_mat_mod=".$offMatMod.", off_rat_mod=".$offRatMod.", off_def_mod=".$offDefMod.", off_arm_mod=".$offArmMod.", duration=".$duration." 
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "UPDATE spells_known
+		SET description=".$description.", cost=".$cost.", range_distance=".$range.", aoe=".$aoe.", pow=".$pow.", upkeep=".$upkeep.", offensive=".$offensive.", ability_granted=".$specialAbility1.", second_ability_granted=".$specialAbility2.", off_spd_mod=".$offSpdMod.", off_str_mod=".$offStrMod.", off_mat_mod=".$offMatMod.", off_rat_mod=".$offRatMod.", off_def_mod=".$offDefMod.", off_arm_mod=".$offArmMod.", duration=".$duration."
 		WHERE name=".$name."";
+
+		//$sql = "UPDATE spells_known
+		//SET description=".$description.", cost=".$cost.", range_distance=".$range.", aoe=".$aoe.", pow=".$pow.", upkeep=".$upkeep.", offensive=".$offensive.", ability_granted=".$specialAbility1.", second_ability_granted=".$specialAbility2.", off_spd_mod=".$offSpdMod.", off_str_mod=".$offStrMod.", off_mat_mod=".$offMatMod.", off_rat_mod=".$offRatMod.", off_def_mod=".$offDefMod.", off_arm_mod=".$offArmMod.", duration=".$duration."
+		//WHERE name=".$name."";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE) {
 			echo "Record updated successfully<br>";
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 }

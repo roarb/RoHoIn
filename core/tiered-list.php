@@ -6,10 +6,14 @@ class AllTieredLists extends AllCore
 	 * @return string
 	 */
 	function getAllTieredLists(){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM tiered_list ORDER BY name";
+		$listsResult = $mysqli->query($sql_query);
 
-		$lists = "SELECT * FROM tiered_list ORDER BY name";
-		$listsResult = $conn->query($lists);
+		//$conn = $this->connect();
+		//$lists = "SELECT * FROM tiered_list ORDER BY name";
+		//$listsResult = $conn->query($lists);
 		$listsBuild = '';
 		if ($listsResult->num_rows > 0) {
 			// output data of each row
@@ -19,7 +23,7 @@ class AllTieredLists extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $listsBuild;
 	}
 
@@ -28,17 +32,21 @@ class AllTieredLists extends AllCore
 	 * @return array|bool|string
 	 */
 	function getTieredListById($tierId){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM tiered_list WHERE id = '".$tierId."' ORDER BY name";
+		$listsResult = $mysqli->query($sql_query);
 
-		$lists = "SELECT * FROM tiered_list WHERE id = '".$tierId."' ORDER BY name";
-		$listsResult = $conn->query($lists);
+		//$conn = $this->connect();
+		//$lists = "SELECT * FROM tiered_list WHERE id = '".$tierId."' ORDER BY name";
+		//$listsResult = $conn->query($lists);
 		$listsBuild = '';
 		if ($listsResult->num_rows > 0) {
 			while($row = $listsResult->fetch_assoc()) {
 				$listsBuild = $row;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $listsBuild;
 	}
 
@@ -73,7 +81,7 @@ class AllTieredLists extends AllCore
 	 * @param $tier4Req
 	 */
 	function saveTieredLists($name, $faction, $caster, $description, $reqBattlegroupFront, $reqBattlegroupRules, $reqUnitsFront, $reqUnitsRules, $reqSolosFront, $reqSolosRules, $reqBattleengineFront, $reqBattleengineRules, $tier1BonusFront, $tier1Bonus, $tier1ReqFront, $tier1Req, $tier2BonusFront, $tier2Bonus, $tier2ReqFront,$tier2Req, $tier3BonusFront, $tier3Bonus, $tier3ReqFront,$tier3Req, $tier4BonusFront, $tier4Bonus, $tier4ReqFront, $tier4Req){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
 		$caster = "'".$caster."'";
@@ -177,18 +185,22 @@ class AllTieredLists extends AllCore
 			$tier4Req = str_replace("'", "\'", $tier4Req);
 			$tier4Req = "'".$tier4Req."'";
 		}
-		
-		
-		$sql = "INSERT INTO tiered_list (name, faction, caster, description, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules)
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "INSERT INTO tiered_list (name, faction, caster, description, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules)
 		VALUES (".$name.", ".$faction.", ".$caster.", ".$description.", ".$tier1ReqFront.", ".$tier1BonusFront.", ".$tier1Bonus.", ".$tier1Req.", ".$tier2ReqFront.", ".$tier2BonusFront.", ".$tier2Bonus.", ".$tier2Req.", ".$tier3ReqFront.", ".$tier3BonusFront.", ".$tier3Bonus.", ".$tier3Req.", ".$tier4ReqFront.", ".$tier4BonusFront.", ".$tier4Bonus.", ".$tier4Req.", ".$reqBattlegroupFront.", ".$reqBattlegroupRules.", ".$reqUnitsFront.", ".$reqUnitsRules.", ".$reqSolosFront.", ".$reqSolosRules.", ".$reqBattleengineFront.", ".$reqBattleengineRules.")";
+
+		//$sql = "INSERT INTO tiered_list (name, faction, caster, description, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules)
+		//VALUES (".$name.", ".$faction.", ".$caster.", ".$description.", ".$tier1ReqFront.", ".$tier1BonusFront.", ".$tier1Bonus.", ".$tier1Req.", ".$tier2ReqFront.", ".$tier2BonusFront.", ".$tier2Bonus.", ".$tier2Req.", ".$tier3ReqFront.", ".$tier3BonusFront.", ".$tier3Bonus.", ".$tier3Req.", ".$tier4ReqFront.", ".$tier4BonusFront.", ".$tier4Bonus.", ".$tier4Req.", ".$reqBattlegroupFront.", ".$reqBattlegroupRules.", ".$reqUnitsFront.", ".$reqUnitsRules.", ".$reqSolosFront.", ".$reqSolosRules.", ".$reqBattleengineFront.", ".$reqBattleengineRules.")";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE) {
 			echo "New record created successfully<br>";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			echo "Error: " . $sql_query . "<br>" . $mysqli->error;
 		}
 
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -196,10 +208,14 @@ class AllTieredLists extends AllCore
 	 * @return string
 	 */
 	function getTierByCasterId($id){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req FROM tiered_list WHERE caster = ".$id." ORDER BY name";
+		$listsResult = $mysqli->query($sql_query);
 
-		$list = "SELECT name, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req FROM tiered_list WHERE caster = ".$id." ORDER BY name";
-		$listsResult = $conn->query($list);
+		//$conn = $this->connect();
+		//$list = "SELECT name, req_battlegroup_front, req_battlegroup_rules, req_units_front, req_units_rules, req_solos_front, req_solos_rules, req_battleengine_front, req_battleengine_rules, tier1_req_front, tier1_bonus_front, tier1_bonus, tier1_req, tier2_req_front, tier2_bonus_front, tier2_bonus, tier2_req, tier3_req_front, tier3_bonus_front, tier3_bonus, tier3_req, tier4_req_front, tier4_bonus_front, tier4_bonus, tier4_req FROM tiered_list WHERE caster = ".$id." ORDER BY name";
+		//listsResult = $conn->query($list);
 		$listsBuild = '';
 		if ($listsResult->num_rows > 0) {
 			// output data of each row
@@ -209,7 +225,7 @@ class AllTieredLists extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $listsBuild;
 	}
 }

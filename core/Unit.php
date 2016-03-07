@@ -8,10 +8,12 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getAllUnits(){
-		$conn = $this->connect();
-		
-		$units = "SELECT * FROM core";
-		$unitsResult = $conn->query($units);
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -23,7 +25,7 @@ class AllUnits extends AllCore
 		} else {
 			echo "0 results";
 		}
-		mysqli_close($conn); //$conn->close();
+
 		return $unitsBuild;
 	}
 
@@ -33,9 +35,11 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getFactionUnitList($faction){
-		$conn = $this->connect();
-		$units = "SELECT DISTINCT name, faction, type, companion FROM core WHERE faction='".$faction."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT DISTINCT name, faction, type, companion FROM core WHERE faction='".$faction."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -45,7 +49,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+
 		return $unitsBuild;
 	}
 
@@ -54,9 +58,10 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getFactionUnitListAbilities($faction){
-		$conn = $this->connect();
-		$units = "SELECT DISTINCT special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10 FROM core WHERE faction='".$faction."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT DISTINCT special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10 FROM core WHERE faction='".$faction."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -66,7 +71,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+
 		return $unitsBuild;
 	}
 
@@ -75,9 +80,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getFactionUnitListWeapons($faction){
-		$conn = $this->connect();
-		$units = "SELECT DISTINCT weapon1, weapon2, weapon3, weapon4, weapon5 FROM core WHERE faction='".$faction."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT DISTINCT weapon1, weapon2, weapon3, weapon4, weapon5 FROM core WHERE faction='".$faction."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT DISTINCT weapon1, weapon2, weapon3, weapon4, weapon5 FROM core WHERE faction='".$faction."' ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -87,7 +97,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -96,9 +106,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getFactionUnitListSpells($faction){
-		$conn = $this->connect();
-		$units = "SELECT DISTINCT spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10 FROM core WHERE faction='".$faction."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT DISTINCT spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10 FROM core WHERE faction='".$faction."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT DISTINCT spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10 FROM core WHERE faction='".$faction."' ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -108,7 +123,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -117,15 +132,20 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	public function getFactionByUnitName($unitName){
-        $conn = $this->connect();
-        $unitName = "'" . $unitName . "'";
-        $factionSql = "SELECT faction FROM core WHERE name=" . $unitName . " ORDER BY faction";
-        $factionResult = $conn->query($factionSql);
+		$unitName = "'" . $unitName . "'";
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT faction FROM core WHERE name=" . $unitName . " ORDER BY faction";
+		$factionResult = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$factionSql = "SELECT faction FROM core WHERE name=" . $unitName . " ORDER BY faction";
+        //$factionResult = $conn->query($factionSql);
         $faction = '';
         foreach ($factionResult as $result) {
             $faction = $result['faction'];
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $faction;
     }
 
@@ -134,9 +154,15 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getAllUnitsName(){
-		$conn = $this->connect();
-		$units = "SELECT name FROM core ORDER BY name";
-		$unitsResult = $conn->query($units);
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM core ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT name FROM core ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -146,7 +172,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -156,9 +182,14 @@ class AllUnits extends AllCore
 	 * @return bool|mysqli_result
 	 */
 	function getAllUnitsNameFaction($faction){
-		$conn = $this->connect();
-		$units = "SELECT name FROM core WHERE faction = '".$faction."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM core WHERE faction = '".$faction."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT name FROM core WHERE faction = '".$faction."' ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -168,7 +199,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsResult;
 	}
 
@@ -178,9 +209,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getAllUnitsNameFactionType($faction, $type){
-		$conn = $this->connect();
-		$units = "SELECT name FROM core WHERE faction = '".$faction."' AND type = '".$type."' ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM core WHERE faction = '".$faction."' AND type = '".$type."' ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT name FROM core WHERE faction = '".$faction."' AND type = '".$type."' ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -190,7 +226,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -198,9 +234,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getWarcasterWarlockUnits(){
-		$conn = $this->connect();
-		$units = "SELECT * FROM core WHERE type = 'Warlock' OR type = 'Warlock Unit' OR type = 'Warcaster' OR type = 'Warcaster Unit' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Warlock' OR type = 'Warlock Unit' OR type = 'Warcaster' OR type = 'Warcaster Unit' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Warlock' OR type = 'Warlock Unit' OR type = 'Warcaster' OR type = 'Warcaster Unit' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -210,7 +251,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -219,7 +260,6 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getWarcasterWarlockUnitsByFaction($faction){
-        $conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -227,8 +267,11 @@ class AllUnits extends AllCore
 			$userId = $_SESSION['user_id'];
 		}
 
-        $faction = "'".$faction."'";
-        $units = "SELECT *
+		$faction = "'".$faction."'";
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT *
         FROM core
         WHERE  faction =  ".$faction."
         AND (
@@ -237,7 +280,19 @@ class AllUnits extends AllCore
             OR  type =  'Warcaster'
             OR  type =  'Warcaster Unit'
         ) ORDER BY name" ;
-        $unitsResult = $conn->query($units);
+		$unitsResult = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$units = "SELECT *
+        //FROM core
+        //WHERE  faction =  ".$faction."
+        //AND (
+        //    type =  'Warlock'
+        //    OR  type =  'Warlock Unit'
+        //    OR  type =  'Warcaster'
+        //    OR  type =  'Warcaster Unit'
+        //) ORDER BY name" ;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -257,7 +312,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         // add in 'possible_ua' for each model in the array
 		// add in 'tiered options for each model in the array
         $i = 0;
@@ -275,7 +330,7 @@ class AllUnits extends AllCore
 	 * @return array
 	 */
     function getWarcasterFullObjectByName($name){
-        $conn = $this->connect();
+        //$conn = $this->connect();
         $barracks = new Barracks();
         $loggedIn = false; $userId = 0;
         if ($this->getLoggedIn()){
@@ -284,8 +339,14 @@ class AllUnits extends AllCore
         }
         $name = '"'.$name.'"';
         $warcaster = array();
-        $query = "SELECT * FROM core WHERE name = ".$name;
-        $result = $conn->query($query);
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE name = ".$name;
+		$result = $mysqli->query($sql_query);
+
+        //$query = "SELECT * FROM core WHERE name = ".$name;
+        //$result = $conn->query($query);
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
@@ -301,7 +362,7 @@ class AllUnits extends AllCore
 				}
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $warcaster;
     }
 
@@ -309,9 +370,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getColossalUnits(){
-		$conn = $this->connect();
-		$units = "SELECT * FROM core WHERE type = 'Colossal' OR type = 'Colossal Vector' OR type = 'Gargantuan' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Colossal' OR type = 'Colossal Vector' OR type = 'Gargantuan' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Colossal' OR type = 'Colossal Vector' OR type = 'Gargantuan' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -321,7 +387,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -329,9 +395,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getHeavyUnits(){
-		$conn = $this->connect();
-		$units = "SELECT * FROM core WHERE type = 'Heavy Myrmidon' OR type = 'Heavy Vector' OR type = 'Heavy Warbeast' OR type = 'Heavy Warjack' OR type = 'Helljack' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Heavy Myrmidon' OR type = 'Heavy Vector' OR type = 'Heavy Warbeast' OR type = 'Heavy Warjack' OR type = 'Helljack' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Heavy Myrmidon' OR type = 'Heavy Vector' OR type = 'Heavy Warbeast' OR type = 'Heavy Warjack' OR type = 'Helljack' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -341,7 +412,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -349,9 +420,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getLightUnits(){
-		$conn = $this->connect();
-		$units = "SELECT * FROM core WHERE type = 'Light Myrmidon' OR type = 'Light Vector' OR type = 'Light Warbeast' OR type = 'Light Warjack' OR type = 'Bone Jack' OR type = 'Lesser Warbeast' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Light Myrmidon' OR type = 'Light Vector' OR type = 'Light Warbeast' OR type = 'Light Warjack' OR type = 'Bone Jack' OR type = 'Lesser Warbeast' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Light Myrmidon' OR type = 'Light Vector' OR type = 'Light Warbeast' OR type = 'Light Warjack' OR type = 'Bone Jack' OR type = 'Lesser Warbeast' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -361,7 +437,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -370,7 +446,7 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getBattleGroupUnitsByFaction($faction){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -379,7 +455,10 @@ class AllUnits extends AllCore
 		}
 
         $faction = "'".$faction."'";
-        $units = "SELECT *
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT *
         FROM core
         WHERE  faction =  ".$faction."
         AND (
@@ -399,7 +478,29 @@ class AllUnits extends AllCore
             OR  type = 'Gargantuan'
         )
         ORDER BY  name" ;
-        $unitsResult = $conn->query($units);
+		$unitsResult = $mysqli->query($sql_query);
+
+        //$units = "SELECT *
+        //FROM core
+        //WHERE  faction =  ".$faction."
+        //AND (
+        //    type = 'Light Myrmidon'
+        //    OR  type = 'Light Vector'
+        //    OR  type = 'Light Warjack'
+        //    OR  type = 'Light Warbeast'
+        //    OR  type = 'Bone Jack'
+        //    OR  type = 'Lesser Warbeast'
+        //    OR  type = 'Heavy Myrmidon'
+        //    OR  type = 'Heavy Vector'
+        //    OR  type = 'Heavy Warbeast'
+        //    OR  type = 'Heavy Warjack'
+        //    OR  type = 'Helljack'
+        //    OR  type = 'Colossal'
+        //    OR  type = 'Colossal Vector'
+        //    OR  type = 'Gargantuan'
+        //)
+        //ORDER BY  name" ;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -419,7 +520,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -427,9 +528,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getUnitUnits(){
-		$conn = $this->connect();
-		$units = "SELECT * FROM core WHERE type = 'Unit' OR type = 'Character Unit' OR type = 'Warbeast Pack' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Unit' OR type = 'Character Unit' OR type = 'Warbeast Pack' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Unit' OR type = 'Character Unit' OR type = 'Warbeast Pack' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -439,7 +545,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -448,7 +554,7 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getBuilderUnitsByFaction($faction){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -457,8 +563,13 @@ class AllUnits extends AllCore
 		}
 
         $faction = "'".$faction."'";
-        $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Unit' OR  type = 'Character Unit' OR  type = 'Weapon Crew Unit' OR  type = 'Cavalry Unit' ) ORDER BY  name" ;
-        $unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Unit' OR  type = 'Character Unit' OR  type = 'Weapon Crew Unit' OR  type = 'Cavalry Unit' ) ORDER BY  name" ;
+		$unitsResult = $mysqli->query($sql_query);
+
+        //$units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Unit' OR  type = 'Character Unit' OR  type = 'Weapon Crew Unit' OR  type = 'Cavalry Unit' ) ORDER BY  name" ;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -481,7 +592,7 @@ class AllUnits extends AllCore
                 }
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -489,10 +600,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getSoloUnits(){
-		$conn = $this->connect();
-		
-		$units = "SELECT * FROM core WHERE type = 'Solo' OR type = 'Character Solo' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Solo' OR type = 'Character Solo' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Solo' OR type = 'Character Solo' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -502,7 +617,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -511,8 +626,7 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getBuilderSolosByFaction($faction){
-        $conn = $this->connect();
-
+        //$conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
@@ -521,8 +635,13 @@ class AllUnits extends AllCore
 		}
 
         $faction = "'".$faction."'";
-        $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Solo' OR  type = 'Character Solo' ) ORDER BY name" ;
-        $unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Solo' OR  type = 'Character Solo' ) ORDER BY name" ;
+		$unitsResult = $mysqli->query($sql_query);
+
+        //$units = "SELECT * FROM core WHERE  faction =  ".$faction." AND ( type = 'Solo' OR  type = 'Character Solo' ) ORDER BY name" ;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -545,7 +664,7 @@ class AllUnits extends AllCore
                 }
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -553,10 +672,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
 	function getBattleEngineUnits(){
-		$conn = $this->connect();
-		
-		$units = "SELECT * FROM core WHERE type = 'Battle Engine' ORDER BY faction";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE type = 'Battle Engine' ORDER BY faction";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT * FROM core WHERE type = 'Battle Engine' ORDER BY faction";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -566,7 +689,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -575,7 +698,7 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getBattleEngineUnitsByFaction($faction){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -585,8 +708,13 @@ class AllUnits extends AllCore
 		}
 
         $faction = "'".$faction."'";
-        $units = "SELECT * FROM core WHERE  faction =  ".$faction." AND type = 'Battle Engine' ORDER BY  name" ;
-        $unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE  faction =  ".$faction." AND type = 'Battle Engine' ORDER BY  name" ;
+		$unitsResult = $mysqli->query($sql_query);
+
+        //$units = "SELECT * FROM core WHERE  faction =  ".$faction." AND type = 'Battle Engine' ORDER BY  name" ;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -606,12 +734,12 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
 	function getBuilderMercSolosByFaction($faction) {
-		$conn = $this->connect();
+		//$conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -621,8 +749,13 @@ class AllUnits extends AllCore
 		}
 
 		$faction = "'%".$faction."%'";
-		$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%solo%' ORDER BY  name" ;
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%solo%' ORDER BY  name" ;
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%solo%' ORDER BY  name" ;
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -642,12 +775,12 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
 	function getBuilderMercUnitsByFaction($faction) {
-		$conn = $this->connect();
+		//$conn = $this->connect();
 
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
@@ -657,8 +790,13 @@ class AllUnits extends AllCore
 		}
 
 		$faction = "'%".$faction."%'";
-		$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%unit%' ORDER BY  name" ;
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%unit%' ORDER BY  name" ;
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$units = "SELECT * FROM core WHERE  related_factions LIKE ".$faction." AND type LIKE '%unit%' ORDER BY  name" ;
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
@@ -678,7 +816,7 @@ class AllUnits extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -688,7 +826,7 @@ class AllUnits extends AllCore
 	 */
 	public function getAveragesWarcasterWarlock($list){
 		$count = 0;
-		$i = 0;		
+		$i = 0;
 		foreach ($list as $item){
 			if ($item['spd'] != 0){  // make sure speed value is not null
 				if ($item['cost'] != '-'){ // make sure that null cost models are not added
@@ -746,16 +884,21 @@ class AllUnits extends AllCore
 	 * @return array|string
 	 */
 	function getUnitNameById($id){
-		$conn = $this->connect();
-		$units = "SELECT name FROM core WHERE id = ".$id." ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT name FROM core WHERE id = ".$id." ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$units = "SELECT name FROM core WHERE id = ".$id." ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			while($row = $unitsResult->fetch_assoc()) {
 				$unitsBuild = $row;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -764,22 +907,27 @@ class AllUnits extends AllCore
 	 * @return array|string
 	 */
 	function getUnitByName($name){
-		$conn = $this->connect();
+		//$conn = $this->connect();
 		$name = "'".$name."'";
-		$units = "SELECT * FROM core WHERE name = ".$name." ORDER BY name";
-		$unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE name = ".$name." ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$units = "SELECT * FROM core WHERE name = ".$name." ORDER BY name";
+		//$unitsResult = $conn->query($units);
 		$unitsBuild = '';
 		if ($unitsResult->num_rows > 0) {
 			// output data of each row
 			while($row = $unitsResult->fetch_assoc()) {
 				$unitsBuild = $row;
 				$views = $row['views']+1;
-				$conn->query('UPDATE core SET views = '.$views.' WHERE id = "'.$row['id'].'"');
+				$mysqli->query('UPDATE core SET views = '.$views.' WHERE id = "'.$row['id'].'"');
 			}
 		}
         // check for possible Unit Attachments:
         $unitsBuild['possible_ua'] = $this->getUnitOptionalAttachments($unitsBuild['id']);
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $unitsBuild;
 	}
 
@@ -788,15 +936,20 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getUnitIdByName($name){
-        $conn = $this->connect();
+        //$conn = $this->connect();
         $name = "'".$name."'";
-        $units = "SELECT id, views FROM core WHERE name = ".$name;
-        $unitsResult = $conn->query($units);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT id, views FROM core WHERE name = ".$name;
+		$unitsResult = $mysqli->query($sql_query);
+
+		//$units = "SELECT id, views FROM core WHERE name = ".$name;
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         foreach ($unitsResult as $result){
             $unitsBuild = $result['id'];
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -805,16 +958,20 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getUnitById($id){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 		$barracks = new Barracks();
 		$loggedIn = false; $userId = 0;
 		if ($this->getLoggedIn()){
 			$loggedIn = true;
 			$userId = $_SESSION['user_id'];
 		}
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM core WHERE id = ".$id." ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
 
-        $units = "SELECT * FROM core WHERE id = ".$id." ORDER BY name";
-        $unitsResult = $conn->query($units);
+        //$units = "SELECT * FROM core WHERE id = ".$id." ORDER BY name";
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -834,7 +991,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -907,10 +1064,14 @@ class AllUnits extends AllCore
 	 * @return string
 	 */
     function getUnitFactionAttachedToField($faction){
-        $conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT attached_to, id, name, cost, field_allowance, title FROM core WHERE faction = '".$faction."' AND attached_to IS NOT NULL ORDER BY name";
+		$unitsResult = $mysqli->query($sql_query);
 
-        $units = "SELECT attached_to, id, name, cost, field_allowance, title FROM core WHERE faction = '".$faction."' AND attached_to IS NOT NULL ORDER BY name";
-        $unitsResult = $conn->query($units);
+        //$conn = $this->connect();
+        //$units = "SELECT attached_to, id, name, cost, field_allowance, title FROM core WHERE faction = '".$faction."' AND attached_to IS NOT NULL ORDER BY name";
+        //$unitsResult = $conn->query($units);
         $unitsBuild = '';
         if ($unitsResult->num_rows > 0) {
             // output data of each row
@@ -920,7 +1081,7 @@ class AllUnits extends AllCore
                 $i++;
             }
         }
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
         return $unitsBuild;
     }
 
@@ -932,7 +1093,7 @@ class AllUnits extends AllCore
 	 */
 	public function getCountFactionType($list, $faction, $type){
 		$count = 0;
-		$i = 0;		
+		$i = 0;
 		foreach ($list as $item){
 			if ($item['spd'] != 0){
 				foreach ($type as $t){
@@ -1004,7 +1165,7 @@ class AllUnits extends AllCore
 	 * @return int
 	 */
 	public function getCountSpells($item){
-		$x = 0; $i = 0; 
+		$x = 0; $i = 0;
 		while ($i < 10){
 			if (isset($item['spell_'.$i])){$x++;};
 			$i++;
@@ -1017,14 +1178,14 @@ class AllUnits extends AllCore
 	 * @return int
 	 */
 	public function getCountAbilities($item){
-		$x = 0; $i = 0; 
+		$x = 0; $i = 0;
 		while ($i < 10){
 			if (isset($item['special_ability_'.$i])){$x++;};
 			$i++;
 		}
 		return $x;
 	}
-	
+
 	/**
 	 * update - edit units
 	 * @param $name
@@ -1086,14 +1247,14 @@ class AllUnits extends AllCore
 	 * @param $leader
 	 */
 	function updateUnits($name, $faction, $relatedFaction, $unitType, $title, $cost, $bgPoints, $fieldAllowance, $purchaseLow, $purchaseHigh, $focus, $fury, $threshold, $spd, $str, $mat, $rat, $def, $arm, $cmd, $damageBoxes, $damageGrid, $damageSpiral, $animusKnown, $mount, $mountAbility, $mountAbility2, $baseSize, $weapon1, $weapon2, $weapon3, $weapon4, $weapon5, $specialAbility1, $specialAbility2, $specialAbility3, $specialAbility4, $specialAbility5, $specialAbility6, $specialAbility7, $specialAbility8, $specialAbility9, $specialAbility10, $spell1, $spell2, $spell3, $spell4, $spell5, $spell6, $spell7, $spell8, $spell9, $spell10, $feat, $attachedTo, $companion, $leader){
-		$conn = $this->connect();
-		
+		//$conn = $this->connect();
+
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
 		if ($relatedFaction == ''){$relatedFaction = 'NULL';} else {$relatedFaction = "'".$relatedFaction."'";}
 		$unitType = "'".$unitType."'";
 		$title = "'".$title."'";
-		$cost = "'".$cost."'";		
+		$cost = "'".$cost."'";
 		if ($bgPoints == ''){$bgPoints = 'NULL';} else {$bgPoints = "'".$bgPoints."'";}
 		if ($fieldAllowance == ''){$fieldAllowance = 'NULL';} else {$fieldAllowance = "'".$fieldAllowance."'";}
 		if ($purchaseLow == ''){$purchaseLow = 'NULL';} else {$purchaseLow = "'".$purchaseLow."'";}
@@ -1149,17 +1310,27 @@ class AllUnits extends AllCore
 		if ($attachedTo == ''){$attachedTo = 'NULL';} else {$attachedTo = "'".$attachedTo."'";}
 		if ($companion == ''){$companion = 'NULL';} else {$companion = "'".$companion."'";}
         if ($leader == ''){$leader = 'NULL';} else {$leader = "'".$leader."'";}
-		
-		$sql = "UPDATE core SET faction=".$faction.", related_factions=".$relatedFaction.", type =".$unitType.", title=".$title.", cost=".$cost.", bg_points=".$bgPoints.", field_allowance=".$fieldAllowance.", purchased_low=".$purchaseLow.", purchased_high=".$purchaseHigh.", focus=".$focus.", fury=".$fury.", threshold=".$threshold.", spd=".$spd.", str=".$str.", mat=".$mat.", rat=".$rat.", def=".$def.", arm=".$arm.", cmd=".$cmd.", damage_boxes=".$damageBoxes.", damage_grid=".$damageGrid.", damage_spiral=".$damageSpiral.", animus_known=".$animusKnown.", mount=".$mount.", mount_ability=".$mountAbility.", mount_ability2=".$mountAbility2.", base_size=".$baseSize.", weapon1=".$weapon1.", weapon2=".$weapon2.", weapon3=".$weapon3.", weapon4=".$weapon4.", weapon5=".$weapon5.", special_ability_1=".$specialAbility1.", special_ability_2=".$specialAbility2.", special_ability_3=".$specialAbility3.", special_ability_4=".$specialAbility4.", special_ability_5=".$specialAbility5.", special_ability_6=".$specialAbility6.", special_ability_7=".$specialAbility7.", special_ability_8=".$specialAbility8.", special_ability_9=".$specialAbility9.", special_ability_10=".$specialAbility10.", spell_1=".$spell1.", spell_2=".$spell2.", spell_3=".$spell3.", spell_4=".$spell4.", spell_5=".$spell5.", spell_6=".$spell6.", spell_7=".$spell7.", spell_8=".$spell8.", spell_9=".$spell9.", spell_10=".$spell10.", feat=".$feat.", attached_to=".$attachedTo.", companion=".$companion.", unit_leader=".$leader."
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "UPDATE core SET faction=".$faction.", related_factions=".$relatedFaction.", type =".$unitType.", title=".$title.", cost=".$cost.", bg_points=".$bgPoints.", field_allowance=".$fieldAllowance.", purchased_low=".$purchaseLow.", purchased_high=".$purchaseHigh.", focus=".$focus.", fury=".$fury.", threshold=".$threshold.", spd=".$spd.", str=".$str.", mat=".$mat.", rat=".$rat.", def=".$def.", arm=".$arm.", cmd=".$cmd.", damage_boxes=".$damageBoxes.", damage_grid=".$damageGrid.", damage_spiral=".$damageSpiral.", animus_known=".$animusKnown.", mount=".$mount.", mount_ability=".$mountAbility.", mount_ability2=".$mountAbility2.", base_size=".$baseSize.", weapon1=".$weapon1.", weapon2=".$weapon2.", weapon3=".$weapon3.", weapon4=".$weapon4.", weapon5=".$weapon5.", special_ability_1=".$specialAbility1.", special_ability_2=".$specialAbility2.", special_ability_3=".$specialAbility3.", special_ability_4=".$specialAbility4.", special_ability_5=".$specialAbility5.", special_ability_6=".$specialAbility6.", special_ability_7=".$specialAbility7.", special_ability_8=".$specialAbility8.", special_ability_9=".$specialAbility9.", special_ability_10=".$specialAbility10.", spell_1=".$spell1.", spell_2=".$spell2.", spell_3=".$spell3.", spell_4=".$spell4.", spell_5=".$spell5.", spell_6=".$spell6.", spell_7=".$spell7.", spell_8=".$spell8.", spell_9=".$spell9.", spell_10=".$spell10.", feat=".$feat.", attached_to=".$attachedTo.", companion=".$companion.", unit_leader=".$leader."
 		WHERE name = $name";
-		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE){
 			echo "New record created successfully<br>";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			echo "Error: " . $sql_query . "<br>" . $mysqli->error;
 		}
 
-		mysqli_close($conn); //$conn->close();
+		//$sql = "UPDATE core SET faction=".$faction.", related_factions=".$relatedFaction.", type =".$unitType.", title=".$title.", cost=".$cost.", bg_points=".$bgPoints.", field_allowance=".$fieldAllowance.", purchased_low=".$purchaseLow.", purchased_high=".$purchaseHigh.", focus=".$focus.", fury=".$fury.", threshold=".$threshold.", spd=".$spd.", str=".$str.", mat=".$mat.", rat=".$rat.", def=".$def.", arm=".$arm.", cmd=".$cmd.", damage_boxes=".$damageBoxes.", damage_grid=".$damageGrid.", damage_spiral=".$damageSpiral.", animus_known=".$animusKnown.", mount=".$mount.", mount_ability=".$mountAbility.", mount_ability2=".$mountAbility2.", base_size=".$baseSize.", weapon1=".$weapon1.", weapon2=".$weapon2.", weapon3=".$weapon3.", weapon4=".$weapon4.", weapon5=".$weapon5.", special_ability_1=".$specialAbility1.", special_ability_2=".$specialAbility2.", special_ability_3=".$specialAbility3.", special_ability_4=".$specialAbility4.", special_ability_5=".$specialAbility5.", special_ability_6=".$specialAbility6.", special_ability_7=".$specialAbility7.", special_ability_8=".$specialAbility8.", special_ability_9=".$specialAbility9.", special_ability_10=".$specialAbility10.", spell_1=".$spell1.", spell_2=".$spell2.", spell_3=".$spell3.", spell_4=".$spell4.", spell_5=".$spell5.", spell_6=".$spell6.", spell_7=".$spell7.", spell_8=".$spell8.", spell_9=".$spell9.", spell_10=".$spell10.", feat=".$feat.", attached_to=".$attachedTo.", companion=".$companion.", unit_leader=".$leader."
+		//WHERE name = $name";
+
+		//if ($conn->query($sql) === TRUE) {
+		//	echo "New record created successfully<br>";
+		//} else {
+		//	echo "Error: " . $sql . "<br>" . $conn->error;
+		//}
+
+		//mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -1223,14 +1394,14 @@ class AllUnits extends AllCore
 	 * @param $leader
 	 */
 	function saveUnits($name, $faction, $relatedFaction, $unitType, $title, $cost, $bgPoints, $fieldAllowance, $purchaseLow, $purchaseHigh, $focus, $fury, $threshold, $spd, $str, $mat, $rat, $def, $arm, $cmd, $damageBoxes, $damageGrid, $damageSpiral, $animusKnown, $mount, $mountAbility, $mountAbility2, $baseSize, $weapon1, $weapon2, $weapon3, $weapon4, $weapon5, $specialAbility1, $specialAbility2, $specialAbility3, $specialAbility4, $specialAbility5, $specialAbility6, $specialAbility7, $specialAbility8, $specialAbility9, $specialAbility10, $spell1, $spell2, $spell3, $spell4, $spell5, $spell6, $spell7, $spell8, $spell9, $spell10, $feat, $attachedTo, $companion, $leader){
-		$conn = $this->connect();
-		
+		//$conn = $this->connect();
+
 		$name = "'".$name."'";
 		$faction = "'".$faction."'";
 		if ($relatedFaction == ''){$relatedFaction = 'NULL';} else {$relatedFaction = "'".$relatedFaction."'";}
 		$unitType = "'".$unitType."'";
 		$title = "'".$title."'";
-		$cost = "'".$cost."'";		
+		$cost = "'".$cost."'";
 		if ($bgPoints == ''){$bgPoints = 'NULL';} else {$bgPoints = "'".$bgPoints."'";}
 		if ($fieldAllowance == ''){$fieldAllowance = 'NULL';} else {$fieldAllowance = "'".$fieldAllowance."'";}
 		if ($purchaseLow == ''){$purchaseLow = 'NULL';} else {$purchaseLow = "'".$purchaseLow."'";}
@@ -1285,17 +1456,27 @@ class AllUnits extends AllCore
 		if ($attachedTo == ''){$attachedTo = 'NULL';} else {$attachedTo = "'".$attachedTo."'";}
 		if ($companion == ''){$companion = 'NULL';} else {$companion = "'".$companion."'";}
         if ($leader == ''){$leader = 'NULL';} else {$leader = "'".$leader."'";}
-		
-		$sql = "INSERT INTO core (name, faction, related_factions, type, title, cost, bg_points, field_allowance, purchased_low, purchased_high, focus, fury, threshold, spd, str, mat, rat, def, arm, cmd, damage_boxes, damage_grid, damage_spiral, animus_known, mount, mount_ability, mount_ability2, base_size, weapon1, weapon2, weapon3, weapon4, weapon5, special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10, spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10, feat, attached_to, companion, unit_leader)
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "INSERT INTO core (name, faction, related_factions, type, title, cost, bg_points, field_allowance, purchased_low, purchased_high, focus, fury, threshold, spd, str, mat, rat, def, arm, cmd, damage_boxes, damage_grid, damage_spiral, animus_known, mount, mount_ability, mount_ability2, base_size, weapon1, weapon2, weapon3, weapon4, weapon5, special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10, spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10, feat, attached_to, companion, unit_leader)
 		VALUES (".$name.", ".$faction.", ".$relatedFaction.", ".$unitType.", ".$title.", ".$cost.", ".$bgPoints.", ".$fieldAllowance.", ".$purchaseLow.", ".$purchaseHigh.", ".$focus.", ".$fury.", ".$threshold.", ".$spd.", ".$str.", ".$mat.", ".$rat.", ".$def.", ".$arm.", ".$cmd.", ".$damageBoxes.", ".$damageGrid.", ".$damageSpiral.", ".$animusKnown.", ".$mount.", ".$mountAbility.", ".$mountAbility2.", ".$baseSize.", ".$weapon1.", ".$weapon2.", ".$weapon3.", ".$weapon4.", ".$weapon5.", ".$specialAbility1.", ".$specialAbility2.", ".$specialAbility3.", ".$specialAbility4.", ".$specialAbility5.", ".$specialAbility6.", ".$specialAbility7.", ".$specialAbility8.", ".$specialAbility9.", ".$specialAbility10.", ".$spell1.", ".$spell2.", ".$spell3.", ".$spell4.", ".$spell5.", ".$spell6.", ".$spell7.", ".$spell8.", ".$spell9.", ".$spell10.", ".$feat.", ".$attachedTo.", ".$companion.", ".$leader.")";
-		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql_query) === TRUE){
 			echo "New record created successfully<br>";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+			echo "Error: " . $sql_query . "<br>" . $mysqli->error;
 		}
 
-		mysqli_close($conn); //$conn->close();
+		//$sql = "INSERT INTO core (name, faction, related_factions, type, title, cost, bg_points, field_allowance, purchased_low, purchased_high, focus, fury, threshold, spd, str, mat, rat, def, arm, cmd, damage_boxes, damage_grid, damage_spiral, animus_known, mount, mount_ability, mount_ability2, base_size, weapon1, weapon2, weapon3, weapon4, weapon5, special_ability_1, special_ability_2, special_ability_3, special_ability_4, special_ability_5, special_ability_6, special_ability_7, special_ability_8, special_ability_9, special_ability_10, spell_1, spell_2, spell_3, spell_4, spell_5, spell_6, spell_7, spell_8, spell_9, spell_10, feat, attached_to, companion, unit_leader)
+		//VALUES (".$name.", ".$faction.", ".$relatedFaction.", ".$unitType.", ".$title.", ".$cost.", ".$bgPoints.", ".$fieldAllowance.", ".$purchaseLow.", ".$purchaseHigh.", ".$focus.", ".$fury.", ".$threshold.", ".$spd.", ".$str.", ".$mat.", ".$rat.", ".$def.", ".$arm.", ".$cmd.", ".$damageBoxes.", ".$damageGrid.", ".$damageSpiral.", ".$animusKnown.", ".$mount.", ".$mountAbility.", ".$mountAbility2.", ".$baseSize.", ".$weapon1.", ".$weapon2.", ".$weapon3.", ".$weapon4.", ".$weapon5.", ".$specialAbility1.", ".$specialAbility2.", ".$specialAbility3.", ".$specialAbility4.", ".$specialAbility5.", ".$specialAbility6.", ".$specialAbility7.", ".$specialAbility8.", ".$specialAbility9.", ".$specialAbility10.", ".$spell1.", ".$spell2.", ".$spell3.", ".$spell4.", ".$spell5.", ".$spell6.", ".$spell7.", ".$spell8.", ".$spell9.", ".$spell10.", ".$feat.", ".$attachedTo.", ".$companion.", ".$leader.")";
+
+		//if ($conn->query($sql) === TRUE) {
+		//	echo "New record created successfully<br>";
+		//} else {
+		//	echo "Error: " . $sql . "<br>" . $conn->error;
+		//}
+
+		//mysqli_close($conn); //$conn->close();
 	}
 
 	/**
@@ -1334,6 +1515,22 @@ class AllUnits extends AllCore
 		}
 		else {
 			$nameFixed = '<img src="/res/unit_images/thumbs/no-image.jpg" alt="'.$name.'" class="unit-image unit-thumbnail" />';
+		}
+		return $nameFixed;
+	}
+
+	function getUnitImageSrc($name){
+		$nameFixed = str_replace(' ','',$name);
+		$nameFixed = str_replace(',','',$nameFixed);
+		$nameFixed = str_replace('.','',$nameFixed);
+		$nameFixed = str_replace('(','',$nameFixed);
+		$nameFixed = str_replace(')','',$nameFixed);
+		$filePath = $_SERVER['DOCUMENT_ROOT']."/res/unit_images/thumbs/".$nameFixed.".jpg";
+		if (file_exists($filePath)){
+			$nameFixed = '/res/unit_images/thumbs/'.$nameFixed.'.jpg';
+		}
+		else {
+			$nameFixed = '/res/unit_images/thumbs/no-image.jpg';
 		}
 		return $nameFixed;
 	}
@@ -1382,7 +1579,7 @@ class AllUnits extends AllCore
 			$i++;
 		}
 		$spiralBuild .= '</ul></div>';
-		
+
 		return $spiralBuild;
 	}
 
@@ -1417,12 +1614,12 @@ class AllUnits extends AllCore
 	function gridDisplayBuild($grid){
 		$lines = explode("]", $grid);
 		$i = 0;
-		foreach ($lines as $line){			
+		foreach ($lines as $line){
 			$lines[$i] = substr($line,2);
 			$i++;
 		}
 		$i = 0;
-		foreach ($lines as $line){			
+		foreach ($lines as $line){
 			$lines[$i] = explode(',',$line);
 			if (!isset($lines[$i][1])){
 				array_unshift($lines[$i], '0');
@@ -1459,7 +1656,7 @@ class AllUnits extends AllCore
 			}
 			$print .= '</tr>';
 			$x++;
-		} 
+		}
 		return $print;
 	}
 
@@ -1619,4 +1816,92 @@ class AllUnits extends AllCore
 
 		return $outputHtml;
 	}
+
+	function writeModelsToJsonFile() {
+		$allAbilities = new AllSpecialAbilities();
+		$allWeapons = new AllWeapons();
+		$allAnimus = new AllAnimusKnown();
+		$allSpells = new AllSpellsKnown();
+		$allTiers = new AllTieredLists();
+		$msg = 'done running';
+		$response = $this->getAllUnits();
+		foreach ($response as $key => $model){
+			$response[$key]['img_thumb_src'] = $this->getUnitImageSrc($model['name']);
+			if ($response[$key]['special_ability_1'] != null){$response[$key]['special_ability_1'] = $allAbilities->getAbilityByName($response[$key]['special_ability_1']);}
+			if ($response[$key]['special_ability_2'] != null){$response[$key]['special_ability_2'] = $allAbilities->getAbilityByName($response[$key]['special_ability_2']);}
+			if ($response[$key]['special_ability_3'] != null){$response[$key]['special_ability_3'] = $allAbilities->getAbilityByName($response[$key]['special_ability_3']);}
+			if ($response[$key]['special_ability_4'] != null){$response[$key]['special_ability_4'] = $allAbilities->getAbilityByName($response[$key]['special_ability_4']);}
+			if ($response[$key]['special_ability_5'] != null){$response[$key]['special_ability_5'] = $allAbilities->getAbilityByName($response[$key]['special_ability_5']);}
+			if ($response[$key]['special_ability_6'] != null){$response[$key]['special_ability_6'] = $allAbilities->getAbilityByName($response[$key]['special_ability_6']);}
+			if ($response[$key]['special_ability_7'] != null){$response[$key]['special_ability_7'] = $allAbilities->getAbilityByName($response[$key]['special_ability_7']);}
+			if ($response[$key]['special_ability_8'] != null){$response[$key]['special_ability_8'] = $allAbilities->getAbilityByName($response[$key]['special_ability_8']);}
+			if ($response[$key]['special_ability_9'] != null){$response[$key]['special_ability_9'] = $allAbilities->getAbilityByName($response[$key]['special_ability_9']);}
+			if ($response[$key]['special_ability_10'] != null){$response[$key]['special_ability_10'] = $allAbilities->getAbilityByName($response[$key]['special_ability_10']);}
+			if ($response[$key]['mount_ability'] != null){$response[$key]['mount_ability'] = $allAbilities->getAbilityByName($response[$key]['mount_ability']);}
+			if ($response[$key]['mount_ability2'] != null){$response[$key]['mount_ability2'] = $allAbilities->getAbilityByName($response[$key]['mount_ability2']);}
+			if ($response[$key]['spell_1'] != null){$response[$key]['spell_1'] = $allSpells->getSpellByName($response[$key]['spell_1']);}
+			if ($response[$key]['spell_2'] != null){$response[$key]['spell_2'] = $allSpells->getSpellByName($response[$key]['spell_2']);}
+			if ($response[$key]['spell_3'] != null){$response[$key]['spell_3'] = $allSpells->getSpellByName($response[$key]['spell_3']);}
+			if ($response[$key]['spell_4'] != null){$response[$key]['spell_4'] = $allSpells->getSpellByName($response[$key]['spell_4']);}
+			if ($response[$key]['spell_5'] != null){$response[$key]['spell_5'] = $allSpells->getSpellByName($response[$key]['spell_5']);}
+			if ($response[$key]['spell_6'] != null){$response[$key]['spell_6'] = $allSpells->getSpellByName($response[$key]['spell_6']);}
+			if ($response[$key]['spell_7'] != null){$response[$key]['spell_7'] = $allSpells->getSpellByName($response[$key]['spell_7']);}
+			if ($response[$key]['spell_8'] != null){$response[$key]['spell_8'] = $allSpells->getSpellByName($response[$key]['spell_8']);}
+			if ($response[$key]['spell_9'] != null){$response[$key]['spell_9'] = $allSpells->getSpellByName($response[$key]['spell_9']);}
+			if ($response[$key]['spell_10'] != null){$response[$key]['spell_10'] = $allSpells->getSpellByName($response[$key]['spell_10']);}
+			if ($response[$key]['weapon1'] != null){$response[$key]['weapon1'] = $allWeapons->getWeaponByName($response[$key]['weapon1']);}
+			if ($response[$key]['weapon2'] != null){$response[$key]['weapon2'] = $allWeapons->getWeaponByName($response[$key]['weapon2']);}
+			if ($response[$key]['weapon3'] != null){$response[$key]['weapon3'] = $allWeapons->getWeaponByName($response[$key]['weapon3']);}
+			if ($response[$key]['weapon4'] != null){$response[$key]['weapon4'] = $allWeapons->getWeaponByName($response[$key]['weapon4']);}
+			if ($response[$key]['weapon5'] != null){$response[$key]['weapon5'] = $allWeapons->getWeaponByName($response[$key]['weapon5']);}
+			if ($response[$key]['animus_known'] != null){$response[$key]['animus_known'] = $allAnimus->getAnimusByName($response[$key]['animus_known']);}
+
+			// add in the block type this model is be shown in
+			$leader = array('Calvalry Battle Engine Warlock', 'Warlock', 'Warlock Unit', 'Warcaster', 'Warcaster Unit');
+			if (in_array($response[$key]['type'], $leader)){
+				$response[$key]['block_type'] = 'leader';
+			}
+
+			$battleGroup = array ('Bone Jack', 'Colossal', 'Colossal Vector', 'Gargantuan', 'Heavy Myrmidon', 'Heavy Vector', 'Heavy Warbeast', 'Heavy Warjack', 'Helljack', 'Lesser Warbeast', 'Light Myrmidon', 'Light Vector', 'Light Warbeast', 'Light Warjack', 'Warbeast Pack');
+			if (in_array($response[$key]['type'], $battleGroup)){
+				$response[$key]['block_type'] = 'battle-group';
+			}
+
+			$unit = array ('Cavalry Unit', 'Character Unit', 'Unit');
+			if (in_array($response[$key]['type'], $unit)){
+				$response[$key]['block_type'] = 'unit';
+			}
+
+			$solo = array ('Character Solo', 'Solo');
+			if (in_array($response[$key]['type'], $solo)){
+				$response[$key]['block_type'] = 'solo';
+			}
+
+			if ($response[$key]['type'] == 'Battle Engine'){$response[$key]['block_type'] = 'battle-engine';}
+
+
+			// if caster, get tiered lists
+			if ($response[$key]['type'] == 'Warlock' || $response[$key]['type'] == 'Warcaster' || $response[$key]['type'] == 'Warcaster Unit' || $response[$key]['type'] == 'Warloock Unit'){
+				$i = 1;
+				$tiers = $allTiers->getTierByCasterId($response[$key]['id']);
+				if ($tiers != null){
+					foreach ($tiers as $tier){
+						$response[$key]['tiered_list_'.$i] = $tier;
+						$i++;
+					}
+				}
+			}
+
+		}
+
+		$fp = fopen($_SERVER['DOCUMENT_ROOT'].'/node/db/models.js', 'w');
+		fwrite($fp, 'var models_db = '.json_encode($response).';');
+		fclose($fp);
+		$fpNode = fopen($_SERVER['DOCUMENT_ROOT'].'/node/db/models_db.js', 'w');
+		fwrite($fpNode, 'var models_db = '.json_encode($response).'; exports.db = models_db;');
+		fclose($fpNode);
+		return $msg;
+	}
+
+
 }

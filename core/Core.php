@@ -19,27 +19,28 @@ class AllCore
 		include_once $_SERVER['DOCUMENT_ROOT'].'/core/Unit.php';
 		include_once $_SERVER['DOCUMENT_ROOT'].'/core/UnitType.php';
 		include_once $_SERVER['DOCUMENT_ROOT'].'/core/Weapons.php';
+		include_once $_SERVER['DOCUMENT_ROOT'].'/core/database.php';
 	}
 
 	/**
 	 * @return mysqli
 	 */
-	public function connect()
-	{
-		$servername = "localhost";
-		$username = "whrob";
-		$password = "kachowLand2";
-		$database = "roho_warmahordes";
+	//public function connect()
+	//{
+	//	$servername = "localhost";
+	//	$username = "whrob";
+	//	$password = "kachowLand2";
+	//	$database = "roho_warmahordes";
 
 		// Create connection
-		$conn = new mysqli($servername, $username, $password, $database);
+	//	$conn = new mysqli($servername, $username, $password, $database);
 
 		// Check connection
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		}
-		return $conn;
-	}
+	//	if ($conn->connect_error) {
+	//		die("Connection failed: " . $conn->connect_error);
+	//	}
+	//	return $conn;
+	//}
 
 	/**
 	 * @param $list
@@ -139,14 +140,19 @@ class AllCore
 	 */
 	public function getUserNameById($id)
 	{
-		$conn = $this->connect();
-		$sql = "SELECT user_name FROM users WHERE user_id = " . $id;
-		$result = $conn->query($sql);
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT user_name FROM users WHERE user_id = " . $id;
+		$result = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$sql = "SELECT user_name FROM users WHERE user_id = " . $id;
+		//$result = $conn->query($sql);
 		$user = '';
 		foreach ($result as $row) {
 			$user = $row['user_name'];
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $user;
 	}
 
@@ -176,15 +182,21 @@ class AllCore
 	public function getAdmin()
 	{
 		if (isset($_SESSION['user_id'])){
-			$conn = $this->connect();
-			$result = $conn->query("SELECT admin FROM users WHERE user_id = ". $_SESSION['user_id']);
+
+			$db = database::getInstance();
+			$mysqli = $db->getConnection();
+			$sql_query = "SELECT admin FROM users WHERE user_id = ". $_SESSION['user_id'];
+			$result = $mysqli->query($sql_query);
+
+			//$conn = $this->connect();
+			//$result = $conn->query("SELECT admin FROM users WHERE user_id = ". $_SESSION['user_id']);
 			foreach ($result as $row){
 				if ($row['admin'] == 1){
-					mysqli_close($conn); //$conn->close();
+					//mysqli_close($conn); //$conn->close();
 					return true;
 				}
 			}
-			mysqli_close($conn); //$conn->close();
+			//mysqli_close($conn); //$conn->close();
 		}
 		return false;
 	}
@@ -194,15 +206,21 @@ class AllCore
 	 * @return bool
 	 */
 	public function getUserSub($id){
-		$conn = $this->connect();
-		$result = $conn->query("SELECT user_sub FROM users WHERE user_id = " . $id);
+
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT user_sub FROM users WHERE user_id = " . $id;
+		$result = $mysqli->query($sql_query);
+
+		//$conn = $this->connect();
+		//$result = $conn->query("SELECT user_sub FROM users WHERE user_id = " . $id);
 		foreach ($result as $row){
 			if ($row['user_sub'] == 1){
-				mysqli_close($conn); //$conn->close();
+				//mysqli_close($conn); //$conn->close();
 				return true;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return false;
 	}
 

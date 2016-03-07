@@ -36,7 +36,7 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function createNewArmyList($armyName, $armyFaction, $points, $actualPoints, $warcaster1, $tier1, $battlegroup1Sql, $warcaster2, $tier2, $battlegroup2Sql, $warcaster3, $tier3, $battlegroup3Sql, $warcaster4, $tier4, $battlegroup4Sql, $unitsSql, $solosSql, $battleEnginesSql, $mercSolo, $mercUnits, $user, $public, $notes){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 
         $armyName = "'".$armyName."'";
         $armyFaction = "'".$armyFaction."'";
@@ -60,17 +60,27 @@ class ArmyBuilder extends AllCore
         if ($notes == ''){$notes = 'NULL';} else {$notes = "'".$notes."'";}
         $timeCreated = "'".date("Y-m-d H:i:s")."'";
 
-        $sql = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, merc_solo, merc_units, created_by, public, notes, time_created)
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, merc_solo, merc_units, created_by, public, notes, time_created)
 		VALUES (".$armyName.", ".$armyFaction.", ".$points.", ".$actualPoints.", ".$warcaster1.", ".$tier1.", ".$battlegroup1Sql.", ".$warcaster2.", ".$tier2.", ".$battlegroup2Sql.", ".$warcaster3.", ".$tier3.", ".$battlegroup3Sql.", ".$warcaster4.", ".$tier4.", ".$battlegroup4Sql.", ".$solosSql.", ".$unitsSql.", ".$battleEnginesSql.", ".$mercSolo.", ".$mercUnits.", ".$user.", ".$public.", ".$notes.", ".$timeCreated.")";
-        if ($conn->query($sql) === TRUE) {
+        if ($mysqli->query($sql_query) === TRUE) {
             echo "New Army List created successfully<br>";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+            echo "Error: " . $sql_query . "<br>" . $mysqli->error;
+        };
+
+        //$sql = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, merc_solo, merc_units, created_by, public, notes, time_created)
+		//VALUES (".$armyName.", ".$armyFaction.", ".$points.", ".$actualPoints.", ".$warcaster1.", ".$tier1.", ".$battlegroup1Sql.", ".$warcaster2.", ".$tier2.", ".$battlegroup2Sql.", ".$warcaster3.", ".$tier3.", ".$battlegroup3Sql.", ".$warcaster4.", ".$tier4.", ".$battlegroup4Sql.", ".$solosSql.", ".$unitsSql.", ".$battleEnginesSql.", ".$mercSolo.", ".$mercUnits.", ".$user.", ".$public.", ".$notes.", ".$timeCreated.")";
+        //if ($conn->query($sql) === TRUE) {
+        //    echo "New Army List created successfully<br>";
+        //} else {
+        //    echo "Error: " . $sql . "<br>" . $conn->error;
+        //}
 
         $id = $this->getListIdByName($armyName);
 
-        mysqli_close($conn); //$conn->close();
+        //mysqli_close($conn); //$conn->close();
         return $id;
     }
 
@@ -106,7 +116,7 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function ajaxCreateNewArmyList($name, $faction, $points, $actual_points, $warcaster_1, $tier_1, $battle_group_1, $warcaster_2, $tier_2, $battle_group_2, $warcaster_3, $tier_3, $battle_group_3, $warcaster_4, $tier_4, $battle_group_4, $units, $solos, $battle_engines, $journeyman_caster, $journeyman_battlegroup, $jackmarshal, $jackmarshal_battlegroup, $merc_solo, $merc_units, $user, $public, $notes, $guid){
-        $conn = $this->connect();
+        //$conn = $this->connect();
 
         $name = "'".htmlspecialchars($name)."'";
         $faction = "'".htmlspecialchars($faction)."'";
@@ -135,16 +145,25 @@ class ArmyBuilder extends AllCore
         $timeUpdated = $timeCreated;
         $guid = "'".$guid."'";
 
-        $sql = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, journeyman_caster, journeyman_battlegroup, jackmarshal, jackmarshal_battlegroup, merc_solo, merc_units, created_by, public, notes, updated_at, guid)
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, journeyman_caster, journeyman_battlegroup, jackmarshal, jackmarshal_battlegroup, merc_solo, merc_units, created_by, public, notes, updated_at, guid)
 		VALUES (".$name.", ".$faction.", ".$points.", ".$actual_points.", ".$warcaster_1.", ".$tier_1.", ".$battle_group_1.", ".$warcaster_2.", ".$tier_2.", ".$battle_group_2.", ".$warcaster_3.", ".$tier_3.", ".$battle_group_3.", ".$warcaster_4.", ".$tier_4.", ".$battle_group_4.", ".$solos.", ".$units.", ".$battle_engines.", ".$journeyman_caster.", ".$journeyman_battlegroup.", ".$jackmarshal.", ".$jackmarshal_battlegroup.", ".$merc_solo.", ".$merc_units.", ".$user.", ".$public.", ".$notes.", ".$timeUpdated.", ".$guid.")";
-        if ($conn->query($sql) === TRUE) {
-            mysqli_close($conn); //$conn->close();
-            return $guid;
+        if ($mysqli->query($sql_query) === TRUE) {
+            echo "New Army List created successfully<br>";
         } else {
-            mysqli_close($conn); //$conn->close();
-            return false;
+            echo "Error: " . $sql_query . "<br>" . $mysqli->error;
+        };
 
-        }
+        //$sql = "INSERT INTO army_list (name, faction, points, actual_points, warcaster_1, tier_1, battle_group_1, warcaster_2, tier_2, battle_group_2, warcaster_3, tier_3, battle_group_3, warcaster_4, tier_4, battle_group_4, solos, units, battle_engines, journeyman_caster, journeyman_battlegroup, jackmarshal, jackmarshal_battlegroup, merc_solo, merc_units, created_by, public, notes, updated_at, guid)
+		//VALUES (".$name.", ".$faction.", ".$points.", ".$actual_points.", ".$warcaster_1.", ".$tier_1.", ".$battle_group_1.", ".$warcaster_2.", ".$tier_2.", ".$battle_group_2.", ".$warcaster_3.", ".$tier_3.", ".$battle_group_3.", ".$warcaster_4.", ".$tier_4.", ".$battle_group_4.", ".$solos.", ".$units.", ".$battle_engines.", ".$journeyman_caster.", ".$journeyman_battlegroup.", ".$jackmarshal.", ".$jackmarshal_battlegroup.", ".$merc_solo.", ".$merc_units.", ".$user.", ".$public.", ".$notes.", ".$timeUpdated.", ".$guid.")";
+        //if ($conn->query($sql) === TRUE) {
+        //    mysqli_close($conn); //$conn->close();
+        //    return $guid;
+        //} else {
+        //    mysqli_close($conn); //$conn->close();
+        //    return false;
+        //}
     }
 
     /**
@@ -159,13 +178,18 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function getListIdByName($name){
-        $conn = $this->connect();
-        $sql = "SELECT id FROM army_list WHERE name = ".$name;
-        $result = $conn->query($sql);
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "SELECT id FROM army_list WHERE name = ".$name;
+        $result = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$sql = "SELECT id FROM army_list WHERE name = ".$name;
+        //$result = $conn->query($sql);
         $id = '';
         foreach ($result as $row)
             $id = $row;
-        mysqli_close($conn); //$conn->close();
+        //mysqli_close($conn); //$conn->close();
         return $id;
     }
 
@@ -183,9 +207,14 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function getAllPublicArmyLists(){
-        $conn = $this->connect();
-        $sql = "SELECT * FROM army_list WHERE public = 1 ORDER BY points";
-        $result = $conn->query($sql);
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "SELECT * FROM army_list WHERE public = 1 ORDER BY points";
+        $result = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$sql = "SELECT * FROM army_list WHERE public = 1 ORDER BY points";
+        //$result = $conn->query($sql);
         $i = 0;
         $publicList = '';
         foreach ($result as $row){
@@ -193,7 +222,7 @@ class ArmyBuilder extends AllCore
             $publicList[$i]['armyList_link'] = "/armybuilder/view-army-list.php?id=".$row['guid'];
             $i++;
         }
-        mysqli_close($conn); //$conn->close();
+        //mysqli_close($conn); //$conn->close();
         return $publicList;
     }
 
@@ -202,9 +231,14 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function getAllOwnedArmyLists($id){
-        $conn = $this->connect();
-        $sql = "SELECT * FROM army_list WHERE created_by = ".$id." ORDER BY points";
-        $result = $conn->query($sql);
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "SELECT * FROM army_list WHERE created_by = ".$id." ORDER BY points";
+        $result = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$sql = "SELECT * FROM army_list WHERE created_by = ".$id." ORDER BY points";
+        //$result = $conn->query($sql);
         $i = 0;
         $ownedList = '';
         foreach ($result as $row){
@@ -212,7 +246,7 @@ class ArmyBuilder extends AllCore
             $ownedList[$i]['armyList_link'] = "/armybuilder/view-army-list.php?id=".$row['guid'];
             $i++;
         }
-        mysqli_close($conn); //$conn->close();
+        //mysqli_close($conn); //$conn->close();
         return $ownedList;
     }
 
@@ -221,20 +255,26 @@ class ArmyBuilder extends AllCore
      * @return string
      */
     public function getListByGuid($guid){
-        $conn = $this->connect();
-        $sql = "SELECT * FROM army_list WHERE guid = '".$guid."'";
-        $result = $conn->query($sql);
+        $db = database::getInstance();
+        $mysqli = $db->getConnection();
+        $sql_query = "SELECT * FROM army_list WHERE guid = '".$guid."'";
+        $result = $mysqli->query($sql_query);
+
+        //$conn = $this->connect();
+        //$sql = "SELECT * FROM army_list WHERE guid = '".$guid."'";
+        //$result = $conn->query($sql);
         $list = '';
         if ($result->num_rows > 0){
             foreach ($result as $row){
                 $list = $row;
                 $views = $row['views']+1;
-                $conn->query('UPDATE army_list SET views = '.$views.' WHERE guid = "'.$guid.'"');
+                $mysqli->query('UPDATE army_list SET views = '.$views.' WHERE guid = "'.$guid.'"');
+                //$conn->query('UPDATE army_list SET views = '.$views.' WHERE guid = "'.$guid.'"');
             }
-            mysqli_close($conn); //$conn->close();
+            //mysqli_close($conn); //$conn->close();
             return $list;
         } else {
-            mysqli_close($conn); //$conn->close();
+            //mysqli_close($conn); //$conn->close();
             return false;
         }
     }

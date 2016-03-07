@@ -3,8 +3,10 @@
  */
 var express = require('express');
 var bodyParser = require('body-parser');
+var $ = require('jquery');
 var app = express();
-require('./func.js');
+var func = require('./func.js');
+var m = require('./db/models_db.js');
 
 // parse application/json
 app.use(bodyParser.json());
@@ -32,16 +34,36 @@ app.use(function (req, res, next) {
 
 // START ROHO Builds
 
+app.post('/rest/all-models-for-faction', function (req, res, next) {
+    var obj = req.body;
+    var factionModels = func.getAllModelsForFaction(obj.faction, m.db);
+    res.send(JSON.stringify(factionModels));
+    next();
+});
+
 // This responds with a replacement src for a models' image from the model object.
 app.post('/rest/model-image-replace', function (req, res, next) {
     console.log("Got a POST request for a model image");
     var obj = req.body;
-    console.log(obj.name);
     var src = obj.name.replace(/[^a-zA-Z0-9]/g, "");
-    // next check if that image exists, if not serve the default graphic
-    console.log(doesModelImageExist(src));
     src = JSON.stringify(src);
     res.send(src);
+    next();
+});
+
+app.post('/rest/model-html-block', function(req, res, next){
+   var obj = req.body;
+    obj = func.modelHtmlBlock(obj);
+    res.send(JSON.stringify(obj));
+    next();
+});
+
+app.post('/rest/add-model-to-army', function (req, res, next) {
+    console.log("Got a POST request for adding a model to the army list");
+    var obj = req.body;
+    obj = func.addModelToArmyList(obj);
+    res.send(JSON.stringify(obj));
+    next();
 });
 
 // START examples
@@ -76,12 +98,6 @@ app.delete('/del_user', function (req, res) {
 app.get('/list_user', function (req, res) {
     console.log("Got a GET request for /list_user");
     res.send('Page Listing');
-});
-
-// This responds a GET request for abcd, abxcd, ab123cd, and so on
-app.get('/ab*cd', function(req, res) {
-    console.log("Got a GET request for /ab*cd");
-    res.send('Page Pattern Match');
 });
 
 var server = app.listen(8081, function () {

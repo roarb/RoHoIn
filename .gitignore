@@ -432,3 +432,4 @@ pip-log.txt
 *.db
 *.md
 node/node_modules/*
+*.db

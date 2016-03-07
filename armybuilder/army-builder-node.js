@@ -22,21 +22,22 @@ function armyListBuilderBoot(){
     console.log(armyBuilder);
     $.post("/ajax/army-builder.php?faction="+armyBuilder.army.faction.faction_name+"&points="+armyBuilder.army.points.selected+"&name="+armyBuilder.army.name)
         .done(function(data){
-            addBattleGroup(1);
+            //addBattleGroup(1);
             $('#ajax-armybuilder').html(data);
             $('#input-points').val(armyBuilder.army.points.selected);
             showAjaxLoading();
+            setArmyBuilderWrapperHeight();
         });
 }
 
 function addBattleGroup(count){
-    $.post("/ajax/battlegroup-build.php?faction="+armyBuilder.army.faction.faction_name+"&count="+count)
-        .done(function(data){
-            $('#battlegroup-'+count).html(data);
-            hideAjaxLoading(); console.log('hide ajax fires in addBattleGroup');
-            infoBlockResize();
-            infoBlockToolsResize();
-    });
+    //$.post("/ajax/battlegroup-build.php?faction="+armyBuilder.army.faction.faction_name+"&count="+count)
+    //    .done(function(data){
+    //        $('#battlegroup-'+count).html(data);
+    //        hideAjaxLoading(); console.log('hide ajax fires in addBattleGroup');
+    //        infoBlockResize();
+    //        infoBlockToolsResize();
+    //});
 }
 
 // functions for creating new army lists
@@ -89,28 +90,11 @@ function startArmyListBuilder(){
 
     // need to add in a validator, if that's true then proceed.
     showAjaxLoading();
-    var faction = "";
-    var selectedFaction = $("input[type='radio'][name='faction']:checked");
-    if (selectedFaction.length > 0) {
-        faction = selectedFaction.val();
-    }
-    var points = "";
-    var selectedPoints = $("input[type='radio'][name='pointsValue']:checked");
-    if (selectedPoints.length > 0) {
-        points = selectedPoints.val();
-    }
-
-    var armyName = $('#army-list-name').val();
-    if (armyName == ''){
-        armyName = 'Random Army Name Picker Here';
-    }
-    // update tempList with the army name
-    //tempList.name = armyName;
-    hideArmyListCreationStartScreen(faction, points, armyName);
+    hideArmyListCreationStartScreen();
     armyListBuilderBoot();
 }
 
-function hideArmyListCreationStartScreen(faction, points, armyName){
+function hideArmyListCreationStartScreen(){
     // first run a hide function on the previous screen
     $('#army-name').hide();
     $('#army-faction').hide();
@@ -118,120 +102,161 @@ function hideArmyListCreationStartScreen(faction, points, armyName){
     $('#start-building').hide();
     // then load in the army name, points and faction into the toolbar.
     $('.army-builder-toolbar').removeClass('hidden');
-    $('#display-army-name').html('<input type="text" id="army-name" value="'+armyName+'" onblur="updateArmyName(this)" />');
-    $('#display-faction').html(faction);
-    $('#display-army-points').html(points);
+    $('#display-army-name').html('<input type="text" id="army-name" value="'+armyBuilder.army.name+'" onblur="updateArmyName(this)" />');
+    $('#total-points-allowed').html(armyBuilder.army.points.selected);
 }
 
 function updateArmyName(el){
     var name = $(el).val();
-    $('#input-army-name').val(name);
     armyBuilder.army.name = name;
 }
 
 // add a leader to its battlegroup
-function leaderSelected(e, count, object){ // count = battle group 1-4, object = model object
-    if ($(e).parents('.unit').hasClass('barracks-active') && !$(e).parents('.unit').hasClass('in-barracks')){
-        document.querySelector('#not-in-barracks').show();
-        return false;
-    }
-    applyBGPointsToToolbar(parseInt(object['bg_points']));
-    showBattleGroup(count);
-    $('.battlegroup'+count+'-title .leader-name').html(object['name']+"'s Batlle Group");
-    $('.warcaster'+count+'-title').hide();
-    $('.warcaster-'+count).find('.single-caster').removeClass('chosen');
-    $('.'+object['id']+'-'+count).addClass('chosen');
-    $('.warcaster-'+count).hide();
+function leaderSelected(e, id){ // count = battle group 1-4, object = model object
+    console.log(armyBuilder);
+    var model = {};
+    $(armyBuilder.army.army_models_avil.leaders).each(function(key, val){
+        if (val.id == id){
+            model = val;
+        }
+    });
+    //var input = {armyBuilder: armyBuilder, model: model};
+    var input = {model: model};
+    addNewModelToList(input);
+
+    showBattleGroup();
+    $('.warcaster-title').hide();
+    $('.warcaster').find('.single-caster').removeClass('chosen');
+    //$('.'+object['id']+'-'+count).addClass('chosen');
+    $('.warcaster').hide();
     // display unit - solo - battle engine options after a warcaster is selected.
     $('#unit-picker').show();
     $('#solo-picker').show();
     $('#battle-engine-picker').show();
     $('#merc-solo-picker').show();
     $('#merc-unit-picker').show();
-    addLeaderToBattleGroup(count,object);
+    //addLeaderToBattleGroup(count,object);
     //armyListBuilderShortSave();
 }
 
-// add a model to the list by model id
-function addNewModelToList(rule){
-    $.getJSON('/ajax/get-unit-by-id.php?id='+rule, function(data) {
-        // set variables
-        var model = data[0];
-        console.log(model);
-        $.get('/ajax/unit-model-stats.php?id='+model.id, function(stats) {
-            var pickerBlock = '',
-                wrapperClass = '',
-                modelBlock = '',
-                addUnitToArmy = '';
-            // find the correct picker block
-            if (model.type.indexOf('Unit') > -1) { // found a unit model
-                pickerBlock = $('#unit-picker');
-                unitModelObject.push(model);
-                wrapperClass += 'unit unit-model-option model-id-'+model.id;
-                addUnitToArmy += 'addUnitToArmy(unitModelObject, '+(unitModelObject.length - 1)+');';
-            } else if (model.type.indexOf('Heavy') > -1 || model.type.indexOf('Light') > -1 || model.type.indexOf('Lesser') > -1){ // found a battle group model - assuming battle group one
-                pickerBlock = $('#battlegroup-1 .battlegroup-1');
-                bgUnitObject.push(model);
-                wrapperClass += 'unit battle-group-unit model-id-'+model.id;
-                addUnitToArmy += 'addToBattleGroup(1, bgUnitObject, '+(bgUnitObject.length - 1)+');';
-            } else if (model.type.indexOf('Solo') > -1){ // found a solo model
-                pickerBlock = $('#solo-picker');
-                soloModelObject.push(model);
-                wrapperClass += 'unit solo-model model-id-'+model.id;
-                addUnitToArmy += 'addUnitToArmy(soloModelObject, '+(soloModelObject.length - 1)+');';
-            } else if (model.type.indexOf('Engine') > -1){ // found a battle engine
-                pickerBlock = $('#battle-engine-picker');
-                battleEngineModelObject.push(model);
-                wrapperClass += 'unit battle-engine-model model-id-'+model.id;
-                addUnitToArmy += 'addUnitToArmy(battleEngineModelObject, '+(battleEngineModelObject.length - 1)+');';
-            }
-
-            // apply updates to the correct block
-            modelBlock += '<div class="'+wrapperClass+'">';
-            modelBlock += '<div class="add-model-to-list" onclick="'+addUnitToArmy+'" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
-            modelBlock += '<paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>';
-            modelBlock += '<span class="mo-notice hidden">Add to List</span></div>';
-            modelBlock += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
-            modelBlock += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
-            modelBlock += '<span class="mo-notice hidden">View Stats</span></div>';
-            modelBlock += '<div class="focus-circle">';
-            modelBlock += '<span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>';
-            modelBlock += '<span class="field-allowance">';
-            if (model.field_allowance == 'U'){
-                modelBlock += '&#x221e;</span></div>';
-            } else {
-                modelBlock += model.field_allowance + '</span></div>';
-            }
-            modelBlock += '<label for="'+ model.name+'" class="unit-label">';
-            modelBlock += '<span class="unit-name">'+ model.name+'</span><br /><span class="unit-title">'+ model.title+'</span></label>';
-            modelBlock += '<div class="unit-cost">';
-            var pts = model.cost.split(',');
-            modelBlock += pts[0]+'pts';
-            if (pts[1] != undefined){
-                modelBlock += ' | '+pts[1]+'pts';
-            }
-            modelBlock += '</div>';
-            modelBlock += '<div class="clearer"></div>';
-            modelBlock += '<div class="additional-model-info" style="display:none;">';
-            modelBlock += stats+'</div></div>';
-
-            $(pickerBlock).append(modelBlock);
-
-        });
+function addNewUnitModelToList(el, id){
+    var model = {};
+    $(armyBuilder.army.army_models_avil.battlegroup_models).each(function(key, val){
+        if (val.id == id){
+            model = val;
+        }
     });
+    var input = {model: model};
+    addNewModelToList(input);
 }
 
-function applyBGPointsToToolbar(bg){
-    var points = "";
-    var selectedPoints = $("input[type='radio'][name='pointsValue']:checked");
-    if (selectedPoints.length > 0) {
-        points = parseInt(selectedPoints.val());
-    }
-    var finalPoints = bg + points;
-    // update tempList object
-    tempList.points = finalPoints;
-    var startBGPoints = '<span class="total-army-points-block"><span id="points-count-up">0</span>/<span id="total-points-allowed">'+finalPoints+'</span> ('+points+')</span>';
-    $('#display-army-points').html(startBGPoints);
+// add a model to the list by model id
+function addNewModelToList(input){
+    $.ajax({
+        type: "POST",
+        url: 'http://roho.in:8081/rest/add-model-to-army',
+        data: JSON.stringify(input),
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data) {
+            //armyBuilder = data.armyBuilder;
+            console.log(data);
+            if (data.army_points_update){
+                if (data.army_points_update_caster_mod){
+                    armyBuilder.army.points.caster_mod = data.army_points_update_caster_mod;
+                    armyBuilder.army.points.mod_total = parseInt(data.army_points_update_caster_mod) + parseInt(armyBuilder.army.points.selected);
+                } else if (data.army_points_update_model_cost){
+                    armyBuilder.army.points.used = parseInt(armyBuilder.army.points.used) + parseInt(data.army_points_update_model_cost);
+                }
+                applyBGPointsToToolbar();
+            }
+            $(data.location_block).append(data.html_block);
+
+            if (input.model.block_type == 'leader'){
+                if (data.army_name_update){
+                    armyBuilder.army.name = armyBuilder.army.name + ' - ' + input.model.name;
+                    armyBuilder.army.army_models_added.leader = input.model;
+                    $('#display-army-name #army-name').val(armyBuilder.army.name);
+                }
+                $('.battlegroup-title .leader-name').html(input.model.name+"'s Battle Group");
+                $('.battlegroup-title .battlegroup-points').html('+'+armyBuilder.army.points.caster_mod+' Battle Group Points');
+            } else if (input.model.block_type == 'battle-group'){
+                armyBuilder.army.army_models_added.battlegroup_models = input.model;
+            }
+        console.log(armyBuilder);
+        }
+    });
+
+    //$.getJSON('/ajax/get-unit-by-id.php?id='+rule, function(data) {
+    //    // set variables
+    //    var model = data[0];
+    //    console.log(model);
+    //    $.get('/ajax/unit-model-stats.php?id='+model.id, function(stats) {
+    //        var pickerBlock = '',
+    //            wrapperClass = '',
+    //            modelBlock = '',
+    //            addUnitToArmy = '';
+            // find the correct picker block
+    //        if (model.type.indexOf('Unit') > -1) { // found a unit model
+    //            pickerBlock = $('#unit-picker');
+    //            unitModelObject.push(model);
+    //            wrapperClass += 'unit unit-model-option model-id-'+model.id;
+    //            addUnitToArmy += 'addUnitToArmy(unitModelObject, '+(unitModelObject.length - 1)+');';
+    //        } else if (model.type.indexOf('Heavy') > -1 || model.type.indexOf('Light') > -1 || model.type.indexOf('Lesser') > -1){ // found a battle group model - assuming battle group one
+    //            pickerBlock = $('#battlegroup-1 .battlegroup-1');
+    //            bgUnitObject.push(model);
+    //            wrapperClass += 'unit battle-group-unit model-id-'+model.id;
+    //            addUnitToArmy += 'addToBattleGroup(1, bgUnitObject, '+(bgUnitObject.length - 1)+');';
+    //        } else if (model.type.indexOf('Solo') > -1){ // found a solo model
+    //            pickerBlock = $('#solo-picker');
+    //            soloModelObject.push(model);
+    //            wrapperClass += 'unit solo-model model-id-'+model.id;
+    //            addUnitToArmy += 'addUnitToArmy(soloModelObject, '+(soloModelObject.length - 1)+');';
+    //        } else if (model.type.indexOf('Engine') > -1){ // found a battle engine
+    //            pickerBlock = $('#battle-engine-picker');
+    //            battleEngineModelObject.push(model);
+    //            wrapperClass += 'unit battle-engine-model model-id-'+model.id;
+    //            addUnitToArmy += 'addUnitToArmy(battleEngineModelObject, '+(battleEngineModelObject.length - 1)+');';
+    //        }
+
+            // apply updates to the correct block
+    //        modelBlock += '<div class="'+wrapperClass+'">';
+    //        modelBlock += '<div class="add-model-to-list" onclick="'+addUnitToArmy+'" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">';
+    //        modelBlock += '<paper-icon-button icon="add-circle-outline" class="add-model"></paper-icon-button>';
+    //        modelBlock += '<span class="mo-notice hidden">Add to List</span></div>';
+    //        modelBlock += '<div class="show-additional" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)" onclick="expandUnitDisplay(this)">';
+    //        modelBlock += '<paper-icon-button icon="visibility" class="view-added-model-additional"></paper-icon-button>';
+    //        modelBlock += '<span class="mo-notice hidden">View Stats</span></div>';
+    //        modelBlock += '<div class="focus-circle">';
+    //        modelBlock += '<span class="in-army" style="display:none;">0</span><span class="divider" style="display:none;">/</span>';
+    //        modelBlock += '<span class="field-allowance">';
+    //        if (model.field_allowance == 'U'){
+    //            modelBlock += '&#x221e;</span></div>';
+    //        } else {
+    //            modelBlock += model.field_allowance + '</span></div>';
+    //        }
+    //        modelBlock += '<label for="'+ model.name+'" class="unit-label">';
+    //        modelBlock += '<span class="unit-name">'+ model.name+'</span><br /><span class="unit-title">'+ model.title+'</span></label>';
+    //        modelBlock += '<div class="unit-cost">';
+    //        var pts = model.cost.split(',');
+    //        modelBlock += pts[0]+'pts';
+    //        if (pts[1] != undefined){
+    //            modelBlock += ' | '+pts[1]+'pts';
+    //        }
+    //        modelBlock += '</div>';
+    //        modelBlock += '<div class="clearer"></div>';
+    //        modelBlock += '<div class="additional-model-info" style="display:none;">';
+    //        modelBlock += stats+'</div></div>';
+
+    //        $(pickerBlock).append(modelBlock);
+
+    //    });
+    //});
+}
+
+function applyBGPointsToToolbar(){
+    $('#points-count-up').html(armyBuilder.army.points.used);
+    $('#total-points-allowed').html(armyBuilder.army.points.mod_total);
 }
 
 // add a model/unit points cost to the army total, flag with class error if it exceeds the army total
@@ -746,11 +771,11 @@ function addMinMaxUnitToArmy(count, cost, id){ // this loads if there is a min /
 
 }
 
-function showBattleGroup(count){
+function showBattleGroup(){
     // show all battlegroup models
-    $('.battlegroup-'+count).removeClass('hidden');
+    $('.battlegroup').removeClass('hidden');
     // then display the new battlegroup build block on the right column
-    $('#battlegroup-'+count+'-built').show();
+    $('#battlegroup-built').show();
 }
 
 function modelCountInCurrentBattleGroup(count){
@@ -1094,4 +1119,8 @@ function writeModelAdditionToTempList(object, cost, count, merc){ // object = un
             tempList['unitModels'].push(unitItem);
         }
     }
+}
+
+function setArmyBuilderWrapperHeight(){
+    $('#army-builder-wrapper').height($(window).height() - 100);
 }

@@ -44,24 +44,33 @@ if ($faction == 'Circle Orboros' || $faction == 'Legion of Everblight' || $facti
     }
 }
 
-$units = $allUnits->getBuilderUnitsByFaction($faction);
-$solos = $allUnits->getBuilderSolosByFaction($faction);
-$battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
-$mercUnits = $allUnits->getBuilderMercUnitsByFaction($faction);
-$mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
+//$units = $allUnits->getBuilderUnitsByFaction($faction);
+//$solos = $allUnits->getBuilderSolosByFaction($faction);
+//$battleEngines = $allUnits->getBattleEngineUnitsByFaction($faction);
+//$mercUnits = $allUnits->getBuilderMercUnitsByFaction($faction);
+//$mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
 
 ?>
 
-<div class="horizontal layout">
+<div class="horizontal layout" id="army-builder-wrapper">
     <div class="flex-2 all-units-panel info-block-tools" style="overflow-y:auto;">
-        <paper-material elevation="1" class="m-cushion padding-top-bottom battlegroup" id="battlegroup-1"></paper-material>
-        <paper-material elevation="1" class="m-cushion padding-top-bottom battlegroup" id="battlegroup-2" style="display:none;"></paper-material>
-        <paper-material elevation="1" class="m-cushion padding-top-bottom battlegroup" id="battlegroup-3" style="display:none;"></paper-material>
-        <paper-material elevation="1" class="m-cushion padding-top-bottom battlegroup" id="battlegroup-4" style="display:none;"></paper-material>
+        <paper-material elevation="1" class="m-cushion padding-top-bottom battlegroup" id="battlegroup">
+            <div class="warcaster" id="leader-wrapper-block">
+                <div class="warcaster-title army-entry-select-title">Select a <?php echo $leader ?> for Battle Group</div>
+            </div>
+
+            <div class="clearer"></div>
+            <div class="battlegroup hidden" id="battlegroup-wrapper-block">
+                <div class="battlegroup-title army-entry-select-title">
+                    <span class="leader-name"></span><br />
+                    <span class="battlegroup-points" style="font-size:.8em;"></span>
+                </div>
+            </div>
+        </paper-material>
 
         <paper-material elevation="1" class="m-cushion padding-top-bottom units" id="unit-picker" style="display:none;">
             <div class="units-title army-entry-select-title">Units <span id="unit-points"></span></div>
-            <?php foreach ($units as $unit): ?>
+            <?php /*foreach ($units as $unit): ?>
                 <script>armyBuilder.army.army_models_avil.unit_models.push(<?php echo json_encode($unit) ?>);</script>
                 <div class="unit unit-model-option model-id-<?php echo $unit['id'] ?>">
                     <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $unit['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -77,7 +86,20 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <span class="field-allowance"><?php if ($unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $unit['field_allowance']; ?><?php endif; ?></span>
                     </div>
                     <div class="model-image">
-                        <?php echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
+                        <img src="/skin/images/spacer.gif" alt="<?php echo $unit['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $unit['id'] ?>-thumbnail" />
+                        <script>
+                            $.ajax({
+                                type: "POST",
+                                url: 'http://local.roho.in:8081/rest/model-image-replace',
+                                data: JSON.stringify(<?php echo json_encode($unit) ?>),
+                                dataType: 'json',
+                                contentType: 'application/json; charset=UTF-8',
+                                success: function (data) {
+                                    $('#model-<?php echo $unit['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
+                                }
+                            });
+                        </script>
+                        <?php //echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
                     </div>
                     <label for="<?php echo $unit['name'] ?>" class="unit-label">
                         <span class="unit-name"><?php echo $unit['name'] ?></span><br />
@@ -97,11 +119,11 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <?php //echo $allUnits->displayArmyBuilderStatsLine($unit) ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endforeach; */ ?>
         </paper-material>
         <paper-material elevation="1" class="m-cushion padding-top-bottom solos" id="solo-picker" style="display:none;">
             <div class="solos-title army-entry-select-title">Solos <span id="solo-points"></span></div>
-            <?php foreach ($solos as $solo): ?>
+            <?php /* foreach ($solos as $solo): ?>
                 <script>armyBuilder.army.army_models_avil.solo_models.push(<?php echo json_encode($solo) ?>);</script>
                 <div class="unit solo-model model-id-<?php echo $solo['id'] ?>">
                     <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $solo['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -121,7 +143,20 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         </span>
                     </div>
                     <div class="model-image">
-                        <?php echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
+                        <img src="/skin/images/spacer.gif" alt="<?php echo $solo['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $solo['id'] ?>-thumbnail" />
+                        <script>
+                            $.ajax({
+                                type: "POST",
+                                url: 'http://local.roho.in:8081/rest/model-image-replace',
+                                data: JSON.stringify(<?php echo json_encode($solo) ?>),
+                                dataType: 'json',
+                                contentType: 'application/json; charset=UTF-8',
+                                success: function (data) {
+                                    $('#model-<?php echo $solo['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
+                                }
+                            });
+                        </script>
+                        <?php //echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
                     </div>
                     <label for="<?php echo $solo['name'] ?>" class="unit-label">
                         <span class="unit-name"><?php echo $solo['name'] ?></span><br />
@@ -140,12 +175,12 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                         <?php //echo $allUnits->displayArmyBuilderStatsLine($solo) ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endforeach; */ ?>
         </paper-material>
         <?php if (isset($battleEngines)): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom battle-engines" id="battle-engine-picker" style="display:none;">
                 <div class="battle-engine-title army-entry-select-title">Battle Engines<span id="battle-engine-points"></span></div>
-                <?php foreach ($battleEngines as $battleEngine): ?>
+                <?php /* foreach ($battleEngines as $battleEngine): ?>
                     <script>armyBuilder.army.army_models_avil.battle_engine_models.push(<?php echo json_encode($battleEngine) ?>);</script>
                     <div class="unit battle-engine-model model-id-<?php echo $battleEngine['id'] ?>">
                         <div class="add-model-to-list" onclick="addUnitToArmy(this, <?php echo $battleEngine['id'] ?>);" onmouseover="moNoticeOver(this)" onmouseout="moNoticeOut(this)">
@@ -161,7 +196,20 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                             <span class="field-allowance"><?php if ($battleEngine['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $battleEngine['field_allowance']; ?><?php endif; ?></span>
                         </div>
                         <div class="model-image">
-                            <?php echo $allUnits->getUnitImageThumbnail($battleEngine['name']) ?>
+                            <img src="/skin/images/spacer.gif" alt="<?php echo $battleEngine['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $battleEngine['id'] ?>-thumbnail" />
+                            <script>
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'http://local.roho.in:8081/rest/model-image-replace',
+                                    data: JSON.stringify(<?php echo json_encode($battleEngine) ?>),
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=UTF-8',
+                                    success: function (data) {
+                                        $('#model-<?php echo $battleEngine['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
+                                    }
+                                });
+                            </script>
+                            <?php //echo $allUnits->getUnitImageThumbnail($battleEngine['name']) ?>
                         </div>
                         <label for="<?php echo $battleEngine['name'] ?>" class="unit-label">
                             <span class="unit-name"><?php echo $battleEngine['name'] ?></span><br />
@@ -180,10 +228,10 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                             <?php //echo $allUnits->displayArmyBuilderStatsLine($battleEngine) ?>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach; */ ?>
             </paper-material>
         <?php endif ?>
-        <?php if(isset($mercSolos)): ?>
+        <?php /*if(isset($mercSolos)): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom merc-solos" id="merc-solo-picker" style="display:none;">
                 <div class="merc-solos-title army-entry-select-title">Mercenary/Minion Solos <span id="merc-solo-points"></span></div>
                 <?php foreach ($mercSolos as $solo): ?>
@@ -206,7 +254,20 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                             </span>
                         </div>
                         <div class="model-image">
-                            <?php echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
+                            <img src="/skin/images/spacer.gif" alt="<?php echo $solo['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $solo['id'] ?>-thumbnail" />
+                            <script>
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'http://local.roho.in:8081/rest/model-image-replace',
+                                    data: JSON.stringify(<?php echo json_encode($solo) ?>),
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=UTF-8',
+                                    success: function (data) {
+                                        $('#model-<?php echo $solo['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
+                                    }
+                                });
+                            </script>
+                            <?php //echo $allUnits->getUnitImageThumbnail($solo['name']) ?>
                         </div>
                         <label for="<?php echo $solo['name'] ?>" class="unit-label">
                             <span class="unit-name"><?php echo $solo['name'] ?></span><br />
@@ -228,7 +289,7 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                 <?php endforeach; ?>
             </paper-material>
         <?php endif; ?>
-        <?php if (isset($mercUnits)): ?>
+        <?php if ($mercUnits != ''): ?>
             <paper-material elevation="1" class="m-cushion padding-top-bottom merc-units" id="merc-unit-picker" style="display:none;">
                 <div class="merc-units-title army-entry-select-title">Mercenary/Minion Units <span id="merc-unit-points"></span></div>
                 <?php foreach ($mercUnits as $unit): ?>
@@ -247,7 +308,20 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                             <span class="field-allowance"><?php if ($unit['field_allowance'] == 'U'): echo '&#x221e;'; ?><?php else: echo $unit['field_allowance']; ?><?php endif; ?></span>
                         </div>
                         <div class="model-image">
-                            <?php echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
+                            <img src="/skin/images/spacer.gif" alt="<?php echo $unit['name'] ?>" class="unit-image unit-thumbnail" id="model-<?php echo $unit['id'] ?>-thumbnail" />
+                            <script>
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'http://local.roho.in:8081/rest/model-image-replace',
+                                    data: JSON.stringify(<?php echo json_encode($unit) ?>),
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=UTF-8',
+                                    success: function (data) {
+                                        $('#model-<?php echo $unit['id'] ?>-thumbnail').attr('src', '/res/unit_images/thumbs/'+data+'.jpg');
+                                    }
+                                });
+                            </script>
+                            <?php //echo $allUnits->getUnitImageThumbnail($unit['name']) ?>
                         </div>
                         <label for="<?php echo $unit['name'] ?>" class="unit-label">
                             <span class="unit-name"><?php echo $unit['name'] ?></span><br />
@@ -269,7 +343,7 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
                     </div>
                 <?php endforeach; ?>
             </paper-material>
-        <?php endif; ?>
+        <?php endif;*/ ?>
     </div>
     <div class="flex-2 added-to-list-panel info-block-tools" style="overflow-y:auto;">
         <div id="tier-list-req-notice">
@@ -280,10 +354,7 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
         </div>
         <form method="post" name="create-army-list" id="create-army-list" action="save-list.php">
             <paper-material id="requirements" class="hidden"></paper-material>
-            <paper-material class="battle-group-built m-cushion" id="battlegroup-1-built" style="display:none;"></paper-material>
-            <paper-material class="battle-group-built m-cushion" id="battlegroup-2-built" style="display:none;"></paper-material>
-            <paper-material class="battle-group-built m-cushion" id="battlegroup-3-built" style="display:none;"></paper-material>
-            <paper-material class="battle-group-built m-cushion" id="battlegroup-4-built" style="display:none;"></paper-material>
+            <paper-material class="battle-group-built m-cushion" id="battlegroup-built" style="display:none;"></paper-material>
             <paper-material class="units-built m-cushion" id="units-built" style="display:none;"></paper-material>
             <paper-material class="solos-built m-cushion" id="solos-built" style="display:none;"></paper-material>
             <paper-material class="battle-engines-built m-cushion" id="battle-engines-built" style="display:none;"></paper-material>
@@ -319,9 +390,53 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
 </div>
 <paper-toast style="z-index:1;" id="battlegroup-needed" text="Please add a model to the battle group before saving."></paper-toast>
 <paper-toast style="z-index:1;" id="over-points" text="You've used too many models and are over your points allotment."></paper-toast>
+<paper-toast style="z-index:1;" id="not-in-barracks" text="This models is not in your Barracks and cannot be added to the army list while 'Use only models from your Barracks' is selected."></paper-toast>
 
 <div class="tiered-army-list-options" style="display:none;"></div>
 <div class="shadow" id="notice-shadow" style="display:none;"></div>
+
+<script>
+    $.ajax({
+        type: "POST",
+        url: 'http://local.roho.in:8081/rest/all-models-for-faction',
+        data: JSON.stringify({"faction":<?php echo json_encode($faction) ?>}),
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data) {
+            //factionModels = data;
+            $(data).each(function(key, val){
+                $.ajax({
+                    type: "POST",
+                    url: 'http://local.roho.in:8081/rest/model-html-block',
+                    data: JSON.stringify(val),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=UTF-8',
+                    success: function (html) {
+                        //factionModels = data;
+                        if (val.block_type == 'leader'){
+                            $('#leader-wrapper-block').append(html);
+                            armyBuilder.army.army_models_avil.leaders.push(val)
+                        } else if (val.block_type == 'battle-group'){
+                            $('#battlegroup-wrapper-block').append(html);
+                            armyBuilder.army.army_models_avil.battlegroup_models.push(val)
+                        } else if (val.block_type == 'unit'){
+                            $('#unit-picker').append(html);
+                            armyBuilder.army.army_models_avil.unit_models.push(val)
+                        } else if (val.block_type == 'solo'){
+                            $('#solo-picker').append(html);
+                            armyBuilder.army.army_models_avil.solo_models.push(val)
+                        } else if (val.block_type == 'battle-engine'){
+                            $('#battle-engine-picker').append(html);
+                            armyBuilder.army.army_models_avil.battle_engine_models.push(val)
+                        } else {
+                            armyBuilder.army.army_models_avil.aux_models.push(val)
+                        }
+                    }
+                });
+            });
+        }
+    });
+</script>
 
 <script>
     $(document).ready(function(){
@@ -351,95 +466,7 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
             e.preventDefault();
             //submitForm('#create-army-list');
             console.log(armyBuilder);
-<?php /* submission section
-            var battleGroupSql1 = '';
-            $(tempList.bg1Models).each(function(key, val){
-                battleGroupSql1 += '['+val+',1]';
-            });
-            if (tempList.bg1Models.length < 1){
-                battleGroupSql1 = null;
-            }
 
-            var solosSql = '';
-            $(tempList.soloModels).each(function(key, val){
-               solosSql += '['+val['id']+','+val['count']+']';
-            });
-            if (tempList.soloModels.length < 1){
-                solosSql = null;
-            }
-
-            var unitsSql = '';
-            $(tempList.unitModels).each(function(key,val){
-               unitsSql +=  '['+val['id']+','+val['count']+','+val['cost']+']';
-            });
-            if (tempList.unitModels.length < 1){
-                unitsSql = null;
-            }
-
-            var battleEngineSql = '';
-            $(tempList.battleEngineModels).each(function(key,val){
-                battleEngineSql +=  '['+val['id']+','+val['count']+']';
-            });
-            if (tempList.battleEngineModels.length < 1){
-                battleEngineSql = null;
-            }
-
-            var journeymanBgSql = '';
-            $(tempList.journeyman_bg).each(function(key, val){
-                journeymanBgSql += '['+val+',1]';
-            });
-            if (tempList.journeyman_bg.length < 1){
-                journeymanBgSql = null;
-            }
-
-            var user = null;
-            if (tempList.creator_id[0] != null){
-                user = tempList.creator_id[0];
-            }
-
-            var query = 'name='+tempList.name;
-            query += '&faction='+tempList.faction;
-            query += '&points='+tempList.orig_points;
-            query += '&points_used='+tempList.points_used;
-            query += '&warcaster1='+tempList.leader1name;
-            query += '&tier1='+tempList.tierListLevel;
-            if (battleGroupSql1 != null){query += '&bg1='+battleGroupSql1;}
-            if (solosSql != null){query += '&solos='+solosSql;}
-            if (unitsSql != null){query += '&units='+unitsSql;}
-            if (battleEngineSql != null){query += '&battle_engines='+battleEngineSql;}
-            if (tempList.journeyman['active'] == 1){query += '&journeyman_caster='+tempList.journeyman['id'];}
-            if (journeymanBgSql != null){query += '&journeyman_battlegroup='+journeymanBgSql;}
-            // need jackmarshal here
-            // need jackmarshal battle group here
-            query += '&created_by='+user;
-            query += '&public='+tempList.publicList;
-            if ($('#notes').val().length > 0){
-                query += '&notes='+$('#notes').val();
-            }
-            query += '&guid='+tempList.guid;
-
-            //console.log(query);
-            // run JS validation checks before submitting
-            var commitSave = true;
-
-            if (tempList.bg1Models.length == 0){
-                commitSave = false;
-                document.querySelector('#battlegroup-needed').show();
-            }
-            if (tempList.points_used > tempList.points){
-                commitSave = false;
-                document.querySelector('#over-points').show();
-            }
-
-            if (commitSave){
-                $.post("/ajax/save-army-list.php?"+query, function(guid) {
-                    var msg = '<h3>Great news, your army list was saved!</h3>';
-                    msg += '<p>You can view it at <a href="/armybuilder/view-army-list.php?id='+guid.slice(1, -1)+'" title="'+tempList.name+'">'+tempList.name+'</a></p>';
-                    msg += '<paper-button class="cushion" raised>Create a New Army List</paper-button>';
-                    displayNotice(msg, true)
-                });
-            }
-*/ ?>
         });
         $('#go-back').on('touchstart click', function(){
             backToCreateArmyStepOne()
@@ -447,4 +474,5 @@ $mercSolos = $allUnits->getBuilderMercSolosByFaction($faction);
 
     });
 
+    console.log(armyBuilder);
 </script>

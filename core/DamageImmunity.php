@@ -6,10 +6,14 @@ class AllDamageImmunityTypes extends AllCore
 	 * @return string
 	 */
 	function getAllDamageImmunityTypes(){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		$sql_query = "SELECT * FROM damage_immunity_types ORDER BY name";
+		$typesResult = $mysqli->query($sql_query);
+		//$conn = $this->connect();
 		
-		$types = "SELECT * FROM damage_immunity_types ORDER BY name";
-		$typesResult = $conn->query($types);
+		//$types = "SELECT * FROM damage_immunity_types ORDER BY name";
+		//$typesResult = $conn->query($types);
 		$typesBuild = '';
 		if ($typesResult->num_rows > 0) {
 			// output data of each row
@@ -19,7 +23,7 @@ class AllDamageImmunityTypes extends AllCore
 				$i++;
 			}
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 		return $typesBuild;
 	}
 
@@ -27,14 +31,16 @@ class AllDamageImmunityTypes extends AllCore
 	 * @param $data
 	 */
 	function saveDamageImmunityType($data){
-		$conn = $this->connect();
+		$db = database::getInstance();
+		$mysqli = $db->getConnection();
+		//$conn = $this->connect();
 		
 		$sql = "INSERT INTO damage_immunity_types (name)
 		VALUES ('".$data."')";
 		
-		if ($conn->query($sql) === TRUE) {
+		if ($mysqli->query($sql) === TRUE) {
 			echo "New record created successfully<br>";
 		}
-		mysqli_close($conn); //$conn->close();
+		//mysqli_close($conn); //$conn->close();
 	}
 }
