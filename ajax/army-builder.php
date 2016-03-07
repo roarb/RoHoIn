@@ -398,7 +398,7 @@ if ($faction == 'Circle Orboros' || $faction == 'Legion of Everblight' || $facti
 <script>
     $.ajax({
         type: "POST",
-        url: 'http://local.roho.in:8081/rest/all-models-for-faction',
+        url: 'http://roho.in:8081/rest/all-models-for-faction',
         data: JSON.stringify({"faction":<?php echo json_encode($faction) ?>}),
         dataType: 'json',
         contentType: 'application/json; charset=UTF-8',
@@ -407,7 +407,7 @@ if ($faction == 'Circle Orboros' || $faction == 'Legion of Everblight' || $facti
             $(data).each(function(key, val){
                 $.ajax({
                     type: "POST",
-                    url: 'http://local.roho.in:8081/rest/model-html-block',
+                    url: 'http://roho.in:8081/rest/model-html-block',
                     data: JSON.stringify(val),
                     dataType: 'json',
                     contentType: 'application/json; charset=UTF-8',
